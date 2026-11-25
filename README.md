@@ -34,7 +34,7 @@ Engineering usually sees it coming and says so. But "this will hurt us later" so
   status: open
 ```
 
-**3. Puts numbers under the argument.** An optional `business_case.yaml` models what the decision changes (for example conversion, checkout completion and returns) against what each alternative costs. `prodoffs.py case` computes yearly net and payback, and the agents argue with those numbers instead of inventing their own.
+**3. Puts numbers under the argument.** An optional business case models what the decision changes (for example conversion, checkout completion and returns) against what each alternative costs. The script computes yearly net and payback, and the agents argue with those numbers instead of inventing their own.
 
 **4. Helps assemble the quarterly roadmap or settle a single trade-off.** You provide the strategy for the next 12 to 18 months, candidate initiatives with rough estimates, team capacity and known shortcuts. Five role agents negotiate. You get:
 
@@ -46,96 +46,99 @@ Engineering usually sees it coming and says so. But "this will hurt us later" so
 
 ## The agents
 
-Each role is a Claude Code subagent in [`.claude/agents/`](.claude/agents) plus a mandate file in the workspace. A mandate is a contract: what the role owns, its red lines, and its weighted requirements. Roles are advocates, not neutral advisors.
+Each role is an advocate with its own mandate: what it owns, its red lines, and its weighted requirements.
 
-| Agent | Argues for | Typical red line | Watches for |
-|---|---|---|---|
-| [`prodoffs-ceo`](.claude/agents/prodoffs-ceo.md) | EBITDA, ARR, strategic fit | Negative 12-month contribution with no strategic rationale | Q1 wins that endanger the year's bets; margin leaks |
-| [`prodoffs-cpo`](.claude/agents/prodoffs-cpo.md) | Time-to-market, adoption, experience | Core features miss the market window | Seasonal windows; top reasons customers do not adopt |
-| [`prodoffs-cto`](.claude/agents/prodoffs-cto.md) | Scalability, reliability, tech debt, capacity | No new shortcut that blocks a strategic bet | New and open shortcuts; own concession balance; capacity realism |
-| [`prodoffs-cmo`](.claude/agents/prodoffs-cmo.md) | Positioning, acquisition cost, competitive response | Nothing that breaks a public promise | Competitor moves; launch stories |
-| [`prodoffs-cdo`](.claude/agents/prodoffs-cdo.md) | Reusable data models, measurability | Data models tied to one catalog or market; launches without metrics | Quick versions that create manual data work |
-| [`prodoffs-facilitator`](.claude/agents/prodoffs-facilitator.md) | Nobody: neutral, non-voting | | Builds hybrid options, proposes who concedes, records dissent |
+| Agent | Argues for | Typical red line |
+|---|---|---|
+| CEO | EBITDA, ARR, strategic fit | Negative 12-month contribution with no strategic rationale |
+| CPO | Time-to-market, adoption, experience | Core features miss the market window |
+| CTO | Scalability, reliability, tech debt, capacity | No new shortcut that blocks a strategic bet |
+| CMO | Positioning, acquisition cost, competitive response | Nothing that breaks a public promise |
+| CDO | Reusable data models, measurability | Data models tied to one catalog or market; launches without metrics |
+| Facilitator | Nobody: neutral, non-voting | Builds hybrid options, proposes who concedes, records dissent |
 
-All roles follow the same [role protocol](docs/role-protocol.md): which phase writes which file, in which format, and the rules below.
-
-Seven skills cover the whole cycle, from setting up to checking whether past trade-offs paid off:
+Seven skills cover the whole cycle:
 
 | Skill | When | What it does |
 |---|---|---|
-| [`prodoffs-setup`](.claude/skills/prodoffs-setup/SKILL.md) | Once, at the start | Interviews you for strategy, candidates, capacity, known shortcuts, mandates and past decisions; creates and validates a workspace |
-| [`prodoffs-radar`](.claude/skills/prodoffs-radar/SKILL.md) | Before planning, or on a schedule | Which strategic bets are at risk from shortcuts you already carry, where shortcuts pile up, who has been conceding |
-| [`prodoffs-roadmap`](.claude/skills/prodoffs-roadmap/SKILL.md) | Quarterly planning | Full negotiation of the quarter with all agents and the live board |
-| [`prodoffs-decide`](.claude/skills/prodoffs-decide/SKILL.md) | Any single trade-off | Same negotiation for one decision: quick versus proper, build versus buy |
-| [`prodoffs-shortcut`](.claude/skills/prodoffs-shortcut/SKILL.md) | Whenever a team cuts a corner | Records the shortcut with its future price and what it blocks, in under a minute |
-| [`prodoffs-recall`](.claude/skills/prodoffs-recall/SKILL.md) | Any time | Answers "why did we choose X?", "what blocks Y?", "who has been giving in?" from memory, with ids |
-| [`prodoffs-retro`](.claude/skills/prodoffs-retro/SKILL.md) | End of quarter | Plan versus reality; updates the real price of shortcuts; flags disagreements that turned out right |
+| `prodoffs-setup` | Once, at the start | Interviews you and creates a workspace for your product |
+| `prodoffs-radar` | Before planning, or on a schedule | Which strategic bets are at risk from shortcuts you already carry, who has been conceding |
+| `prodoffs-roadmap` | Quarterly planning | Full negotiation of the quarter with all agents and the live board |
+| `prodoffs-decide` | Any single trade-off | Same negotiation for one decision: quick versus proper, build versus buy |
+| `prodoffs-shortcut` | Whenever a team cuts a corner | Records the shortcut with its future price, in under a minute |
+| `prodoffs-recall` | Any time | Answers "why did we choose X?", "what blocks Y?", "who has been giving in?" |
+| `prodoffs-retro` | End of quarter | Plan versus reality; flags disagreements that turned out right |
 
 ## How a session runs
 
 ```
-Intake      load strategy, candidates, open shortcuts, past decisions, concession balances
+Intake      load strategy, candidates, open shortcuts, past decisions
 Sealed      each role writes its position alone, in parallel
 Reveal      positions shown at once
 Cross-exam  each role steelmans the strongest rival position, then attacks it
 Synthesis   facilitator builds 2-3 hybrid options
-Scoring     each role scores every option per requirement; the script does the math
-Converge    if nothing passes, facilitator proposes the smallest concession; rescore (max 3 rounds)
+Scoring     each role scores every option; the script does the math
+Converge    if nothing passes, the smallest concession is proposed (max 3 rounds)
 Record      decision brief; with your yes, the ledger is updated
 ```
 
-Rules that make it more than role-play:
+What makes it more than role-play:
 
-- **Unanimity is suspicious.** If all sealed positions agree, cross-examination turns into red-teaming the consensus: each role defends the best rejected option and attacks the agreed one. In the VIN run this is what exposed the flaw in the business case.
+- **Unanimity is suspicious.** If all roles agree, they switch to red-teaming the consensus. In the VIN run this is what exposed a flaw in the business case.
 - **Independent first.** Sealed positions counter the known tendency of AI agents to agree with each other too quickly (Yao et al., 2025, [arXiv:2509.23055](https://arxiv.org/abs/2509.23055)).
 - **Receipts.** A role may change its score only by citing a new fact or argument.
-- **Agreement rule.** An option is accepted when it fits capacity, breaks no red line, creates no new risk for a strategic bet (risk from shortcuts you already carry is shown, not blocking), and no role deviates more than its tolerance (default 20%) from what it wanted.
-- **Fairness over time.** A role that conceded in recent decisions gets a tighter tolerance, so the same function cannot lose every quarter.
-- **Code does the math.** [`scripts/prodoffs.py`](scripts/prodoffs.py) computes deviations, tolerances, capacity, the future-proof check and moods. Agents only argue and score.
+- **Clear agreement rule.** An option passes when it fits capacity, breaks no red line, creates no new risk for a strategic bet, and no role deviates more than its tolerance (default 20%) from what it wanted.
+- **Fairness over time.** A role that conceded recently gets a tighter tolerance, so the same function cannot lose every quarter.
+- **Code does the math.** Agents argue and score; a script computes deviations, capacity and the future-proof check.
 - **The human chairs.** Nothing is recorded without your yes.
 
 ## The live board
 
-While agents negotiate, a local page shows the room: each role as a character with a mood, their latest line, deviation against tolerance, the options being scored, the business case, strategy health and a feed.
+While agents negotiate, a local page shows the room: each role as a character with a mood, their latest line, deviation against tolerance, the options being scored and a feed. Mood is computed from the numbers, not generated by the model. The same page replays finished sessions.
 
 ![Final state of the VIN run: H3 accepted, every role inside tolerance](docs/vin-accepted.png)
-
-Mood is computed from the numbers, not generated by the model:
-
-| Mood | Rule |
-|---|---|
-| Thinking | Writing its sealed position |
-| Pleased | Deviation under 50% of tolerance |
-| Neutral | 50 to 80% |
-| Concerned | 80 to 100% |
-| Angry | Over tolerance, or a red line is broken |
-
-How it works: Claude Code hooks (`SubagentStart`, `SubagentStop`, configured in [`.claude/settings.json`](.claude/settings.json)) and the script append events to `events.jsonl` in the session folder. [`board/index.html`](board/index.html) reads that file and redraws. No build step, no dependencies. The same page replays finished sessions.
 
 ## Examples
 
 Both use the same fictional online auto parts retailer.
 
-| Example | Kind | Sample session | What it shows |
-|---|---|---|---|
-| [`vin-buy-vs-build`](examples/vin-buy-vs-build) | Single decision: buy, build or hybrid for vehicle identification by VIN, with a business case on conversion, checkout completion and returns | **Real agent run** | Unanimous positions get red-teamed; the agents find a flaw in the business case, correct it, and accept a plan with four recorded disagreements |
-| [`auto-parts-q1-roadmap`](examples/auto-parts-q1-roadmap) | Quarterly roadmap: five initiatives, 30 team-weeks, three strategic bets | Hand-written to illustrate the mechanics | Past concessions tighten the CTO's tolerance; a quick payment integration is rejected because it would block the market launch |
+| Example | Kind | What it shows |
+|---|---|---|
+| [`vin-buy-vs-build`](examples/vin-buy-vs-build) | Single decision, with a business case. **Real agent run** | Unanimous positions get red-teamed; the agents find a flaw in the business case, correct it, and accept a plan with four recorded disagreements |
+| [`auto-parts-q1-roadmap`](examples/auto-parts-q1-roadmap) | Quarterly roadmap: five initiatives, 30 team-weeks, three strategic bets. Hand-written to illustrate the mechanics | Past concessions tighten the CTO's tolerance; a quick payment integration is rejected because it would block a market launch |
 
 ![The original hybrid rejected in the VIN run: CTO, CMO and CDO on red lines](docs/vin-h1-rejected.png)
 
-## Try it
+## Getting started
 
-You need Python 3.9+ and `pip install pyyaml`.
+### What you need
 
-**1. Watch a sample session (1 minute, no AI needed)**
+| To do | You need |
+|---|---|
+| Watch the demo, rerun the math | Python 3.9+ and `pyyaml` |
+| Run real sessions | Also [Claude Code](https://code.claude.com/docs) (terminal, desktop app or web) with a Claude subscription that includes it, or an Anthropic API key |
+
+### Install
+
+```bash
+git clone https://github.com/mxdxru/prodoffs.git
+cd prodoffs
+pip install pyyaml
+```
+
+Nothing else to install. The agents, skills and hooks live in `.claude/` inside the repository and load automatically when you start Claude Code here.
+
+### 1. Watch a sample session (1 minute, no AI needed)
 
 ```bash
 python3 -m http.server 8000
-# open http://localhost:8000/board/?events=/examples/vin-buy-vs-build/sample-session/events.jsonl
-# add &layout=wide for the 16:9 presentation view used in the video
 ```
 
-**2. Rerun the math yourself**
+Open http://localhost:8000/board/?events=/examples/vin-buy-vs-build/sample-session/events.jsonl
+
+Add `&layout=wide` for the 16:9 view used in the video.
+
+### 2. Rerun the math yourself
 
 ```bash
 python3 scripts/prodoffs.py case examples/vin-buy-vs-build --dry-run
@@ -143,49 +146,74 @@ python3 scripts/prodoffs.py score examples/auto-parts-q1-roadmap --round 2 \
   --session examples/auto-parts-q1-roadmap/sample-session --dry-run
 ```
 
-Change a score in `sample-session/scores/` or a balance in `memory/concessions.yaml` and rerun to see the outcome change. `--dry-run` prints without touching the sample. `sample-session/rebuild.sh` regenerates the events and the brief.
+Change a score in `sample-session/scores/` or a balance in `memory/concessions.yaml` and rerun to see the outcome change. `--dry-run` prints without touching the sample.
 
-**3. Run a real session with Claude Code**
+### 3. Run a real session
+
+Start Claude Code **from the repository root**:
 
 ```bash
 claude
-> Run a Prodoffs decision for examples/vin-buy-vs-build
-> Run a Prodoffs roadmap session for examples/auto-parts-q1-roadmap
 ```
 
-The skills run all phases with the agents and print a link to watch the board live.
+On first start Claude Code asks whether you trust this folder. Say yes: the live board depends on hooks from `.claude/settings.json`, which only run in a trusted folder.
 
-**Reset after trying it**
+Then ask in plain words, or call the skill directly:
+
+```
+> Run a Prodoffs decision for examples/vin-buy-vs-build
+> /prodoffs-roadmap examples/auto-parts-q1-roadmap
+```
+
+The skill runs all phases and prints a link to watch the board live. Claude Code will ask permission to run `scripts/prodoffs.py` and write session files; allow them.
+
+A full session runs six agents over several rounds, so it uses far more tokens than a normal chat. Start with the single VIN decision before a full roadmap session, especially on a Pro plan.
+
+### Reset after trying it
 
 ```bash
-python3 scripts/prodoffs.py reset examples/auto-parts-q1-roadmap            # remove sessions from runs
+python3 scripts/prodoffs.py reset examples/auto-parts-q1-roadmap            # remove sessions
 python3 scripts/prodoffs.py reset examples/auto-parts-q1-roadmap --memory   # also undo recorded decisions
 ```
 
-The first `record` snapshots `memory/` into `memory/.baseline/`; `--memory` restores that snapshot, so concession balances, shortcuts and decision files return to their state before the first recorded decision. Works the same for your own workspaces.
+Works the same for your own workspaces.
 
-What Claude itself keeps between sessions is separate from Prodoffs' memory:
+### Use it for your own product
 
-- **Conversation context:** `/clear` in Claude Code.
-- **Claude Code auto memory:** turned off for this repository in [`.claude/settings.json`](.claude/settings.json) (`"autoMemoryEnabled": false`), so demo runs do not leak into the next one. Prodoffs keeps its memory in plain files you can see and reset. Check with `/memory`.
-- **Model training:** the model does not learn from your runs as you use it. Whether conversations may be used to train future models is an account setting; see [Claude Code data usage](https://code.claude.com/docs/en/data-usage).
+In Claude Code, ask: *"Set up a Prodoffs workspace for my product"*. The setup skill interviews you and creates `workspaces/<name>/`. This folder is git-ignored, so your company data stays out of a public fork.
 
-## Use it for your own product
-
-Ask Claude Code to "set up a Prodoffs workspace for my product". The `prodoffs-setup` skill interviews you and creates `workspaces/<name>/` from [`templates/workspace`](templates/workspace). `workspaces/` is git-ignored, so your company data stays out of a public fork. Check a workspace any time with `python3 scripts/prodoffs.py validate workspaces/<name>`.
-
-You can also fill the files by hand:
+You can also fill the files by hand, starting from `templates/workspace`:
 
 | File | What to put in |
 |---|---|
 | `strategy.yaml` | 2 to 5 strategic bets for the next 12 to 18 months, concrete ("two new EU markets in H2", not "grow revenue") |
-| `candidates.yaml` | Initiatives for the quarter, each with versions (full, quick...), effort, and shortcuts a version creates or fixes; team capacity |
+| `candidates.yaml` | Initiatives for the quarter, each with versions (full, quick...), effort and the shortcuts each creates or fixes; team capacity |
 | `memory/shortcuts.yaml` | Known shortcuts and tech debt, even a rough list from engineering leads, with what they block |
 | `mandates/*.yaml` | Each role's owned metrics, red lines and weighted requirements |
 | `memory/concessions.yaml` | Start at zero, or seed from recent decisions |
 | `prodoffs.yaml` | Tolerance, fairness strength, max rounds |
 
+Check a workspace any time:
+
+```bash
+python3 scripts/prodoffs.py validate workspaces/<name>
+```
+
 Past decisions in `memory/decisions/` help the agents argue from history. Plan versus actual from previous quarters makes the retro useful.
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| Claude does not know the Prodoffs skills or agents | You started `claude` outside the repository root. Exit, `cd` into `prodoffs`, start again. `/agents` should list six `prodoffs-*` agents |
+| The board does not update during a run | The folder is not trusted, so hooks are off, or `python3` is not on your PATH. Check with `/hooks` |
+| The board is blank | Open it through `python3 -m http.server`, not as a local file; browsers block reading `events.jsonl` from `file://` |
+| `ModuleNotFoundError: No module named 'yaml'` | `pip install pyyaml` for the same Python that runs `python3` |
+| Usage limit hit mid-session | Sessions do not resume. Files written so far stay in the session folder for reference; start a new session later. Try a single decision before a full roadmap |
+
+### What Claude keeps between sessions
+
+Prodoffs keeps its memory in plain files you can see and reset. Claude Code auto memory is turned off for this repository, so demo runs do not leak into the next one. Use `/clear` to drop conversation context. Whether your conversations may be used for model training is an account setting; see [Claude Code data usage](https://code.claude.com/docs/en/data-usage).
 
 ## What makes it different
 
@@ -197,26 +225,6 @@ Past decisions in `memory/decisions/` help the agents argue from history. Plan v
 | ADRs, decision logs | Record what was decided | Record what was cut, what it blocks, and who paid |
 
 In one sentence: **Prodoffs connects today's shortcuts to tomorrow's plans, so the roadmap is judged on both.**
-
-## Repository layout
-
-```
-.claude/
-  agents/            prodoffs-ceo, -cpo, -cto, -cmo, -cdo, -facilitator
-  skills/            setup, radar, roadmap, decide, shortcut, recall, retro
-  settings.json      hooks that feed the live board
-board/index.html     live board and replay page
-docs/                role protocol, screenshots, demo video
-scripts/prodoffs.py  validate, radar, business case, scoring, future-proof check, brief, ledger, reset, events
-scripts/video/       renders the demo video from a session's event log
-templates/workspace/ blank workspace used by prodoffs-setup
-examples/
-  vin-buy-vs-build/   single decision with business case; real agent run
-  auto-parts-q1-roadmap/
-    prodoffs.yaml  strategy.yaml  candidates.yaml
-    mandates/      memory/ (shortcuts, concessions, past decisions)
-    sample-session/  (positions, critiques, options, scores, events, brief)
-```
 
 ## License
 
