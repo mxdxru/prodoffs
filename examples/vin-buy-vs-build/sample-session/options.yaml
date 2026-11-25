@@ -1,0 +1,36 @@
+# Round 1 options, narrowing. Written by the facilitator.
+# Every number is from the files or is marked "our arithmetic" (sums on file inputs).
+# No option meets every hard condition as written today. Which option survives depends on terms the vendor has not yet written.
+# Shared conditions for every hybrid option: signed DPA before any live VIN lookup (Legal); named owning team in Engineering before signature (owner); 24-month term with a 12-month review (owner); no garage VIN storage in the first release (owner); no fit guarantee or precision claim before our own measurement (owner).
+options:
+  hybrid_phased_draft:
+    round: 1
+    summary: "Hybrid as drafted, phased. Vendor fee 0.08 per lookup as in the offer. Phase 1 (about 8 weeks): vendor behind our own vehicle-ID layer, VIN entry behind a flag, dropdown fallback, holdout flag and logging, 10% soft launch in March. Phase 2 (about 4 weeks as drafted): selector and my-garage moved to our IDs (closes S-009), cache if cleared, returns tagging. Effort 12 team-weeks (business case baseline)."
+    items: {vehicle-id: hybrid}
+    notes:
+      - "Business case: baseline, unchanged. Run cost 16,800 a month (case: 9,000 layer plus 97,500 x 0.08 = 7,800). Breaches the 15,000 hard limit by 1,800. Owner: a breach is not acceptable."
+      - "At the 24 November price of 0.09 flat, run cost is 17,775 (our arithmetic, also Engineering's). Breach 2,775."
+      - "Passes the run-cost limit only if the fee falls to the 6,000 minimum or the layer costs less (executive and engineering arithmetic). Neither is in the files."
+      - "Included as the draft the roles debated. The script should remove it unless the terms change."
+  hybrid_terms_conditional:
+    round: 1
+    summary: "Hybrid, phased, on the vendor terms of 24 November: 0.09 per lookup with processor-only terms, increases capped at 5% a year if signed for 24 months, catalog mapping included, exit after month 12 with 3 months' notice. Conditional on run-cost terms NOT in the vendor reply: an all-units volume tier at 0.06 above 60,000 lookups a month, and a minimum-fee ramp for months 1 to 6. Effort 14 team-weeks (Engineering point, range 12 to 18): phase 1 about 8 (range 6 to 10), phase 2 about 6. That is 58% of the 24 team-week capacity at point, 75% at the top of the range."
+    items: {vehicle-id: hybrid_terms}
+    notes:
+      - "Terms IN the vendor reply (24 November): 0.09 per lookup; monthly minimum 6,000 unchanged; processor only; 30 days' troubleshooting retention; no reuse; caching of decoded results for our own customers allowed; mapping included; price cap 5% a year only with 24 months; exit after month 12 with 3 months' notice."
+      - "Terms NOT in the vendor reply, assumed for this variant only: the 0.06 all-units tier above 60,000 lookups (executive's figure from an earlier offer discussion) and a minimum-fee ramp (no figure offered; executive suggested 3,000 as an example). Silent in the reply: volume tiers, ramp, SLA (99.5% with credits capped at 10% of the monthly fee; owner asked for 99.9%), term beyond 24 months, post-termination licence, liability cap, audit, breach notice."
+      - "Run cost with a flat 0.09 fee (what the script models): 8,775 fees plus 9,000 layer equals 17,775. Breach 2,775. The script will show a breach unless the tier is entered."
+      - "Run cost with the all-units 0.06 tier (our arithmetic): 97,500 x 0.06 = 5,850, the 6,000 minimum binds, run cost 15,000 exactly. No headroom. With a marginal tier (60,000 at 0.09 plus 37,500 at 0.06) run cost is 16,650, a breach (Engineering arithmetic)."
+      - "Ramp: at base volume the minimum never binds (fee 8,775 is above 6,000), so a ramp does not fix steady-state run cost. At soft launch (10% of traffic, about 9,750 lookups, fee about 880) a 3,000 minimum gives run cost about 12,000 (our arithmetic). The ramp is a soft-launch and downside lever, not the base-case fix."
+      - "If the tier is not written before full ramp, the fallback is to cap VIN-entry traffic at or below about 66,667 lookups a month (6,000 divided by 0.09; about 17% adoption, executive's 17% stress gives about 66,300). That keeps run cost at or under 15,000 but cuts about a third of base lookups. Revenue effect not priced in the files. Engineering calls it an honest traffic decision, not a breach."
+      - "Business case: session copy, hybrid_terms (fee 0.09, growth 0.05, one-off 14 team-weeks). Layer run cost 9,000 kept unchanged; Engineering must supply its build-up before the rerun. Changes listed in the session business_case.yaml notes."
+      - "Dated phase 2 is required before the marketplace connector starts (executive, engineering). No phase 2 date is in the files."
+  buy_reference:
+    round: 1
+    summary: "Plain vendor API, direct integration, 4 team-weeks, on the 24 November terms. Search, cart and returns keyed to vendor IDs (S-040). Kept as a reference so the trade-off stays visible. The owner has ruled it out for the marketplace bet."
+    items: {vehicle-id: buy_terms}
+    notes:
+      - "Run cost: 1,500 plus 8,775 fees equals 10,275 (our arithmetic), inside 15,000. The 1,500 is unsourced in the case."
+      - "Blocks the marketplace bet through S-040. Remap later is 8 to 10 weeks and there is no leverage on price increases (candidates.yaml). Engineering: red line no_strategic_blocker. Owner: marketplace is firm."
+      - "Three-year gap against hybrid: the workspace baseline shows 259,136 (buy 839,880 against hybrid 580,744). That is the price of our own layer plus the marketplace bet. Not re-run at 0.09; the rerun will show it."
+      - "A thin owned layer on top of buy is hybrid phase 1 by another name (executive, engineering). It is not a separate version, and buy_terms carries no layer cost."

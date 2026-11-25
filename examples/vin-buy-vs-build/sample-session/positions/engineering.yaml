@@ -1,0 +1,127 @@
+role: engineering
+stance: "Own vehicle-ID layer, vendor behind it"
+proposal: {vehicle-id: hybrid}
+business_case_view: >
+  Trust: lookup volume (97,500 a month at 0.08 EUR is about 7,800, above the 6,000 minimum, so the
+  minimum does not bind) and the effort figures in candidates.yaml as a baseline. Doubt: (1) Buy is shown
+  as 4 weeks and "within guardrails", but its S-040 stacks on the open S-009 and blocks the marketplace
+  bet; the 8 to 10 week remap is not in its numbers, and it grows with every system keyed to vendor IDs.
+  (2) The vendor can raise price up to 15% a year, so 0.08 becomes about 0.106 by year 3; the buy run
+  cost is flat in the case. (3) Build at 22 of 24 weeks leaves 9% buffer, which is not a plan. (4) Hybrid
+  breaches the run-cost guardrail (16,800 vs 15,000) and I do not hide that: the fix is lookup caching and
+  a negotiated price, not a bigger budget. (5) The 25% adoption is an assumption; the survey says 41%
+  intent, so volume could be lower and the run cost lower with it. memory/ has no estimate-bias record,
+  so I added my own buffer and say so.
+alternatives:
+  buy:
+    pros:
+      - "4 weeks (range 3 to 6), smallest capacity draw (17% of 24), live well before spring"
+      - "Payback month 4 and best 3-year net in the case (839,880)"
+      - "Within every guardrail on paper"
+      - "Termination for convenience after month 12 gives a legal exit"
+    cons:
+      - "Creates S-040 on top of open S-009: search, cart and returns keyed to proprietary vendor IDs. Blocks marketplace. Breaks my red line no_strategic_blocker"
+      - "Vendor IDs returned as proprietary; mapping to catalog standards costs extra, so lock-in is priced by the vendor"
+      - "Annual price review up to 15%, 36-month term, SLA credits capped at 10% of the fee, which is no remedy for an outage on the search path"
+      - "Vendor may retain VINs for 24 months and reuse them; needs Legal, and a vendor outage degrades search with no fallback"
+      - "Remap later costs 8 to 10 weeks, more than the 8 weeks it saves, and S-009 stays open"
+  build:
+    pros:
+      - "Full control of data, no per-lookup fee, no vendor dependency"
+      - "Fixes S-009 and gives the marketplace a proper vehicle-ID layer"
+    cons:
+      - "22 weeks (range 20 to 30) of 24 available: 9% buffer at best, probable overrun. Blocks other catalog work for two quarters"
+      - "Creates S-041: home markets only, 6 to 8 weeks per new country. Blocks eu-markets (two launches in H2). Breaks no_strategic_blocker"
+      - "Breaches all three guardrails: 198,000 one-off, 21,000 a month run cost, payback month 31"
+      - "Needs registry and manufacturer data contracts and an owner for data freshness; no team is named today, which risks no_orphan_service"
+      - "Misses the spring season if the range runs long"
+  hybrid:
+    pros:
+      - "Own vehicle-ID layer (catalog-owned interface) with the vendor as one replaceable provider behind it. Fixes S-009"
+      - "12 weeks (range 10 to 16) is 50% of capacity, 8 to 12 weeks of buffer"
+      - "S-042 blocks nothing; keeps marketplace and eu-markets open. Third-party sellers can be matched to our IDs, not the vendor's"
+      - "Reversible: vendor can be swapped, or own decoding added per country, without remapping search, cart or returns"
+      - "Payback month 9 and 3-year net 580,744, inside the 12-month payback guardrail"
+    cons:
+      - "Breaches run-cost guardrail: 16,800 a month vs 15,000 (1,800 over)"
+      - "S-042: long-tail and foreign VINs stay on vendor fees; renegotiation needed at volume"
+      - "3-year net about 259,000 lower than buy, and 8 weeks more engineering than buy"
+      - "Still a vendor dependency during the 36-month term unless the contract is changed; own layer needs a named operating team"
+artifacts:
+  - title: "Effort estimate"
+    content: >
+      Ranges with confidence. No estimate-bias history in memory/, so a default 25% buffer is applied to
+      the point estimates in candidates.yaml and flagged as my assumption.
+      Buy: 4 weeks point, range 3 to 6, confidence high. Integration is small; risk sits in the vendor's
+      sandbox and the contract, not in code. Excludes the 8 to 10 week remap that comes later.
+      Build: 22 weeks point, range 20 to 30, confidence low. Depends on registry data access and the
+      quality of our own catalog vehicle mapping. Uses 83% to 125% of the 24-week capacity, so overrun is
+      a real possibility.
+      Hybrid: 12 weeks point, range 10 to 16, confidence medium. Layer interface, vendor adapter, ID
+      mapping to our catalog, cache, fallback and S-009 migration of the dropdown selector. Largest
+      uncertainty is the S-009 migration (8 weeks estimated in memory/shortcuts.yaml, partly inside the 12).
+      Even at the top of the range (16) it uses 67% of capacity.
+  - title: "Shortcut register entries"
+    content: >
+      S-009 (open, from D-0018, blocks marketplace): Buy leaves it open and deepens it; Build and Hybrid
+      fix it. This is the second time the vehicle-ID layer is deferred; the catalog area keeps conceding.
+      S-040 (Buy): saves 8 weeks now; costs 8 to 10 weeks of remap later and no price leverage; blocks
+      marketplace. Red line for me.
+      S-041 (Build): saves 10 weeks now; costs 6 to 8 weeks per new country; blocks eu-markets. Red line.
+      S-042 (Hybrid): saves 16 weeks; costs ongoing per-lookup fees on the long tail and a renegotiation
+      at volume; blocks nothing. Acceptable. Proposed new entry if Hybrid is chosen: S-043 "Cache and
+      fallback deferred to phase 2" only if we cut it from the 12 weeks; I would rather not cut it.
+  - title: "Architecture options and reversibility"
+    content: >
+      Stays reversible in Hybrid: the vendor (adapter behind our interface), the per-country data source,
+      the decoding provider chain (own first, vendor fallback, or the reverse). Becomes a dependency in
+      Hybrid: our own vehicle-ID schema, which is the point, and the vendor contract for 36 months unless
+      we negotiate it down. In Buy, the vendor ID becomes the primary key across search, cart, returns
+      and "my garage", which is the hardest thing to undo. In Build, the dependency is on registry data
+      suppliers and our own maintenance capacity.
+      Planned feature: storing VINs in "my garage" must store our own vehicle ID plus the VIN, never the
+      vendor ID alone.
+  - title: "Run cost and ownership"
+    content: >
+      Business case run cost: Buy about 7,800 a month in fees (floor 6,000), Hybrid 16,800 a month
+      including the layer, Build 21,000. Ownership proposal: the catalog team owns the vehicle-ID layer
+      and the vendor adapter (service, on-call, SLO). Without a named owner the layer is an orphan
+      service and breaks no_orphan_service; I ask the owner to name the team before approval.
+      Proposed SLOs: lookup p95 under 400 ms, 99.9% availability of the layer (the vendor's 99.5% is
+      behind a cache and fallback to dropdown selection). Closing the 1,800 a month gap: cache every
+      resolved VIN (subject to Legal on vendor retention terms), which cuts repeat lookups from "my
+      garage" and re-searches, and negotiate price tiers at volume. I cannot quantify the saving without
+      repeat-lookup data (see questions).
+risks:
+  - "Run-cost guardrail breach in Hybrid (16,800 vs 15,000) if cache and negotiation do not close the gap"
+  - "Vendor price rises up to 15% a year from year 2 and a 36-month term lock us in during the ramp"
+  - "Vendor's VIN retention and reuse clause (24 months) conflicts with our data-use conditions; reply is still outstanding, so the contract may change the design (for example, no caching)"
+  - "S-009 migration is the biggest uncertainty in the 12 weeks; the dropdown selector touches search, cart and returns"
+  - "Vendor outage on the search path; 99.5% SLA with credits capped at 10% is no real protection without a fallback to dropdowns"
+  - "Hybrid is split across two teams or has no owner, creating an orphan layer"
+  - "Spring deadline: if integration starts after January, buy-style 4 week delivery is safer than hybrid at 16 weeks"
+  - "Catalog area has conceded on debt before (S-009 in D-0018); a third deferral compounds"
+questions:
+  - "To the decision owner: which team owns and operates the vehicle-ID layer after launch?"
+  - "To the decision owner: is the 15,000 run-cost guardrail firm, or can Hybrid at 16,800 be accepted with a cache plan and a review at month 6?"
+  - "To Data: what share of lookups are repeat VINs (my garage, re-searches)? That sets the cache saving."
+  - "To Legal: can we cache and store vendor-resolved vehicle data under the vendor's retention and reuse terms?"
+  - "To Product: what is the exact spring cutoff date, and can phase 1 ship with vendor-only decoding?"
+  - "To the decision owner: when does the vendor reply on our data-use conditions arrive, and can the term and price review be negotiated at the same time?"
+ideas:
+  - "Hybrid in two phases: phase 1 (about 8 weeks) ships the layer, vendor adapter and our own IDs for spring; phase 2 (about 4 weeks) adds cache, fallback and the S-009 migration"
+  - "Negotiate the vendor contract: price cap on the annual review, exit after month 6, own-ID mapping included at no extra cost, retention shortened"
+  - "Cache resolved VINs and store them with our own vehicle ID in 'my garage'"
+  - "Add a second source (registry data) for home-market VINs from the start of own decoding, as the long-term way to cut fees"
+  - "Fall back to the dropdown selector when the vendor is down, so search never blocks"
+plan:
+  - "Weeks 1-2: define vehicle-ID interface and our ID schema with Catalog; name the owning team; contract points to vendor (term, price cap, retention, ID mapping)"
+  - "Weeks 3-8: vendor adapter, mapping to our catalog, VIN entry in search behind a flag; phase 1 live for spring"
+  - "Weeks 9-12: cache, dropdown fallback, S-009 migration of selector and 'my garage' to our IDs; close S-009"
+  - "Weeks 13-16 (buffer): run-cost review against 15,000, load test, SLO dashboard"
+  - "Quarter after launch: decide own decoding per country, based on measured long-tail volume and fees"
+conditions:
+  - "Accept Buy only if the vendor adapter sits behind our own vehicle-ID layer, which is Hybrid; plain Buy with vendor IDs as keys breaks no_strategic_blocker"
+  - "Accept Build only if it is scoped to a vendor-backed fallback for new countries (S-041 removed) and the capacity reaches 24 weeks with at least 25% buffer"
+  - "Accept the Hybrid run-cost breach only with a recorded cache and negotiation plan and a month-6 review; otherwise reduce scope"
+  - "A named owning team for the layer is a hard precondition for any option"

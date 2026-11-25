@@ -1,0 +1,43 @@
+questions:
+  - from: executive
+    to: owner
+    question: "Is the marketplace bet firm for year end? If it slips beyond the horizon, buy's S-040 remap cost falls away. S-009 already blocks marketplace today."
+  - from: executive
+    to: owner
+    question: "Is the 15,000 run-cost guardrail applied as written? strategy.yaml calls guardrails hard limits. Hybrid as drafted is 16,800 a month, about 17,800 at the reply's 0.09 price. Confirm it is a hard limit, or decide whether a breach with a month-6 review is acceptable."
+  - from: product
+    to: owner
+    question: "What is the spring start date (first sales or campaign week), and is a soft launch to part of traffic acceptable?"
+  - from: engineering
+    to: owner
+    question: "Which team owns and operates the vehicle-ID layer after launch? Engineering and data make a named owner a precondition for any option."
+  - from: executive
+    to: owner
+    question: "Term: sign 24 months (the 5% price cap in the vendor reply applies only to a 24-month signature), keep the 36 months offered (15% cap, not in reply), or a 12-month stage gate?"
+  - from: data
+    to: owner
+    question: "Holdout for a causal readout: 10% of traffic without VIN entry for about 8 weeks (data), or 20% A/B (product, marketing)? Each costs some short-term revenue."
+  - from: marketing
+    to: owner
+    question: "Is any fit guarantee or return promise in first-release scope? The plan assumes none until decided. A guarantee needs legal and finance sign-off."
+  - from: product
+    to: owner
+    question: "Is VIN storage in 'my garage' in the first release? It decides whether DPIA screening and retention rules are needed at launch."
+  - from: facilitator
+    to: owner
+    question: "May we negotiate volume tiers, a minimum-fee ramp and a 99.9% SLA with the vendor? The reply does not address them, and they are the levers for the run-cost gap."
+  - from: facilitator
+    to: legal
+    question: "Does the 1 December reply (30-day deletion, processor-only use, DPA and sub-processor list, 5% cap over 24 months) remove the veto for buy and hybrid? Which items of the contract checklist are still open: post-termination licence to keep mapped results, liability cap, audit rights, breach notice?"
+  - from: executive
+    to: engineering
+    question: "Buy with a thin own ID layer (executive estimates 6 to 8 weeks; no effort in candidates.yaml). Does it avoid S-040 if search, cart and returns key to our IDs, and does the vendor's included catalog mapping cut the 8 to 10 week remap? If not, what does it still block?"
+  - from: product
+    to: engineering
+    question: "Can phase 1 (vendor adapter behind our IDs, VIN field, dropdown fallback) ship in 6 to 8 weeks, with cache and the S-009 migration after?"
+  - from: executive
+    to: data
+    question: "Repeat-VIN share (garage saves, re-searches): what share of lookups are repeats? This sets the cache saving that the run-cost fix depends on."
+  - from: executive
+    to: data
+    question: "Can precision be measured on 500 to 1,000 of our own VINs before the term is signed? The 98.5% figure is the vendor's own test set."

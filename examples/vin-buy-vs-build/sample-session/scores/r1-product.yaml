@@ -1,0 +1,22 @@
+# Round 1 scores, Product. Requirement scores 0 to 100. The script computes totals and deviations.
+# Mandate: default product mandate. No workspace mandates/product.yaml was found.
+# Red line market_window: core customer value ships before the first sales week (mid-March, owner answer as quoted by Executive round 1).
+# Shared gate for every option: no live VIN lookup before a signed DPA (Legal round 1). Scored as timing risk, not as a red line break.
+# Mandate scores do not include the marketplace bet, which sits outside this mandate and is the reason Product still holds phased hybrid.
+opening: {ttm: 85, adoption: 75, experience: 85}
+options:
+  hybrid_phased_draft:
+    scores: {ttm: 72, adoption: 62, experience: 58}
+    red_lines: []
+    receipt: "Opening ttm 85 assumed a 6-week MVP. Engineering round 1 (section 1) puts phase 1 at 8 weeks, range 6 to 10, so value lands late January to mid-March, which is still inside the window if the build starts in early December. Experience 85 to 58: phase 1 leaves the dropdown on the S-009 old IDs, so the 'your vehicle' result and the filters can disagree (Engineering round 1, section 1; my round 1 challenge). Adoption 75 to 62: the draft has no fix for run cost at 0.09 (17,775 a month), so the fix is a traffic cap or a recorded breach (Engineering round 1, section 6)."
+    line: "Phase 1 can ship for spring; the draft still breaches run cost."
+  hybrid_terms_conditional:
+    scores: {ttm: 65, adoption: 58, experience: 55}
+    red_lines: []
+    receipt: "Ttm 85 to 65: the variant depends on a volume tier and ramp that the vendor reply does not contain, and the executive will not sign without them (Executive round 1, section 7). Signature could slip past mid-February. Market window not marked broken, because a traffic cap lets phase 1 ship without the tier. Adoption 75 to 58: without the tier, the fallback caps VIN entry at about 66,700 lookups a month, about 17% adoption (Engineering round 1, section 6). Experience 85 to 55: a cap turns VIN entry on for some customers and off for others, and phase 1 keeps the two ID schemes."
+    line: "No signature without volume terms; a traffic cap then costs customers adoption."
+  buy_reference:
+    scores: {ttm: 88, adoption: 78, experience: 80}
+    red_lines: []
+    receipt: "Ttm 85 to 88: 4 team-weeks and 2 months to value, so the customer value lands before phase 1 would (session business_case.yaml, buy_terms). Experience 85 to 80: one ID scheme from day one, so no disagreement between 'your vehicle' and filters; a later remap of garage profiles would be customer-visible (my round 1 pros and cons). Adoption 75 to 78: the run cost sits inside the 15,000 limit on the case figures, so no traffic cap is forced. Buy is ruled out by the owner's marketplace answer (Executive round 1, section 2). That is outside this mandate, so it is not scored here, and it is why Product does not pick buy."
+    line: "Fastest for customers, but owner has ruled out the marketplace bet."

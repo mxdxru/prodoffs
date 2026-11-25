@@ -1,0 +1,32 @@
+company: "Fictional online auto parts retailer. Sells spare parts to consumers and to independent repair workshops in several European countries."
+question: "Vehicle identification by VIN: buy a market solution or build our own?"
+horizon: "Next 12 months"
+context: >
+  Today customers pick their vehicle from make, model and engine dropdowns. Many skip it or pick the wrong
+  variant, so search shows parts that do not fit, conversion from search is low and a large share of returns
+  are wrong-fitment returns. Entering a VIN would identify the exact vehicle. A vendor sells VIN-to-vehicle
+  decoding as an API priced per lookup; the team also has an idea to build its own decoder on top of
+  registry and manufacturer data plus our catalog's vehicle mapping.
+goals:
+  - id: revenue-growth
+    name: "Revenue +20% this year"
+    metric: revenue
+    baseline: 60000000
+    target_growth: 0.20
+  - id: workshop-share
+    name: "Workshops 40% of revenue by year end"
+    metric: segment_share
+guardrails:                     # hard limits for any single decision this half-year
+  max_one_off_investment: 150000
+  max_added_run_cost_monthly: 15000
+  max_payback_months: 12
+bets:
+  - id: eu-markets
+    name: "Two new EU markets, H2"
+    detail: "Launch in two new countries in the second half of the year."
+  - id: marketplace
+    name: "Marketplace, year end"
+    detail: "Third-party sellers list parts that must be matched to vehicles exactly like our own catalog."
+  - id: returns-down
+    name: "Wrong-fitment returns down by a third"
+    detail: "Cut returns caused by parts that do not fit by one third within 12 months."

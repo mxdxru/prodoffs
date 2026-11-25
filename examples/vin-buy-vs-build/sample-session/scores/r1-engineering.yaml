@@ -1,0 +1,21 @@
+# Engineering scores, round 1. Session 20261125-133804.
+# Opening scores are reconstructed from positions/engineering.yaml, which carries no numeric scores.
+# Red lines are binary. hybrid options: named owning team (no_orphan_service) is a precondition not yet met;
+# it is not scored as broken, but every hybrid score assumes it lands before signature.
+opening: {arch_fit: 88, debt: 85, capacity: 80, reversibility: 85}
+options:
+  hybrid_phased_draft:
+    scores: {arch_fit: 80, debt: 70, capacity: 62, reversibility: 82}
+    red_lines: []
+    receipt: "Moved from opening: arch_fit 88 to 80, debt 85 to 70, capacity 80 to 62, reversibility 85 to 82. Receipts: effort 12 is the optimistic end of my 14 point (range 12 to 18), since S-009 is priced at 8 weeks in memory/shortcuts.yaml and phase 2 as drafted (4 weeks) is short of my 6-week estimate; S-009 is fixed only in phase 2, which is undated; phase 1 keeps the selector on supplier IDs, so two ID schemes run in spring (Product, debate r1). Run cost at 0.08 is 16,800, a guardrail breach outside my mandate."
+    line: "Phased draft is optimistic at 12 weeks; phase 2 must be dated."
+  hybrid_terms_conditional:
+    scores: {arch_fit: 80, debt: 72, capacity: 66, reversibility: 70}
+    red_lines: []
+    receipt: "Moved from opening: arch_fit 88 to 80, debt 85 to 72, capacity 80 to 66, reversibility 85 to 70. Receipts: effort 14 point is the honest figure (58% of 24 weeks at point, 75% at top of range), and phase 2 at about 6 weeks closes S-009 on a realistic plan; reversibility falls because the 24-month term exits only after month 12 plus 3 months' notice (earliest month 15, Legal), and the post-termination mapping licence is not yet in writing. Run cost at flat 0.09 is 17,775 unless a volume tier is written; the tier and minimum-fee ramp are not in the vendor reply, so this option is conditional."
+    line: "Honest effort; holds only if written tiers and a named owner land."
+  buy_reference:
+    scores: {arch_fit: 20, debt: 10, capacity: 85, reversibility: 15}
+    red_lines: [no_strategic_blocker]
+    receipt: null
+    line: "Blocks marketplace via S-040 and deepens S-009; red line."

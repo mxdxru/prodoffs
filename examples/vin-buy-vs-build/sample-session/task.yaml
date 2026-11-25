@@ -1,0 +1,10 @@
+question: "Vehicle identification by VIN: buy a vendor API, build our own decoder, or a hybrid?"
+decision_owner: "Head of Product"
+deadline: "Decision by 4 December"
+alternatives: [buy, build, hybrid]
+roles: [executive, product, engineering, marketing, data, legal]
+constraints:
+  - "VIN entry live before the spring season"
+  - "Strategy guardrails in strategy.yaml apply: one-off investment, monthly run cost, payback"
+evidence: [evidence/vendor-offer.md, evidence/vendor-reply.md, evidence/analytics-snapshot.md]
+notes: "The vendor offer is the first draft. Our conditions on VIN data use have been sent to the vendor; its reply is not in yet."

@@ -1,0 +1,25 @@
+# local notes, not published
+notes/
+# your own company workspaces (created by prodoffs-setup)
+workspaces/
+# runtime state
+.prodoffs/
+__pycache__/
+# live sessions created by running the skill (the sample session is committed)
+examples/*/sessions/
+.DS_Store
+# rendered video frames
+build/
+# personal Claude Code settings and local overrides
+.claude/settings.local.json
+CLAUDE.local.md
+# secrets and keys, never commit
+.env
+.env.*
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+deploy_*
+*.p12
+*.pfx

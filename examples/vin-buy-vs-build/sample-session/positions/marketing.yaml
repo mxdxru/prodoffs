@@ -1,0 +1,124 @@
+role: marketing
+stance: "Hybrid, ship early, claim only measured fit"
+proposal: {vehicle-id: hybrid}
+business_case_view: >
+  Trust: the funnel inputs come from our own analytics (35% vehicle known, 4.8% vs 3.8% conversion), and the
+  41% survey intent gives the 25% VIN usage assumption a safety margin of about 16 points. Doubt: (1) the
+  25% usage assumes the VIN field is easy to find and that people know where their VIN is; without a registration
+  document photo/scan or a plate lookup, real usage could sit well below 25%. At 15% usage, buy year 1 revenue
+  falls by roughly 40% of the lookup-driven part. (2) "98.5% precision" is the vendor's own test set, not our
+  catalog; the returns benefit scales with precision, so our own number may be lower. (3) The case prices no
+  acquisition effect: a visible "find parts for your exact car" feature should lift paid search and landing page
+  conversion, and the case leaves that out. I would not add it to the numbers until measured, but it favours
+  any option live before spring. (4) Buy shows the best 3-year net (839,880) but is the only option that hands
+  vendor-ID lock-in to every future channel (marketplace, new countries); price review of up to 15% per year
+  eats into the lookup economics we would advertise on.
+alternatives:
+  buy:
+    pros:
+      - "Fastest: 4 team-weeks, so VIN entry can be live well before the spring season and campaign planning can start now"
+      - "Best year 1 revenue (1,197,901) and payback in month 4; the earliest campaign proof points"
+      - "Within every guardrail, so no budget fight that delays the launch date"
+    cons:
+      - "Vendor 24-month VIN retention and reuse clause may contradict what we tell customers about their data (needs legal review before any privacy-related copy)"
+      - "Blocks the marketplace bet (S-040): third-party sellers could not be matched, so the 'works for every seller' claim is off the table"
+      - "No differentiation: any competitor can license the same decoder; the claim 'enter your VIN' is parity, not advantage"
+      - "Price review up to 15% a year pushes cost per lookup, and so cost per acquired order, upward"
+  build:
+    pros:
+      - "Own data asset and a story we fully control (no vendor dependency in the claim)"
+      - "Strongest long-run differentiation if coverage became excellent"
+    cons:
+      - "22 team-weeks of 24 and a launch very likely after the spring season starts: we lose a selling season while a competitor campaign runs"
+      - "Home markets only (S-041): cannot say 'across Europe' and blocks the two new EU markets bet; launch campaigns there would have no VIN story"
+      - "Year 1 net negative (-32,127) and three guardrail breaches"
+  hybrid:
+    pros:
+      - "Vendor behind our own vehicle-ID layer: 12 team-weeks, still plausible before spring if started in January and a thin first release ships on the vendor"
+      - "Keeps marketplace and new-market stories open (S-042 blocks nothing), so one message can run across home markets, new EU markets and third-party sellers"
+      - "Own IDs make 'my garage' with a stored VIN, repeat-order reminders and CRM campaigns possible: a retention channel that gets cheaper with use"
+      - "Year 1 revenue 1,078,111, only about 10% below buy, payback month 9"
+    cons:
+      - "Breaches the run-cost guardrail (16,800 vs 15,000 a month); needs an owner decision or a price renegotiation"
+      - "Longest wait for a full launch story if the layer slips; risk of announcing before it works"
+      - "Long-tail and foreign VINs still depend on the vendor, so coverage claims must stay at the vendor-measured level"
+artifacts:
+  - title: "Competitive scan (generic, no real names)"
+    content: >
+      No live web search was run for this position: the brief asks for generic and fictional market facts, so the
+      scan below is a structured hypothesis to be checked, not a cited finding. Typical comparable auto parts
+      retailers fall into three groups. (1) Large generalist retailers: VIN or plate entry in the header, a
+      saved "my garage" and a "fits your car" badge on product pages; they treat it as table stakes. (2) Specialist
+      or workshop-focused sellers: VIN lookup tied to catalog diagrams and OE numbers, often with account-level
+      saved vehicles and B2B login; the strongest on workshop trust, which is our 40% revenue goal. (3) Marketplaces:
+      fitment filters driven by seller data, with a visible 'fit guarantee' or return promise on some listings.
+      What this means for us: today, with dropdowns only, we are behind group 1 and 2 on the first interaction.
+      VIN entry gives parity. Advantage needs something on top: a fit guarantee, a plate or scan input, or
+      workshop features (saved fleet of vehicles). Sources to collect before the claim is final: the public
+      pages of 5 named competitors in each home market (owner or analyst to pick them), reviewed in week 1.
+  - title: "Launch narrative and exact claims"
+    content: >
+      Narrative: "Stop guessing which part fits. Enter your VIN once, see only parts for your exact car, and
+      reorder from your garage." Two audiences: consumers (fewer wrong parts) and workshops (faster, fewer
+      returns, saved vehicles). Claims by status. SAFE NOW: "Enter your VIN to see parts for your exact vehicle";
+      "Save your vehicle in My garage". NEEDS MEASUREMENT FIRST: any percentage of fit or precision (the vendor's
+      98.5% is its own test set; run a 2-week test on at least 1,000 real orders against our catalog and
+      only then quote a number); "fewer returns" (needs a before/after on the same categories, at least 6 weeks
+      of data); coverage "95% of European VINs" (vendor claim, quote nothing until we measure it per country).
+      NEEDS LEGAL REVIEW: any "fit guarantee" or "money back if it does not fit" (creates a public promise that
+      costs us cost per return of 21 plus margin on every miss); any privacy wording about VIN data (conflicts with the
+      vendor's 24-month retention and reuse clause unless the reply to our conditions fixes it);
+      "across Europe" wording until the foreign VIN coverage is measured. DO NOT SAY: "100% fit", "works for
+      every car", "your data is never shared".
+  - title: "Channel impact and acquisition cost"
+    content: >
+      Benefiting channels: (a) on-site search and category pages (the VIN prompt is the new hero element;
+      first in line for conversion tests), (b) paid search and shopping ads to landing pages "parts for your car"
+      with VIN entry above the fold: a 1.0 point lift in conversion (3.8% to 4.8%) on VIN-identified sessions cuts
+      cost per order by about 21% at constant click cost (1 - 3.8/4.8); that is the upper bound, applied only to
+      the sessions where VIN is used, so the blended effect is a fraction of it; (c) CRM and email: a stored VIN
+      allows "service due" and "parts for your car" mailings, the cheapest channel we own; (d) workshop outreach:
+      "save your customers' vehicles" is a hook for the 40% workshop-share goal. Cost side: buy and hybrid add
+      lookup fees (0.08 per lookup, 6,000 monthly minimum), about 7,800 a month at 97,500 lookups, which should be
+      read as an acquisition cost: about 0.08 per VIN session. Build has no lookup fee but a 21,000 monthly run
+      cost. Net: all three options lower blended cost per order once live; only buy and hybrid are live in time
+      for spring campaign planning. Landing pages: one VIN landing per home market, one generic for new EU markets
+      after launch.
+  - title: "Timing and plan against the season"
+    content: >
+      Buy can be in market about 4 weeks after the start of work; hybrid about 12; build 22. With a deadline
+      to decide on 4 December and a spring season start we do not know exactly, I assume the buy-only path is the
+      one with no launch risk. Question to the owner: the exact date the spring season starts for us. If hybrid
+      cannot show a first release by then, the fallback is buy first and hybrid layer second, which the candidate
+      list does not offer as a version, so the facilitator should consider it as an option (see ideas).
+risks:
+  - "Public promise we cannot keep: a fit or precision claim made from the vendor's 98.5% before we measure it on our catalog"
+  - "Privacy copy that contradicts the vendor's 24-month retention and reuse clause; a customer complaint or regulator question lands on the brand"
+  - "A competitor announces VIN or plate entry first in spring; we then launch as a follower with a parity message"
+  - "VIN usage lands well under 25% because customers do not know where to find their VIN, so the campaign promise outruns the behaviour"
+  - "Vendor price review of up to 15% a year raises cost per lookup after we have built the channel on it"
+  - "Launching in new EU markets with no foreign VIN coverage data, then advertising it"
+questions:
+  - "To owner: on what date does the spring season start for campaign purposes, and is a soft launch to a share of traffic acceptable?"
+  - "To owner: may the first release carry a 'fit guarantee', or do we limit it to 'see parts for your car'? A guarantee needs legal and finance sign-off."
+  - "To legal: does the vendor's reply to our data-use conditions remove the 24-month retention and reuse clause? Until it does, no privacy claim."
+  - "To data: can we measure the vendor's precision on 1,000 of our orders before launch, and what is our real VIN usage, from the survey intent of 41%?"
+  - "To product: does the first release include a registration document scan or plate entry? It likely decides whether usage reaches 25%."
+  - "To engineering: can a thin release of the hybrid layer run on the vendor within 6 weeks, so we have a spring story?"
+ideas:
+  - "Staged option: buy first (4 weeks) behind a thin own vehicle-ID layer, so the first release is vendor-only and the layer grows later; ask the facilitator to add it as a version of hybrid."
+  - "A/B test the VIN prompt on 20% of traffic for 2 weeks before any campaign money is spent; use the result for the claim."
+  - "Add registration document scan or plate lookup if usage is below 20% after 4 weeks."
+  - "Workshop pack: saved vehicles for a customer fleet, as an acquisition hook for the 40% workshop-share goal."
+  - "Negotiate the vendor price review cap (for example 5% a year) and no reuse of our VIN data as a condition of volume above 100,000 lookups."
+plan:
+  - "Weeks 1-2 (December): competitive check of the named competitors in each home market; draft claims list; legal review request for the privacy and guarantee wording."
+  - "Weeks 3-6: landing page and VIN prompt design; A/B test plan with data; no external announcement."
+  - "Weeks 7-10: soft launch to 20% of traffic once the first release is live; measure usage, conversion and fit on real orders."
+  - "Weeks 11-14: publish the measured claim only; start paid search and CRM campaigns to VIN landing pages; workshop outreach."
+  - "Week 15 onward: weekly cost per order by channel; decide on scan or plate input; review vendor price against the cost per order."
+conditions:
+  - "Accept buy if the hybrid first release cannot be live before the spring season start, provided the vehicle-ID layer follows in a named quarter and the vendor reply on data use is acceptable."
+  - "Accept build only if it launches before spring and covers the new EU markets, which the candidate data says it does not."
+  - "Any option: no public precision, fit-rate or guarantee claim until measured on our own orders and cleared by legal."
+  - "Any option: no privacy wording about VIN data until the vendor's retention and reuse clause is resolved."

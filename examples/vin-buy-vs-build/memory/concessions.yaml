@@ -1,0 +1,7 @@
+# Running balance of how much each role has given up recently.
+executive: {balance: 0.0, history: []}
+product: {balance: 0.05, history: [{D-0018: 0.05}]}
+engineering: {balance: 0.10, history: [{D-0016: 0.10}]}
+marketing: {balance: 0.0, history: []}
+data: {balance: 0.30, history: [{D-0016: 0.12}, {D-0018: 0.21}]}
+legal: {balance: 0.0, history: []}

@@ -1,0 +1,17 @@
+opening: {compliance: 75, contract: 60, claims: 80}   # Legal opening position: hybrid on a processor-only contract, conditions as in positions/legal.yaml
+options:
+  hybrid_phased_draft:
+    scores: {compliance: 35, contract: 25, claims: 65}
+    red_lines: [lawful_basis]
+    receipt: "Opening view was hybrid on a processor-only contract. The draft's 0.08 fee is the offer's price, and the 24 November reply prices processor-only terms at 0.09. Signing 0.08 therefore means signing the offer's 24-month retention and reuse clause, which the reply withdraws. That breaks lawful_basis (GDPR Art 28(3)(a)). Lifts only if the draft is rewritten on the reply terms, which makes it hybrid_terms_conditional."
+    line: "Offer terms are stale; no signature at 0.08 without reply terms."
+  hybrid_terms_conditional:
+    scores: {compliance: 65, contract: 55, claims: 70}
+    red_lines: []
+    receipt: "Met on paper since opening: processor-only terms, 30-day retention, no reuse, 5% cap at 24 months, month-12 exit with 3 months' notice (vendor reply, 24 November). Below opening because the reply is silent on liability cap, audit, breach notice (24 to 48 hours), post-termination licence for the mapping and results, deletion on instruction and SLA, and the DPA is attached but not reviewed. Veto is a signature gate: no live VIN lookup before a signed DPA."
+    line: "Reply terms are signable once DPA, audit, breach and mapping licence land."
+  buy_reference:
+    scores: {compliance: 70, contract: 30, claims: 55}
+    red_lines: []
+    receipt: "The reply's processor-only terms remove the data clause that drove my buy red line, so buy no longer breaks lawful_basis once the DPA is signed. Contract still fails: no licence to keep vendor-keyed mapping after termination, so exit means a remap of 8 to 10 weeks (S-040) with no price leverage. Claims score lower: 'works for every seller' cannot be substantiated under buy, and the 98.5% precision is the vendor's own test set."
+    line: "Buy exit is blocked until we hold a post-termination mapping licence."

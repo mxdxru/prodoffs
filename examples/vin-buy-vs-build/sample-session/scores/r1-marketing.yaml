@@ -1,0 +1,17 @@
+opening: {competitive: 60, story: 70, acquisition: 65}   # set at preparation from positions/marketing.yaml (hybrid, claims limited to measured fit)
+options:
+  hybrid_phased_draft:
+    scores: {competitive: 60, story: 55, acquisition: 55}
+    red_lines: [broken_promise]   # the draft is priced on the 0.08 offer terms, whose 24-month retention and reuse clause cannot support the privacy copy a VIN launch needs. Clears only if signed on the 24 November terms.
+    receipt: "Opening hybrid view held, but the draft is superseded: the 24 November reply moves the fee to 0.09 and sets processor-only terms with 30-day retention (Legal, Executive, Engineering). Data says the 3.8% to 4.8% gap includes self-selection, so my 21% cost-per-order upper bound is withdrawn."
+    line: "Offer terms at 0.08 block the privacy copy we need; redo."
+  hybrid_terms_conditional:
+    scores: {competitive: 62, story: 72, acquisition: 62}
+    red_lines: []
+    receipt: "Story up from opening: processor-only terms, 30-day retention and no reuse let us state the retention window honestly (Legal, Engineering). Legal also replaced 'exact vehicle' with 'parts matched to your vehicle'. Acquisition down from opening: the 0.09 fee raises cost per order, and the owner's garage and CRM channels moved to phase 2, so spring has no retention lever. Campaign spend waits for a signed tier or an agreed traffic cap, so a rationed feature is never advertised."
+    line: "Parity by March; claim matched parts only; campaign after signed tier."
+  buy_reference:
+    scores: {competitive: 55, story: 62, acquisition: 45}
+    red_lines: []
+    receipt: "Withdrew my buy fallback. An 8-week owned layer lands before mid-March, and buy alone blocks the marketplace through S-040 (Engineering red line), so 'works for every seller' stays off the table. Legal adds a mapping-licence gate for buy exit. Buy keeps the earliest parity, which is its only competitive edge; its per-order cost is no lower than hybrid's and it has no owned retention channel."
+    line: "Fastest parity, but no advantage and no owned retention channel."

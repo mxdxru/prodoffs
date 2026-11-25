@@ -1,0 +1,134 @@
+role: executive
+stance: "Hybrid, but only with run cost under 15k"
+proposal: {vehicle-id: hybrid}
+business_case_view: >
+  Trust: the ranking. Buy returns 839,880 over 3 years against 580,744 for hybrid and 72,834 for build, and
+  build breaks all three guardrails (198k one-off, 21k/month, payback month 31). Build is out for the
+  executive: it uses 22 of 24 team-weeks, adds almost nothing to the year (3% of the growth goal) and
+  blocks the eu-markets bet via S-041.
+  Doubt: (1) The 25% VIN adoption carries everything. The survey says 41% would enter a VIN, but stated
+  intent usually converts at half or less, so 25% is not conservative. Run cost scales with it, and so does
+  the benefit. (2) The vendor price is not fixed: "up to 15% per year" compounds to about +32% by year 3 on
+  the per-lookup fee, and the 6,000 monthly minimum applies from day one even before adoption ramps.
+  I would like the script to re-run buy and hybrid with adoption at 17% (30% worse) and price escalation at
+  the full 15%, since hybrid payback of month 9 has little room before it crosses the 12-month guardrail.
+  (3) Strategic effects are not priced: marketplace and two new EU markets both depend on exact vehicle
+  matching, and the vendor claims 95% EU coverage and 98.5% precision on its own test set only.
+  (4) Even the best case is small against the target: 9-10% of the 12M growth goal. VIN entry is a
+  worthwhile enabler, not the plan to hit +20%. We should not spend more than the guardrail on it.
+alternatives:
+  buy:
+    pros:
+      - "Inside every guardrail: one-off 36k vs 150k limit, payback month 4, run cost within 15k"
+      - "Best 3-year net 839,880; year 1 net 270,619; 10% of the growth goal"
+      - "4 team-weeks, leaves 20 of 24 weeks for other bets before spring"
+      - "Fastest to live; easiest to hit the spring season"
+    cons:
+      - "S-040 blocks the marketplace bet; 8 to 10 team-weeks (about 72-90k at 9k) to remap later"
+      - "Lock-in: 36-month term, proprietary IDs, up to +15% a year, no leverage once everything is keyed to vendor IDs"
+      - "Vendor data clause (24-month retention, reuse to improve the service) is unresolved and may be a Legal red line"
+      - "Returns-down bet depends on a vendor precision figure we have not verified"
+  build:
+    pros:
+      - "Owns the data asset; no per-lookup fee at scale; fixes S-009"
+      - "Best long-run unit cost if volume grows"
+    cons:
+      - "Breaches three guardrails: 198k one-off, 21k/month run cost, payback month 31"
+      - "Year 1 net is negative (-32,127); only 3% of growth goal"
+      - "22 of 24 team-weeks, nothing left for eu-markets or marketplace"
+      - "S-041 blocks eu-markets: 6 to 8 weeks per new country"
+      - "Misses the spring season risk"
+  hybrid:
+    pros:
+      - "Keeps marketplace and eu-markets open: S-042 blocks nothing, own vehicle-ID layer fixes S-009"
+      - "Year 1 net 176,057, 3-year net 580,744, payback month 9, 9% of growth goal"
+      - "12 of 24 team-weeks; capacity left for the other bets"
+      - "Vendor becomes replaceable behind our layer, which is our lever on price"
+    cons:
+      - "As drafted breaches the run cost guardrail: 16,800 vs 15,000 per month (+1,800)"
+      - "Costs about 259k less than buy over 3 years (839,880 vs 580,744), the price of optionality"
+      - "Payback month 9 is thin if adoption or conversion is 30% worse"
+      - "Long-tail and foreign VINs stay on per-lookup fees; renegotiation needed at volume"
+artifacts:
+  - title: "Check against goals and guardrails (figures from business_case.md)"
+    content: |
+      Guardrails: one-off 150,000; added run cost 15,000/month; payback 12 months.
+      Buy:    one-off 36,000 (ok); run cost within (ok); payback month 4 (ok); year-1 revenue 1,197,901 (10% of goal).
+      Build:  198,000 (breach); 21,000 (breach); month 31 (breach); year-1 revenue 363,153 (3%).
+      Hybrid: 108,000 (ok); 16,800 (breach, +1,800); month 9 (ok); year-1 revenue 1,078,111 (9%).
+      Only buy passes unchanged. Hybrid passes if run cost drops by about 11%. Build cannot be repaired by terms.
+  - title: "Assumptions that carry the result and the 30% stress"
+    content: |
+      1. VIN adoption 25% of sessions without a vehicle (97,500 lookups/month). Survey intent is 41%.
+         At 30% worse (about 17%): lookups and fees fall roughly 30%, but so does uplift. The monthly
+         minimum of 6,000 does not shrink, so fixed cost share rises. Buy stays well inside payback 12.
+         Hybrid at month 9 likely moves to the edge of 12 or past it; the script must say which.
+      2. Conversion uplift 3.8% to 4.8% on identified sessions. This is the largest revenue driver; no test
+         has validated it for VIN-entered vehicles. Ask Data for a holdout on the dropdown cohort.
+      3. Returns: 17% rate, 45% fitment, 60% removed, scaled by precision. Vendor precision 98.5% is its
+         own test set; at 95% real precision the returns effect shrinks.
+      4. Vendor price: +15% a year compounds to 1.32x by year 3. Year 3 net for buy (294,557) is already
+         below year 2 (310,703), so the case is already eroding with price.
+      5. Not priced: marketplace and new markets. Both could be worth far more than VIN entry or could be
+         blocked. This is why the S-040 cost matters more than the table shows.
+  - title: "Opportunity cost"
+    content: |
+      Buy uses 4 team-weeks, hybrid 12, build 22 of 24 available. At 9,000 per team-week, hybrid's 12 weeks
+      is the 108,000 one-off. Build would consume the entire capacity for two quarters, which would stall the
+      marketplace (year-end bet) and the two new EU markets (H2 bet). Hybrid leaves 12 weeks, which fits
+      the marketplace connector. Buy leaves 20 weeks but then spends 8 to 10 later on remapping, so the
+      saving is mostly deferred, not real, if the marketplace goes ahead as planned.
+      Money: the 150k one-off budget is mostly unspent under buy (114k left) and 42k left under hybrid. Unspent
+      budget has value only if there is a better use identified; I have not seen one named.
+  - title: "Commercial levers (to bring hybrid under 15,000/month and cut lock-in)"
+    content: |
+      1. Price cap: replace "up to 15% per year" with CPI or a fixed 3-5% cap, or a 24-month price freeze.
+      2. Volume tiers: 0.08 falls to about 0.06 above 60,000 lookups/month and to 0.05 above 100,000.
+         At 97,500 lookups a tier at 0.06 gives about 5,850 a month in fees on the lookups alone; the 6,000
+         minimum then binds, so negotiate the minimum down or ramp it (for example 2,000 for 3 months).
+      3. Term: 12 months plus option, or termination for convenience at month 6 rather than after month 12;
+         shorten notice from 6 to 3 months. This protects the own-decoding later path.
+      4. Mapping to the two catalog standards included in price, not at extra cost. Without it our layer
+         has to pay the remap cost the hybrid is meant to avoid.
+      5. Data: no retention beyond the request, no reuse for service improvement (or only aggregated),
+         sub-processor list before signature. Waiting for the vendor reply on our conditions.
+      6. Cache: store resolved VIN to vehicle result in our own layer (a VIN decodes to the same vehicle),
+         so repeat lookups, my-garage reuse and re-orders cost nothing. This is a run-cost lever we control.
+      7. Phasing: launch in home markets first, add foreign VINs in the eu-markets window, so fees follow
+         revenue rather than precede it.
+      8. SLA: service credits capped at 10% of the fee are not real protection. Ask for 99.9% and a credit
+         that scales with downtime, as VIN entry will sit in the search path.
+risks:
+  - "Run cost: hybrid is 1,800 a month over the guardrail unless levers 1, 2 or 6 land; a breach is a red line for me"
+  - "Price escalation up to 15% a year erodes buy and hybrid returns; year 3 buy is already below year 2"
+  - "Adoption below 25%: fixed 6,000 monthly minimum is paid regardless, and uplift drops with volume"
+  - "Vendor data clause fails Legal review; delay beyond the spring season"
+  - "Vendor precision (98.5% own test set) not independently verified; returns-down bet then underdelivers"
+  - "Buy path: S-040 locks search, cart and returns to vendor IDs; 8 to 10 weeks to unwind and weaker position on price"
+  - "36-month term outlasts the year of the bets; termination only after month 12 with 6 months' notice means up to 18 months of committed spend"
+  - "VIN entry is only 9 to 10% of the growth goal; over-investing here starves eu-markets and marketplace"
+questions:
+  - "Owner: is the marketplace bet firm for year end? If yes, S-040 makes buy a 8-10 week deferred cost; if it slips, buy wins."
+  - "Owner: are the guardrails hard, or can the half-year investment guardrail be read per decision as written? I treat run cost 15,000 as hard."
+  - "Data: can we get a holdout test of VIN entry on a cohort before signing the 36-month term?"
+  - "Data: what is real precision of vendor decoding on a sample of 1,000 of our own VINs?"
+  - "Engineering: can the vehicle-ID layer be built in 12 weeks with cache and a vendor-agnostic ID, so the layer, not the vendor, is the key in search and cart?"
+  - "Engineering: is there a cheaper variant, buy with a thin ID abstraction (about 6 to 8 weeks), that avoids S-040 without the full hybrid cost?"
+  - "Legal: can the 24-month retention and reuse clause be accepted if we drop it to request-only retention? What does the vendor say?"
+  - "Marketing: does a VIN feature bring any acquisition or workshop-share effect (40% workshop goal) that is missing from the case?"
+ideas:
+  - "Thin abstraction variant: buy now, own vehicle-ID mapping layer from week 1, only 6 to 8 weeks, a possible new option between buy and hybrid"
+  - "Stage gate: sign 12 months, commit to the 36-month term only if adoption reaches 20% and precision reaches 97% by month 6"
+  - "Workshop angle: workshops reorder against the same vehicles; the VIN stored in my-garage (planned) lifts reorder rate and supports the workshop-share goal"
+  - "Revisit build of own decoding only when volume makes fees exceed the amortised build cost; set that trigger in the plan"
+plan:
+  - "Weeks 1-2: negotiate vendor terms (levers 1 to 5, 7), obtain reply on data use; Data runs vendor precision test on 1,000 of our VINs"
+  - "Weeks 2-3: re-run script with adoption 17% and price at +15%/year; confirm run cost under 15,000 and payback at or under 12"
+  - "Weeks 3-14: build vehicle-ID layer with cache over vendor API (12 team-weeks); home markets first"
+  - "Weeks 12-16: launch behind a flag on a 20% cohort with holdout, measure conversion and fitment returns"
+  - "Weeks 16-20: full home-market launch before spring season; review the build-own-decoding trigger at month 6"
+conditions:
+  - "Accept buy if the owner confirms marketplace slips beyond the horizon, or a thin ID abstraction removes S-040 for under 8 team-weeks"
+  - "Accept hybrid only if run cost is demonstrated at or below 15,000/month through terms or cache, and payback at or under 12 months at 30% worse adoption"
+  - "Reject any option with a vendor term over 12 months that has no price cap and no data clause fix"
+  - "Build only if the guardrails are formally raised by the owner; I do not argue for that"

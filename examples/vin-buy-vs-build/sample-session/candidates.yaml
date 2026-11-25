@@ -1,0 +1,65 @@
+# One decision: one candidate, its versions are the alternatives.
+# SESSION COPY for round 1 narrowing. The workspace candidates.yaml is unchanged.
+capacity_team_weeks: 24     # engineering budget available for this in the next two quarters
+notes:
+  - "SESSION CHANGE 1: added version buy_terms (same creates as buy, effort 4). Its terms are the 24 November vendor terms, given in business_case.yaml alternative buy_terms."
+  - "SESSION CHANGE 2: added version hybrid_terms with effort 14 (Engineering round 1 point estimate, range 12 to 18). Phase 1 about 8 weeks, phase 2 about 6 weeks. Creates S-042 as before; S-009 is fixed only in phase 2."
+  - "NOT CHANGED: buy, build and hybrid versions as in the workspace. hybrid (effort 12) is the draft the roles debated."
+candidates:
+  - id: vehicle-id
+    name: "Vehicle identification by VIN"
+    area: catalog
+    versions:
+      buy:
+        label: "Buy: vendor API, direct integration"
+        effort: 4
+        creates:
+          - id: S-040
+            area: catalog
+            shortcut: "Search, cart and returns keyed to the vendor's vehicle IDs"
+            saved_now: "8 weeks versus building our own vehicle-ID layer"
+            cost_later: "8 to 10 weeks to remap everything; no leverage on vendor price increases"
+            blocks: [marketplace]
+      build:
+        label: "Build: own decoder for home markets"
+        effort: 22
+        fixes: [S-009]
+        creates:
+          - id: S-041
+            area: catalog
+            shortcut: "Own decoder covers home markets only; new countries need new registry data"
+            saved_now: "10 weeks versus full European coverage"
+            cost_later: "6 to 8 weeks per new country for data sourcing and mapping"
+            blocks: [eu-markets]
+      hybrid:
+        label: "Hybrid: vendor behind own vehicle-ID layer, own decoding later"
+        effort: 12
+        fixes: [S-009]
+        creates:
+          - id: S-042
+            area: catalog
+            shortcut: "Long-tail and foreign VINs stay dependent on the vendor"
+            saved_now: "16 weeks versus own decoding everywhere"
+            cost_later: "Per-lookup fees stay for the long tail; renegotiation needed at volume"
+            blocks: []
+      buy_terms:
+        label: "Buy: vendor API, direct integration, on 24 November vendor terms"
+        effort: 4
+        creates:
+          - id: S-040
+            area: catalog
+            shortcut: "Search, cart and returns keyed to the vendor's vehicle IDs"
+            saved_now: "8 weeks versus building our own vehicle-ID layer"
+            cost_later: "8 to 10 weeks to remap everything; no leverage on vendor price increases"
+            blocks: [marketplace]
+      hybrid_terms:
+        label: "Hybrid, phased: vendor behind own vehicle-ID layer, on 24 November vendor terms"
+        effort: 14
+        fixes: [S-009]
+        creates:
+          - id: S-042
+            area: catalog
+            shortcut: "Long-tail and foreign VINs stay dependent on the vendor"
+            saved_now: "16 weeks versus own decoding everywhere"
+            cost_later: "Per-lookup fees stay for the long tail; renegotiation needed at volume"
+            blocks: []

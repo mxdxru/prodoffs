@@ -1,0 +1,19 @@
+capacity_team_weeks: 30
+candidates:
+  - id: example-initiative
+    name: "Example initiative"
+    area: example-area
+    versions:
+      full:
+        label: "Full"
+        effort: 8
+      quick:
+        label: "Quick"
+        effort: 3
+        creates:                     # the corner this version cuts
+          - id: S-100
+            area: example-area
+            shortcut: "What is cut"
+            saved_now: "5 weeks"
+            cost_later: "What fixing it costs, and how that grows"
+            blocks: [example-bet]    # bet ids from strategy.yaml

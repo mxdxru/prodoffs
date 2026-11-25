@@ -1,0 +1,19 @@
+# Round 1 scores, Data role. Mandate ids: data_ownership, measurement, data_quality; red lines own_core_data, measurable.
+# Scores are 0 to 100 per requirement. No weighted totals or deviations here; the script computes them.
+opening: {data_ownership: 85, measurement: 90, data_quality: 80}
+options:
+  hybrid_phased_draft:
+    scores: {data_ownership: 55, measurement: 75, data_quality: 60}
+    red_lines: []
+    receipt: "Changed from opening (hybrid on signable terms, pre-check and holdout in place). Draft is priced on the offer as sent: 24-month VIN retention with service-improvement use, so our storage precondition is not met; no post-termination licence either. Ownership held at 55, not lower, because vendor IDs sit only in a mapping table. Measurement is 75: holdout flag and logging are in phase 1, but the +0.6 pt rule on VIN users cannot be read from a blended holdout (Product: about 0.25 pt at 25% entry). I concede the rule and move it to intent-to-treat. Quality 60: no pre-check, no abstain rule. Phase 2 is undated, so red line own_core_data holds only if phase 2 is dated before the marketplace connector starts."
+    line: "Offer terms keep our VINs 24 months with reuse; not signable as drafted."
+  hybrid_terms_conditional:
+    scores: {data_ownership: 70, measurement: 75, data_quality: 60}
+    red_lines: []
+    receipt: "Reply of 24 November (evidence/vendor-reply.md) removes the 24-month retention and reuse and allows caching for our customers, so ownership rises from the draft to 70. Still open: a post-termination licence to keep mapped results and bulk export on exit (Legal section 4); without them exit is blocked, so not 85. Measurement held at 75 for the same intent-to-treat correction as the draft. Quality held at 60: the 2,000-VIN pre-check and abstain-below-threshold rule are not written into this option. If both are written into phase 1, I would score 75. The 0.06 volume tier is a run-cost question for Executive, not scored here."
+    line: "Acceptable only with post-termination mapping licence and dated phase 2."
+  buy_reference:
+    scores: {data_ownership: 10, measurement: 70, data_quality: 55}
+    red_lines: [own_core_data]
+    receipt: "Changed from opening: search, cart, order history, returns and the planned garage key would be keyed to vendor IDs (S-040), and marketplace sellers cannot match to our vehicle_id. That breaks own_core_data, so ownership is not a trade-off. Measurement 70: earliest readout (value from month 2), but the 4 team-weeks name no instrumentation or holdout, so logging must be added inside them. Quality 55: no own mapping table and no abstain layer; same vendor claim of 98.5% and 95% coverage, untested on our VINs. Not a red line on measurable, as long as the holdout is built."
+    line: "Keys search, cart and returns to vendor IDs; breaks own_core_data."

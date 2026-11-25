@@ -1,0 +1,127 @@
+role: product
+stance: "Hybrid, but VIN entry live in weeks"
+proposal: {vehicle-id: hybrid}
+business_case_view: >
+  Trust: the funnel base is real (analytics-snapshot: 600,000 sessions, 35% vehicle known, 4.8% vs 3.8%
+  conversion, 17% returns, 45% "does not fit"). Buy and hybrid both pay back inside the 12-month guardrail
+  (month 4 and month 9). Build pays back in month 31 and adds only 363,153 revenue in year 1, so it
+  also misses the spring window by arithmetic: 22 team-weeks starting after a 4 Dec decision lands in May.
+  Doubt: (1) Adoption of 25% is a guess. The on-page survey says 41% would enter a VIN, but stated intent
+  usually overstates behaviour, so I would plan on 15% to 25% and size the downside, not the base case.
+  (2) The 98.5% precision is the vendor's claim on its own test set. The returns benefit scales with
+  precision, so a 95% figure on our own catalog cuts the returns saving and threatens the returns-down bet.
+  (3) 95% coverage means about 1 in 20 VINs does not resolve. The case does not price the dead end for those
+  customers. (4) The case prices no cost of vendor price rises: the offer allows up to 15% per year, and the
+  monthly minimum of 6,000 is a floor we pay even if adoption disappoints. (5) Strategic effects
+  (marketplace, new markets) are unpriced and mostly sit with Buy's lock-in (S-040) and Build's
+  home-market limit (S-041).
+alternatives:
+  buy:
+    pros:
+      - "Smallest effort: 4 team-weeks, so VIN entry can be live around mid January, well before spring."
+      - "Best numbers in the case: 839,880 3-year net, payback month 4, all guardrails within."
+      - "Leaves 20 of 24 capacity weeks for fixing search UX and fallbacks."
+    cons:
+      - "S-040: search, cart and returns keyed to vendor IDs; 8 to 10 weeks to remap, blocks the marketplace bet (third-party listings need our own vehicle matching)."
+      - "Vendor IDs are proprietary; mapping to catalog standards costs extra. Any later vendor switch is a customer-visible migration (garage profiles with saved VINs)."
+      - "Vendor may keep VINs 24 months and reuse them: a trust and legal question that can surface in customer-facing copy."
+      - "Wrong-fitment bet depends entirely on an unverified 98.5% precision."
+  build:
+    pros:
+      - "Own data and IDs, fixes S-009, no per-lookup fee."
+      - "Strongest long-run control of fitment quality and of the marketplace matching."
+    cons:
+      - "22 team-weeks of 24; from a 4 Dec decision it ships around May, after the spring season starts. Breaks my market_window red line."
+      - "Home markets only (S-041): blocks the two new EU markets bet; 6 to 8 weeks per new country."
+      - "Breaches three guardrails: one-off 198,000 vs 150,000, run cost 21,000 vs 15,000, payback month 31 vs 12."
+      - "Risk of a half-finished decoder: customers whose VIN is not covered hit a dead end on day one."
+  hybrid:
+    pros:
+      - "Own vehicle-ID layer (12 team-weeks) means saved garages, search, cart and returns key to our IDs, so vendor swap or own decoding later is invisible to customers."
+      - "Protects both the marketplace and the new-markets bets (blocks: none). Fixes S-009."
+      - "3-year net 580,744, payback month 9, year 1 revenue 1,078,111 (9% of growth goal), nearly equal to Buy in year 1."
+    cons:
+      - "Run cost 16,800 a month vs 15,000 guardrail: a breach to be fixed by cache, volume tiers or minimum fee, not ignored."
+      - "12 weeks is the wrong schedule if done as one big release; a naive plan lands in March, tight for spring."
+      - "Long-tail and foreign VINs stay on the vendor (S-042) and fees continue."
+artifacts:
+  - title: "Customer problem and who has it"
+    content: >
+      Who: roughly 390,000 of 600,000 monthly part-search sessions (65%) have no vehicle selected, and
+      many who do select pick the wrong engine variant. Workshops are hit hardest: they search all day
+      by vehicle, and workshops are the 40%-of-revenue goal segment. Evidence: conversion 3.8% without a
+      vehicle vs 4.8% with one; 17% of orders returned, 45% of returns "does not fit". VIN is on the
+      registration document, which every workshop and most owners have at hand. 41% of surveyed customers
+      without a vehicle say they would enter a VIN.
+  - title: "Scope options"
+    content: >
+      Smallest version that solves the problem (MVP, ship by about week 5 to 6 after decision): VIN field on
+      the search page and in the cart, decode through the vendor, show "your vehicle: make, model, engine,
+      year", filter parts to it, show a clear message and the dropdown fallback if the VIN does not resolve.
+      Behind a thin own vehicle-ID mapping so no screen stores vendor IDs. Leaves out: saved VIN in
+      "my garage", workshop multi-vehicle lists, own decoding, long-tail coverage. Full version (hybrid
+      complete, about week 12 to 14): adds VIN saved to garage, repeat-order flow, vehicle-ID layer used by
+      returns and catalog, vendor adapter with caching, and start of own decoding for the top home-market
+      VIN ranges. Leaves out: own decoding for foreign VINs, marketplace matching (separate bet).
+  - title: "Market research (generic, no names)"
+    content: >
+      Typical practice among online parts retailers, as described in public trade write-ups on parts
+      fitment (illustrative, not verified against a specific source in this session; the web search returned
+      only headlines): (a) a VIN or plate lookup sits at the top of the search and the cart, next to the
+      make/model selector; (b) a persistent "my vehicle" bar filters every list and shows a "fits / does not
+      fit" badge on product pages; (c) when a VIN does not resolve, the customer is offered manual selection,
+      not an error; (d) larger players run their own vehicle-ID layer and use outside decoders as one source
+      among several. Pattern to copy: (b) and (c). Gap to beat: a fit badge that states the vehicle the
+      check was made against. Treat all as assumptions to validate with competitor walk-throughs in week 1.
+  - title: "Success metrics and targets per alternative"
+    content: >
+      Metrics (baseline from analytics-snapshot): VIN adoption among sessions without a vehicle; conversion
+      of VIN-identified sessions; wrong-fitment returns; VIN resolve rate; share of VIN users who finish
+      without error. Targets at month 3 after launch.
+      Buy: adoption 20%, conversion 4.8% on VIN sessions, wrong-fitment returns -20% (precision-limited),
+      resolve rate 95%, live by 31 Jan.
+      Hybrid: same adoption 20% by month 3 (MVP launch is the same experience as Buy), wrong-fitment returns
+      -33% by month 12 (needed for returns-down bet), resolve rate 96% with fallback, MVP live by about
+      1 Feb, full layer by end of March.
+      Build: adoption 15% (home markets only), returns -33% only for home markets, resolve rate 85% to
+      90% at launch, live in May. Misses the window, so targets are moot for spring.
+      Kill or rethink: adoption below 10% after 3 months means stop investing in the long tail and keep the
+      vendor with a minimum-fee renegotiation.
+  - title: "Customer experience rules (non-negotiable for me)"
+    content: >
+      No screen shows an unresolved VIN as an error page. A VIN that returns nothing, or a vehicle with
+      several engine variants, leads to a short pick-one step, not a dead end. Every fit claim names the
+      vehicle it is checked against. VIN storage in the garage is opt-in and the page says what is kept, how
+      long and with whom it is shared; this depends on the vendor's reply on retention and sub-processors.
+      Do not launch the VIN field without the fallback. A half-finished flow is worse than the dropdown.
+risks:
+  - "Vendor reply on VIN data use is outstanding; 24-month retention and reuse may be a Legal red line, which would delay any option that depends on the vendor (Buy and Hybrid)."
+  - "Adoption lands at 10% to 15% instead of 25%: the 6,000 monthly minimum stays, payback stretches. Hybrid at 15% still pays back but later."
+  - "Real precision below the vendor's 98.5% makes fit badges wrong; a wrong badge is worse than none (more returns, lost trust)."
+  - "The 5% unresolved VINs and multi-variant vehicles create a dead end if the fallback is missing."
+  - "Hybrid slips to a single big release in March and loses part of the spring window."
+  - "Vendor price rise of up to 15% a year erodes margin with no cap in the draft."
+questions:
+  - "To owner: is a hybrid run cost of 16,800 vs the 15,000 guardrail acceptable temporarily if caching and a lower minimum fee are negotiated, or is 15,000 absolute?"
+  - "To owner: when exactly does 'spring season' start (first sales week) so I can fix the release date?"
+  - "To Legal: can we ship the MVP before the vendor answers on data use, with VIN stored only for the session and not in the garage?"
+  - "To Engineering: can the thin vehicle-ID mapping ship in the first 4 to 6 weeks, with the full 12-week layer after?"
+  - "To Data: can we run a 4-week holdout on VIN users to measure true precision and returns on our own catalog?"
+  - "To Executive: is a minimum fee of 6,000 acceptable if adoption is 10%, or do we negotiate a ramp (lower minimum for months 1 to 6)?"
+ideas:
+  - "Phased hybrid: ship VIN entry on the vendor in weeks 5 to 6 behind a thin mapping, then complete the vehicle-ID layer in weeks 7 to 14. Customer sees value in January, we avoid S-040."
+  - "Cache every decoded VIN by VIN prefix and full VIN (garage and repeat orders): fewer paid lookups, may bring run cost under 15,000."
+  - "Negotiate in the draft: ramp-up minimum fee, price cap at inflation, ID mapping to the catalog standard included, shorter retention, no secondary use of VINs."
+  - "Workshop first: put VIN entry and multi-vehicle garage in front of workshop customers first (40% revenue goal), then consumers."
+  - "A/B test the field position (search bar vs cart) in the first two weeks to find real adoption before the 6,000 minimum bites."
+plan:
+  - "Weeks 0 to 1 (from decision 4 Dec): sign off scope, contract terms to negotiate, UX flow with fallback, competitor walk-throughs."
+  - "Weeks 2 to 6: thin vehicle-ID mapping plus vendor adapter plus VIN field with fallback; internal test on 500 real VINs from past orders to measure precision."
+  - "Weeks 6 to 7: workshop pilot, then all customers; target live around mid January to 1 February."
+  - "Weeks 7 to 14: complete own vehicle-ID layer, save VIN to garage (if Legal agrees), cache, returns tagging by vehicle ID."
+  - "Week 14 and 26: review adoption and precision; decide how much own decoding to start (top home-market VIN ranges)."
+conditions:
+  - "I would accept Buy only if Engineering confirms the remap cost of S-040 is accepted by the owner and the marketplace bet is moved or not blocked in practice."
+  - "I would accept Build only if the decision date and a spring window are both relaxed, or VIN entry ships first through a vendor bridge; otherwise it breaks my market_window red line."
+  - "I would drop Hybrid if the vendor reply on data use blocks vendor use or the layer cannot ship an MVP in 6 weeks."
+  - "Any option: the unresolved-VIN fallback is in the first release."

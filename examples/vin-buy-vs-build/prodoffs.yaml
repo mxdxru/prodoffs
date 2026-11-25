@@ -1,0 +1,7 @@
+# Rules of the negotiation for this workspace.
+x_base: 0.20            # default max deviation from what a role wanted
+x_min: 0.08             # tolerance never shrinks below this
+k: 0.20                 # how strongly past concessions tighten tolerance
+concession_decay: 0.7   # each new decision, old balance is multiplied by this
+max_rounds: 5
+block_on_strategy_risk: true   # an option that creates a new shortcut blocking a strategic bet cannot be accepted

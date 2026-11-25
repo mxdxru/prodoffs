@@ -1,0 +1,78 @@
+# SESSION COPY for round 1 narrowing. The workspace business_case.yaml is unchanged.
+# baseline is identical to the workspace file. Changes are listed in notes.
+question: "Vehicle identification by VIN"
+currency: EUR
+horizon_years: 3
+cost_per_team_week: 9000
+baseline:                                  # illustrative numbers; replace with your own analytics
+  monthly_search_sessions: 600000          # sessions that include a part search
+  vehicle_identified_share: 0.35           # vehicle already known (dropdown selection) today
+  vin_entry_share: 0.25                    # of the other sessions, share that enters a VIN if offered
+  conversion_identified: 0.048             # search-to-order with a known vehicle
+  conversion_unidentified: 0.038           # search-to-order without
+  completion_uplift: 0.02                  # extra checkout completion when fitment is confirmed by VIN
+  avg_order_value: 118
+  gross_margin: 0.28
+  return_rate: 0.17                        # industry reports for auto parts are around 18-20%
+  fitment_share_of_returns: 0.45           # industry reports: close to half of returns are fitment
+  fitment_return_reduction: 0.60           # share of fitment returns a VIN match removes
+  cost_per_return: 21                      # logistics, handling, write-off
+alternatives:
+  buy:
+    label: "Buy: vendor API"
+    one_off_team_weeks: 4
+    time_to_value_months: 2
+    hit_rate: 0.95                         # share of VINs resolved to a catalog vehicle
+    precision: 0.985
+    fee_per_lookup: 0.08
+    fee_growth_per_year: 0.15              # vendor price increases
+    monthly_minimum: 6000
+    run_cost_monthly: 1500                 # monitoring, vendor management
+  build:
+    label: "Build: own decoder"
+    one_off_team_weeks: 22
+    time_to_value_months: 8
+    hit_rate: [0.72, 0.86, 0.92]           # coverage grows as mapping improves
+    precision: [0.95, 0.975, 0.985]
+    pre_launch_cost_monthly: 6000          # registry data licences paid during the build
+    run_cost_monthly: 21000                # data licences plus about 1.5 FTE upkeep
+  hybrid:
+    label: "Hybrid: vendor behind own layer"
+    one_off_team_weeks: 12
+    time_to_value_months: 3
+    hit_rate: 0.95
+    precision: 0.985
+    fee_per_lookup: 0.08
+    fee_growth_per_year: 0.15
+    monthly_minimum: 6000
+    vendor_share: [1.0, 0.55, 0.35]        # own decoding takes over home-market VINs from year 2
+    run_cost_monthly: 9000                 # own layer upkeep, partial data licences from year 2
+  buy_terms:                               # SESSION ADDITION. Buy on the vendor terms of 24 November
+    label: "Buy: vendor API, on 24 November vendor terms"
+    one_off_team_weeks: 4
+    time_to_value_months: 2
+    hit_rate: 0.95
+    precision: 0.985
+    fee_per_lookup: 0.09
+    fee_growth_per_year: 0.05
+    monthly_minimum: 6000
+    run_cost_monthly: 1500
+  hybrid_terms:                            # SESSION ADDITION. Hybrid on the vendor terms of 24 November, Engineering point effort
+    label: "Hybrid, phased: vendor behind own layer, on 24 November vendor terms"
+    one_off_team_weeks: 14
+    time_to_value_months: 3
+    hit_rate: 0.95
+    precision: 0.985
+    fee_per_lookup: 0.09
+    fee_growth_per_year: 0.05
+    monthly_minimum: 6000
+    vendor_share: [1.0, 0.55, 0.35]
+    run_cost_monthly: 9000
+notes:
+  - "Undiscounted; strategic effects (marketplace, new markets) are not priced in and are argued by the roles."
+  - "Return-rate and fitment-share figures follow public industry reports for auto parts e-commerce; all other numbers are illustrative."
+  - "SESSION CHANGE 1: added alternative buy_terms (copy of buy) with fee_per_lookup 0.09 (was 0.08) and fee_growth_per_year 0.05 (was 0.15). Source: evidence/vendor-reply.md, dated 24 November (assembly.md says 1 December; the file says 24 November). Price cap of 5% a year applies only if we sign for 24 months, which the owner has chosen (answers.yaml). The reply gives no cap after 24 months; this copy assumes the 5% rate holds for all three years of the horizon."
+  - "SESSION CHANGE 2: added alternative hybrid_terms (copy of hybrid) with fee_per_lookup 0.09, fee_growth_per_year 0.05 (same source and assumption as change 1) and one_off_team_weeks 14 (was 12). Source: Engineering round 1 amended point estimate, range 12 to 18, confidence medium-low. Phase 1 about 8 weeks, phase 2 about 6 weeks. Engineering's figure, not verified against the S-009 register."
+  - "SESSION CHANGE 3: no volume tier, minimum-fee ramp or SLA change is modelled. None is in the vendor reply. The executive's figures (0.06 above 60,000 lookups; a lower minimum) are not in this file; the script models a flat fee only."
+  - "UNSOURCED, NOT CHANGED: run_cost_monthly 9000 for hybrid and hybrid_terms (own layer) and 1500 for buy and buy_terms. Engineering has not verified the 9,000 build-up and says a thin owned layer would carry the same owned-service cost. Engineering must supply the build-up before the rerun. Values kept as in baseline."
+  - "NOT CHANGED: baseline, and the buy, build and hybrid alternatives as sent with the offer (fee 0.08, growth 0.15). Baseline is correct for the offer that was sent."

@@ -1,0 +1,106 @@
+role: data
+stance: "Hybrid: own vehicle ID, vendor only as decoder"
+proposal: {vehicle-id: hybrid}
+business_case_view: >
+  Trust: the funnel baseline matches analytics-snapshot.md (600k sessions, 35% known, 4.8% vs 3.8%),
+  and fee math is plausible (97,500 lookups x 0.08 = 7,800 a month, just above the 6,000 minimum).
+  Doubt: (1) The 98.5% precision and 95% hit rate are the vendor's claims on its own test set, yet the
+  case multiplies the fitment benefit by them as if proven. Our own catalog mapping will land lower for
+  foreign and older VINs. (2) The 25% VIN entry share is a guess; the survey says 41% "would", and stated
+  intent usually overshoots, so 25% is the right order but needs a measured ramp, not a promise. (3) The
+  3.8% to 4.8% conversion gap is correlation: people who already know their car are likelier buyers, so
+  part of the +1.0 pt is selection, not causal uplift from VIN. Only a holdout tells us. (4) Vendor fee
+  growth of 15% a year is modelled, good, but "up to 15%" is a ceiling and the 24-month VIN retention and
+  reuse clause is not priced at all. (5) Buy shows 840k three-year net, but the case does not price the
+  8 to 10 weeks of remapping (S-040) or the marketplace it blocks.
+alternatives:
+  buy:
+    pros:
+      - "Fastest to a measurable result: 4 team-weeks, value from month 2, so we get a baseline-vs-treatment readout before spring"
+      - "Best three-year net in the case (839,880) and inside all guardrails"
+      - "Highest day-one coverage (95% claimed) means the least no-result noise in the experiment"
+    cons:
+      - "Breaks own_core_data: search, cart and returns keyed to the vendor's vehicle IDs (S-040); mapping to catalog standards costs extra"
+      - "Vendor may retain VINs 24 months and use them to improve its product: our customer and vehicle data trains their asset"
+      - "No own VIN-to-vehicle table accumulates, so every future lookup is rented and exit means 8 to 10 weeks of remap"
+      - "Marketplace third-party listings cannot be matched to our own vehicle keys; the data model for sellers is hostage to the vendor"
+  build:
+    pros:
+      - "Cleanest data ownership: own decoder, own IDs, own VIN table; fixes S-009"
+      - "Full control over precision and coverage rules, and per-decision explainability"
+    cons:
+      - "Month 8 to value: no spring measurement window, and the readout lands after the season we are optimising for"
+      - "Hit rate starts at 72% and precision at 95%; wrong data in year 1 means more wrong-fit returns, not fewer"
+      - "Breaches three guardrails (198k one-off, 21k run, 31 months payback); home markets only, blocks eu-markets (S-041)"
+  hybrid:
+    pros:
+      - "Meets own_core_data: our own vehicle-ID layer is the key in search, cart, garage and returns; vendor IDs live only in a mapping table"
+      - "Every vendor lookup is written to our own VIN-to-vehicle store, so the asset compounds and vendor_share falls to 0.55 then 0.35"
+      - "Live in month 3 (12 team-weeks), early enough for a holdout readout before spring"
+      - "Same ID layer can accept third-party marketplace items, protecting that bet"
+      - "Fixes S-009 and supports the returns-down bet by logging fitment outcome per resolved vehicle"
+    cons:
+      - "Breaches the monthly run-cost guardrail (16,800 vs 15,000); a cost question for Executive, not a data red line"
+      - "Long-tail and foreign VINs stay on vendor (S-042); fee per lookup stays until own decoding matures"
+      - "Needs a contract that lets us store and reuse results. Vendor reply on our data-use conditions is still open"
+artifacts:
+  - title: "Measurement plan"
+    content: |
+      Question: does VIN entry raise conversion and cut wrong-fitment returns, causally?
+      Primary metrics (definitions fixed before launch):
+        1. Search-to-order conversion, VIN-offered group vs holdout, per session where a part search occurred. Baseline 3.8% (unidentified), 4.8% (identified).
+        2. Wrong-fitment return rate = orders returned with reason "does not fit" / orders. Baseline 17% x 45% = 7.65% of orders. Bet target: -33%, i.e. about 5.1%.
+        3. VIN entry share = sessions with a VIN submitted / sessions without a known vehicle. Case assumes 25%; survey says 41% intent.
+      Secondary: VIN resolve rate (hit rate vs vendor claim 95%), VIN-confirmed fitment precision (returns tagged "does not fit" among VIN-resolved orders vs claimed 98.5%), checkout completion (case +2%), lookups per month and cost per lookup, repeat-VIN reuse from my garage.
+      Guardrail metrics: search latency, no-result rate, vendor error rate against the 99.5% SLA.
+      Design: randomised holdout at user level (not session), 10% holdout (no VIN entry offered) for 8 weeks after full ramp. 10% of 390k unidentified sessions a month is about 39k holdout sessions; at 3.8% that is about 1,500 orders a month, enough to see a 0.3 pt conversion gap in 4 to 6 weeks. Returns lag by the return window, so fitment-return readout needs 30 to 45 days after cohort entry.
+      Fallback if a holdout is vetoed: staggered rollout by country or by traffic share with difference-in-differences, weaker and flagged as such.
+      Baseline freeze: snapshot 4 weeks before launch (same season mix), logged in the metric catalogue with owner and definition.
+      Readout dates: instrumentation and baseline frozen before launch; first read at launch + 6 weeks (conversion, entry share, hit rate); final read at launch + 10 weeks (returns). If launch is week 12 of the plan, final readout around week 22, before the spring peak decisions on scaling and vendor volume tier.
+      Decision rule agreed in advance: scale if conversion lift on VIN users is at least 60% of the case's modelled lift (about +0.6 pt) and VIN-resolved fitment precision is at least 97%. Otherwise pause own-decoding investment, keep the vendor.
+  - title: "Data dependencies and ownership"
+    content: |
+      Buy: vehicle identity = vendor's proprietary IDs. Search index, cart lines, order history, returns reasons and the planned VIN in "my garage" all reference an external key. Mapping to two catalog standards is extra cost. Retention 24 months plus "improve the service" means our customers' VINs feed the vendor's product. Sub-processors "on request" is a gap. Exit = 8 to 10 weeks remap (S-040).
+      Build: all identifiers ours; dependency moves to registry and manufacturer data licences (6,000 a month pre-launch, 21,000 a month later). Licence terms on storage and derived data need checking.
+      Hybrid: canonical vehicle_id is ours (catalog's own vehicle mapping). Vendor output is stored as vendor_ref -> vehicle_id in a mapping table, with source, confidence and timestamp. VIN resolutions we cache become our asset, provided the contract allows storage and reuse. That is a precondition, not a nice-to-have.
+      VIN handling: a VIN can link to a person via "my garage". Store VIN under the same retention and access rules as account data, pseudonymised in analytics. Legal to confirm basis; the 24-month vendor retention is Legal's call but it is also my data-governance concern.
+      Ownership: catalog team owns vehicle_id and the mapping table; Data owns metric definitions, the experiment and the quality dashboard; Engineering owns the vendor adapter.
+  - title: "Data quality risks"
+    content: |
+      Precision: 98.5% is a vendor test-set number. On 97,500 lookups a month, each point of precision is about 975 wrong vehicles a month. At 98.5%, about 1,460 a month are wrong. Our own mapping from vendor ID to catalog vehicle adds its own error, so end-to-end precision may sit nearer 95 to 97%.
+      Cost of wrong data vs no data: a wrong match is worse than no match. It shows a confident wrong-fit list and removes the customer's own check, then costs 21 per return plus trust. A miss falls back to today's dropdown at zero extra cost. So the system should prefer abstaining: below a confidence threshold, return "confirm your vehicle" instead of a match.
+      Coverage: 95% claimed for European VINs, probably lower for older vehicles, imports and the two new EU markets. Measure by country and model year from day one, not as a blended average.
+      Build: starts at 72% hit rate, 95% precision, so year-one data is worse than the status quo for the 28% unresolved and for roughly 1 in 20 resolved.
+      Fitment-return tagging is customer-selected "does not fit"; it undercounts silent mismatches and mislabels. Add a reason-code audit sample (200 returns a quarter) so the returns-down metric is trustworthy.
+      Confounding: the 3.8% vs 4.8% gap includes self-selection. Without a holdout we will overclaim the benefit by an unknown amount.
+risks:
+  - "Vendor reply on data-use conditions is open; if it keeps the 24-month retention and reuse with no storage right for us, hybrid loses its compounding benefit and drifts toward buy"
+  - "Spring launch without instrumentation or holdout means we ship blind and cannot prove the 840k or 580k business case"
+  - "End-to-end precision below 97% turns a conversion project into a returns project; the returns-down bet then moves the wrong way"
+  - "VIN is linkable to an identifiable customer via my garage; weak retention and access rules create a compliance and trust problem"
+  - "Vendor price ceiling of 15% a year plus 6,000 minimum; at lower than expected entry share we pay the minimum for little volume"
+  - "Return reason codes are self-reported, so the returns metric may be noisy or gamed by checkout UX"
+questions:
+  - "Vendor (via Legal): will it grant a right to store and reuse resolved VIN-to-vehicle results indefinitely, and drop the 'improve the service' use of our VINs?"
+  - "Vendor (via Engineering): is mapping to the two catalog standards included in the 0.08 price, or what does it cost?"
+  - "Owner: can we hold out 10% of users from VIN entry for 8 weeks, accepting a small short-term revenue cost for a causal readout?"
+  - "Engineering: can the adapter log vendor_ref, confidence, resolved vehicle_id and later fitment outcome per lookup from the first release?"
+  - "Legal: retention period and lawful basis for storing VINs in my garage and in analytics logs?"
+  - "Executive: is the 16,800 vs 15,000 run-cost breach acceptable if a held-out readout proves the lift by week 22?"
+ideas:
+  - "Abstain below a confidence threshold: wrong match costs more than no match"
+  - "Store every resolved VIN in our own table so vendor_share falls with time and the asset compounds"
+  - "Sell the hybrid as a data asset to the marketplace: sellers map to our vehicle_id, not the vendor's"
+  - "Contract clause: bulk export of all resolved results on exit, plus price cap tied to CPI instead of 'up to 15%'"
+  - "Add a post-purchase micro-survey on fit for 1% of orders to validate precision independently of the vendor"
+plan:
+  - "Weeks 1 to 2: freeze metric definitions and baseline snapshot; agree holdout and decision rule with Product and Executive; send data-use and export conditions to vendor"
+  - "Weeks 2 to 4: define vehicle_id, mapping table (vendor_ref, source, confidence, ts) and event schema with Engineering; add VIN pseudonymisation in analytics"
+  - "Weeks 4 to 12: build adapter and ID layer; instrument entry, resolve, confirm, add-to-cart, order, return; dashboard by country and model year"
+  - "Weeks 12 to 14: 10% holdout live, ramp to 90% treatment; first read at launch + 6 weeks"
+  - "Weeks 20 to 22: final readout including returns; decide on scaling, vendor tier and own-decoding scope for year 2"
+conditions:
+  - "Accept buy only with a contract that gives us storage and reuse of results, bulk export on exit and a mapping to our vehicle_id from day one. Without those it still breaks own_core_data"
+  - "Accept build only if a phased delivery shows 90% coverage and 97.5% precision before month 4 and the spring window is not the success test"
+  - "Any option must ship with the instrumentation and a holdout or staged rollout; otherwise it breaks the measurable red line"
+  - "Accept a vendor-dependent long tail (S-042) if the vendor_share trend is tracked and own-decoding scope is revisited at the week 22 readout"

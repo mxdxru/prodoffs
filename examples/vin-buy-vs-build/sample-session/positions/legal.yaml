@@ -1,0 +1,141 @@
+role: legal
+stance: "Hybrid, only on a processor-only vendor contract"
+proposal: {vehicle-id: hybrid}
+business_case_view: >
+  I do not recompute the numbers. What I doubt is the cost side: the case prices the vendor at the
+  offer's headline rate, but the offer allows up to 15% a year price increases, a 6,000 EUR monthly
+  minimum and a lock-in of at least 18 months (termination only after month 12, plus 6 months' notice).
+  Compounded, year 3 per-lookup price could be about 32% above today's (1.15^2). Also not in the case:
+  legal and DPO review, a data protection impact assessment if VINs are linked to accounts, and the
+  cost of mapping to catalog standards, which the vendor charges extra. Not legal advice; a qualified
+  lawyer must confirm every point marked [lawyer].
+alternatives:
+  buy:
+    pros:
+      - "Fastest to market; vendor carries registry and manufacturer data licensing risk"
+      - "Termination for convenience exists (after month 12), so it is not a contract without an exit"
+    cons:
+      - "As drafted it fails my red line: vendor may keep VINs 24 months and use them to improve its service, which makes it a controller for that purpose or an unauthorised use beyond our instructions (GDPR Art 28(3)(a), 28(10)) [lawyer]"
+      - "Sub-processors only 'on request': we need a list and prior notice and objection right (GDPR Art 28(2), 28(4))"
+      - "Vendor's proprietary IDs: no exit in practice, because search, cart and returns would be keyed to IDs we cannot keep (S-040)"
+      - "Price review up to 15% a year, uncapped by index; minimum fee 6,000 EUR whether or not volume arrives"
+      - "SLA credits capped at 10% of the monthly fee: a VIN outage in season costs us far more than that"
+      - "Accuracy claims (95% coverage, 98.5% precision) are the vendor's own test set; we cannot pass them on to customers"
+  build:
+    pros:
+      - "No third-party processor for the lookup itself: simplest GDPR picture (we stay sole controller)"
+      - "No vendor price or retention terms to negotiate"
+    cons:
+      - "Data licensing is the legal weak point: registry access differs by country, and manufacturer data is accessible under the EU rules on repair and maintenance information (Regulation (EU) 2018/858, Chapter XV) only for defined purposes and on defined terms; database rights (Directive 96/9/EC) may apply [lawyer, per country]"
+      - "Each new country (eu-markets bet) means a new data source and a new licence review, 6 to 8 weeks each per S-041"
+      - "We then own accuracy: any 'fits your car' claim rests on our own data and our own liability"
+  hybrid:
+    pros:
+      - "Own vehicle-ID layer means vendor IDs are mapped to ours, so exit is a technical task, not a rewrite"
+      - "Lets us put the vendor behind a clean DPA and swap it if terms are breached or prices rise"
+      - "Keeps the VIN stored on our side under our own retention rule (my garage), not the vendor's"
+    cons:
+      - "Two data flows to document (us and vendor); more contract work up front (about 2 to 3 weeks of legal time)"
+      - "Still depends on vendor for long-tail and foreign VINs (S-042), so price protection still matters"
+artifacts:
+  - title: "Data protection check"
+    content: |
+      Is a VIN personal data here? Treat it as yes. The Court of Justice held (Case C-319/22, 9 Oct 2024)
+      that a VIN is personal data for a party that has the means reasonably likely to identify the
+      holder, for example by linking it to an account, delivery address or order [lawyer to confirm for our setup].
+      We would link it: the analytics snapshot says VINs are planned to be stored in "my garage", tied to
+      a customer profile. So: personal data from the first day of storage.
+      Lawful basis: performance of the contract / steps at the customer's request (GDPR Art 6(1)(b)) for the
+      lookup and for storing the vehicle in the profile at the customer's request; legitimate interest
+      (Art 6(1)(f), with a balancing test) for analytics on VIN lookups. Consent is not needed for the core
+      function and should not be used as a fallback.
+      Roles: we are controller. Vendor must be processor for the lookup (Art 28). Its clause "retained up to
+      24 months and used to improve the service" is a purpose of its own: either we remove it, or we have
+      a controller-to-controller flow we cannot justify to customers. Position: remove it.
+      Needed: Art 28 data processing agreement; record of processing (Art 30); privacy notice update
+      (Art 13: purpose, recipients, retention); DPIA screening (Art 35), likely not mandatory but document it;
+      retention rule for stored VINs; deletion on account closure.
+      Transfers: vendor hosts in the EU, good; the sub-processor list must confirm no onward transfer
+      outside the EEA without Chapter V safeguards (Art 44 to 46).
+      Veto condition (lawful_basis): no go-live until a signed DPA exists with the points below.
+  - title: "Contract checklist for the VIN vendor"
+    content: |
+      Items we require; status against the draft offer.
+      1. Exit: termination for convenience after month 12 with 6 months' notice = at least 18 months committed.
+         Ask: 90 days' notice from month 6; free termination for breach, price rise above cap, or SLA failure.
+         Exit assistance for 6 months at the then-current price.
+      2. Price changes: "up to 15% per year" is too open. Ask: cap at the lower of 5% or the HICP (euro
+         area consumer price index), no review in the first 24 months, 90 days' written notice, right to
+         terminate without penalty if a rise is above cap. Minimum fee scaled to a ramp-up (for example 50% in months 1 to 6).
+      3. Liability: SLA credits capped at 10% of the monthly fee. Ask: separate, higher cap for data protection
+         breaches and confidentiality (a multiple of annual fees; do not accept a cap that equals the fee of one month);
+         uncapped for intentional breach and where law does not allow a cap [lawyer].
+      4. Data location: EU hosting stated; put it in the contract, with a ban on moving it without our consent.
+      5. Sub-processors: list now, written notice of changes (30 days) and a right to object (Art 28(2), 28(4)).
+      6. Audit rights: right to audit or to receive a recent third-party report (for example ISO 27001) (Art 28(3)(h)).
+      7. Data use: delete the "retain 24 months and improve the service" clause. Process only on our documented
+         instructions (Art 28(3)(a)); delete or return VINs within 30 days of the request or termination;
+         no use for the vendor's own products; security measures (Art 32); breach notice to us within 24 to 48
+         hours so we can meet the 72-hour deadline (Art 33).
+      8. Identifiers and portability: we may store and keep the mapping from VIN to vehicle (our own layer's IDs) after
+         termination; licence to keep results we already received. Otherwise exit is blocked (S-040).
+      9. Quality: precision and coverage as contractual service levels measured on our traffic, not on the vendor's test
+         set; remedy if below (fee reduction, exit right).
+      10. IP and warranties: vendor warrants it holds the rights to the underlying data and indemnifies us for third-party claims.
+  - title: "Claims review"
+    content: |
+      Planned public claims are not defined yet; these are the likely ones.
+      - "Guaranteed to fit" / "100% fit when you enter your VIN": NOT safe. Vendor precision is 98.5% on its own
+        test set, so about 1 in 70 results is wrong, and fit also depends on catalog mapping and part variants.
+        An absolute claim that is false is misleading under the Unfair Commercial Practices Directive
+        (2005/29/EC, Arts 6 and 7) and in many member states under national advertising law [lawyer].
+        If we offer a fit guarantee (refund, free return), it is a binding promise and we pay for each miss:
+        at 17% return rate and 45% fitment share, the cost sits on us, not on the vendor (see contract item 3).
+      - "Reduces wrong-fitment returns by X%": safe only after our own A/B test shows it. Until then:
+        no number in public. The 60% figure in the business case is an assumption.
+      - "Covers 95% of European vehicles": we may not repeat the vendor's number. Say "most European vehicles"
+        until measured on our traffic.
+      - Safe wording now: "Enter your VIN to find parts matched to your vehicle. Always check the part
+        number against your vehicle documents." Add a fit-check fallback and a clear return path.
+      - Privacy claims ("we never share your VIN") are safe only if the DPA is in place. Do not publish before.
+      - For the marketing launch: keep an evidence file for every claim (test results, dates, method).
+  - title: "Regulatory and IP notes for build and hybrid-own-decoding"
+    content: |
+      Data sources need a licence check per country before any build work: public registry access rules differ by
+      member state; manufacturer data under the EU type-approval rules on repair and maintenance information
+      (Regulation (EU) 2018/858) is for independent operators on stated terms and may not cover resale or
+      embedding in a customer product [lawyer]. Database rights (Directive 96/9/EC) can restrict
+      extraction from third-party data sets. Scraping is not an acceptable source. Cost: about 1 to 2 weeks of
+      legal review per country, which the build estimate should include. Each marketplace seller listing also
+      brings third-party data into the layer: seller terms must say who is responsible for fitment data.
+risks:
+  - "Signing the offer as drafted: vendor retains and reuses VINs for 24 months; breach of Art 28 and possible fines of up to 10 million EUR or 2% of turnover for processor-related violations (Art 83(4)), and customer trust loss [lawyer]"
+  - "Lock-in through proprietary vehicle IDs: exit exists on paper only (S-040)"
+  - "Uncapped price review compounding to about 32% over two reviews, on top of the 6,000 EUR minimum"
+  - "Fit claims in marketing or a fit guarantee turn a 1.5% error rate into a refund liability and a misleading-claim exposure"
+  - "My garage stores VINs for repeat orders: retention, deletion and access requests (Art 15 to 17) must be built in, otherwise a data subject request cannot be served"
+  - "Build: data licensing per country may be refused or priced after we have started (eu-markets bet)"
+  - "Marketplace bet: third-party sellers add fitment data we cannot verify; liability for wrong data must be allocated in seller terms"
+  - "Vendor reply on our data use conditions is still open; the decision is being prepared without it"
+questions:
+  - "To the owner: has the vendor answered our data use conditions yet? If it refuses to drop the retention and reuse clause, buy and hybrid are not available (veto), and only build remains."
+  - "To the owner: will the launch include any fit guarantee or return promise? That changes liability from marketing wording to a financial commitment."
+  - "To Product: is VIN storage in my garage in the first release? It decides if a DPIA screening and retention rules are needed at launch."
+  - "To Engineering: can the vehicle-ID layer keep the VIN to vehicle mapping after termination, and can VINs be pseudonymised before they go to the vendor?"
+  - "To Data: can we measure precision and coverage on our own traffic in the pilot, so the contract can use our numbers?"
+ideas:
+  - "Hybrid with a pilot: sign a 6-month pilot with ramp-up minimum fee, a DPA and a price cap; convert to 36 months only if measured precision is at least the stated level"
+  - "Send the vendor our own data processing agreement as the template instead of redlining theirs: it moves the negotiation to our terms"
+  - "Store the VIN in my garage only after the customer's explicit save action, with a visible delete button; the vendor receives the VIN without any customer identifier (no name, email, account ID)"
+  - "Ask the vendor for a licence to keep results for VINs we already decoded, which reduces the long-tail dependency over time"
+plan:
+  - "Weeks 1 to 2: send the DPA and the contract checklist to the vendor; request the sub-processor list and security report; draft the record of processing and privacy notice change"
+  - "Weeks 2 to 4: negotiate price cap, notice periods, liability cap, data use; escalate to a qualified lawyer for liability and Art 28 wording"
+  - "Weeks 3 to 5: DPIA screening for the 'my garage' VIN storage; retention rule and deletion flow agreed with Product and Engineering"
+  - "Weeks 5 to 8: approve public wording and the evidence file; no fit guarantee without a decision from the owner"
+  - "Before go-live: signed DPA, updated privacy notice, claim sign-off; no launch otherwise"
+conditions:
+  - "Buy: acceptable only if the vendor signs a DPA that removes retention and reuse, lists sub-processors, caps price rises and lets us keep the vehicle mapping; otherwise the veto applies"
+  - "Build: acceptable only if a lawyer confirms data licences for each home market in writing before engineering starts"
+  - "Hybrid: my preferred option; I would drop to buy-with-exit-clauses only if the own layer is cut and the identifiers are made portable by contract"
+  - "Any option: no 'guaranteed fit' claim and no unsubstantiated percentage in public"

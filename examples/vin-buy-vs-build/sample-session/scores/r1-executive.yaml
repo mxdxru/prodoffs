@@ -1,0 +1,20 @@
+# Round 1 scores, executive. Requirement ids from the executive mandate: growth, strategy_fit, return.
+# Red line ids from the mandate: guardrail_breach, no_strategic_case.
+# Opening reconstructed from positions/executive.yaml (stance: hybrid, only with run cost under 15k). The position file has no numeric scores.
+opening: {growth: 65, strategy_fit: 85, return: 80}
+options:
+  hybrid_phased_draft:
+    scores: {growth: 55, strategy_fit: 72, return: 40}
+    red_lines: [guardrail_breach]
+    receipt: "Vendor reply of 1 Dec sets the fee at 0.09, not the 0.08 the draft uses (evidence/vendor-reply.md; options.yaml note). At 0.09 run cost is 17,775 a month (our arithmetic, Engineering agrees), a breach of the 15,000 hard limit the owner confirmed in answers.yaml. Return falls from opening because payback month 9 was built on 0.08 and 25% adoption. Growth is lower than opening because the 9% year-1 share is not reached in the phased schedule. Strategy fit stays high because phase 2 keeps S-009 and the marketplace path open, but the phase 2 date is not yet in the files."
+    line: "Right shape for marketplace, but run cost breaches the 15k hard limit."
+  hybrid_terms_conditional:
+    scores: {growth: 50, strategy_fit: 66, return: 40}
+    red_lines: [guardrail_breach]
+    receipt: "The volume tier and minimum-fee ramp that would clear 15,000 are not in the vendor reply (evidence/vendor-reply.md; options.yaml). Without them the flat 0.09 model breaches by 2,775 a month, so the option fails the hard limit on the terms in writing. If the tier is refused, the fallback caps VIN-entry traffic at about 66,667 lookups, which cuts about a third of base lookups and lowers growth below opening. The 14-week Engineering point (range 12 to 18) leaves about 10 weeks for marketplace and eu-markets, so strategy fit is below the draft. Return is lower than the draft because one-off cost is 126k and payback is not re-run at 0.09."
+    line: "Signable only if the volume tier is written; not in the reply."
+  buy_reference:
+    scores: {growth: 65, strategy_fit: 25, return: 85}
+    red_lines: []
+    receipt: "Owner confirmed in answers.yaml that the marketplace bet is firm and not to be traded for a cheaper integration. S-040 blocks marketplace, with an 8 to 10 week remap (72k to 90k) later and no leverage on price (candidates.yaml), so strategy fit falls well below my opening. Buy stays inside all three guardrails at 0.09 (one-off 36k, run cost 10,275, payback month 4), so return is strong. Growth is the best of the three: 10% of the 12M goal in year 1 and a two-month time to value. The 1,500 run cost is unsourced in the case."
+    line: "Inside guardrails and fastest, but locks out the marketplace bet."

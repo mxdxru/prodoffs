@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prodoffs board</title>
+<style>
+@font-face{font-family:"Bricolage";src:url(fonts/bricolage-grotesque-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Bricolage";src:url(fonts/bricolage-grotesque-latin-700-normal.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Bricolage";src:url(fonts/bricolage-grotesque-latin-800-normal.woff2) format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Plex";src:url(fonts/ibm-plex-sans-latin-400-normal.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Plex";src:url(fonts/ibm-plex-sans-latin-500-normal.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Plex";src:url(fonts/ibm-plex-sans-latin-600-normal.woff2) format("woff2");font-weight:600;font-display:swap}
+:root{
+ --bg:#DFE5EA; --panel:#F5F7F9; --ink:#17212B; --muted:#56636F; --faint:#8A96A1; --rule:#C9D2DA;
+ --walnut:#5A3D2B; --walnut-edge:#7B5540; --brass:#B4862B; --brass-soft:#F1E4C3; --brass-ink:#6E4F12;
+ --ok:#2E7D5A; --ok-soft:#DCEFE5; --bad:#B23A34; --bad-soft:#F6DEDB; --warn:#B57A1F; --warn-soft:#F5E7CC;
+ --think:#3C6E9F; --track:#D3DAE1;
+ --display:"Bricolage","Avenir Next","Segoe UI",sans-serif; --text:"Plex","Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--text)}
+.wrap{max-width:1240px;margin:0 auto;padding:22px 26px 28px}
+.top{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+.ws{color:var(--muted);font-size:14px;margin:0 0 4px}
+.ws b{font-family:var(--display);font-weight:700;color:var(--ink);letter-spacing:-.01em;margin-right:10px;font-size:17px}
+.q{font-family:var(--display);font-weight:700;font-size:30px;line-height:1.12;letter-spacing:-.02em;margin:0;max-width:30ch}
+.owner{display:flex;gap:14px;align-items:center;background:var(--panel);border:1.5px solid var(--rule);border-radius:14px;padding:12px 16px;min-width:300px}
+.owner svg{flex:none}
+.owner .who{font-family:var(--display);font-weight:700;font-size:17px;line-height:1.15}
+.owner .st{font-size:13.5px;color:var(--muted);line-height:1.35;margin-top:2px}
+.owner.wait{border-color:var(--brass);background:var(--brass-soft)}
+.owner.wait .st{color:var(--brass-ink)}
+.owner.done{border-color:var(--ok);background:var(--ok-soft)}
+.owner.done .st{color:var(--ok)}
+.track{position:relative;display:grid;grid-template-columns:repeat(8,1fr);margin:20px 0 16px}
+.track:before{content:"";position:absolute;left:6.25%;right:6.25%;top:14px;height:2px;background:var(--track)}
+.track .fill{position:absolute;left:6.25%;top:14px;height:2px;background:var(--ink);transition:width .4s}
+.stn{position:relative;text-align:center;color:var(--faint);font-size:13.5px}
+.stn i{display:block;width:30px;height:30px;margin:0 auto 6px;border-radius:50%;background:var(--bg);border:2px solid var(--track);font:700 13px/26px var(--display);font-style:normal;color:var(--faint)}
+.stn.done{color:var(--muted)}.stn.done i{background:var(--ink);border-color:var(--ink);color:#fff}
+.stn.on{color:var(--ink);font-weight:600}.stn.on i{border-color:var(--brass);background:var(--brass);color:#fff;box-shadow:0 0 0 5px var(--brass-soft)}
+.stn small{display:block;font-weight:400;color:var(--brass-ink);font-size:12px;margin-top:-2px}
+.main{display:grid;grid-template-columns:1.55fr 1fr;gap:18px;align-items:start}
+.room{position:relative;background:linear-gradient(#EEF2F5,#E7ECF0);border-radius:18px;padding:10px 10px 6px;overflow:hidden}
+.cap{font-family:var(--display);font-weight:600;font-size:19px;line-height:1.3;text-align:center;padding:2px 20px 12px;min-height:40px}
+.fac{font-size:13.5px;color:var(--muted);text-align:center;padding:0 20px 10px;min-height:20px}
+.stamp{position:absolute;right:26px;top:22px;transform:rotate(-7deg);border:3px solid var(--brass);color:var(--brass-ink);border-radius:10px;padding:8px 16px 9px;text-align:center;background:rgba(241,228,195,.92);font-family:var(--display);display:none}
+.stamp b{display:block;font-size:22px;font-weight:800;letter-spacing:.01em}
+.stamp span{font-size:13px;font-weight:600}
+.side{background:var(--panel);border-radius:18px;padding:16px 18px 10px}
+.side h3{font-family:var(--display);font-weight:700;font-size:16px;margin:0 0 8px;letter-spacing:-.01em}
+.side section{padding:0 0 14px;margin:0 0 14px;border-bottom:1.5px solid var(--rule)}
+.side section:last-child{border-bottom:0;margin-bottom:0}
+.opt{display:flex;justify-content:space-between;gap:12px;font-size:14px;padding:3px 0}
+.opt span:last-child{text-align:right;font-weight:500}
+.cap-bar{height:6px;background:var(--track);border-radius:3px;margin-top:8px;overflow:hidden}.cap-bar div{height:6px;background:var(--ink);border-radius:3px}
+.case{width:100%;border-collapse:collapse;font-size:13.5px}
+.case td{padding:4px 0;border-top:1px solid var(--rule)}.case tr:first-child td{border-top:0}
+.case td:nth-child(2),.case td:nth-child(3){text-align:right;white-space:nowrap;padding-left:10px;font-variant-numeric:tabular-nums}
+.case .x{color:var(--bad)}
+.gr{font-size:13.5px;margin:6px 0}
+.gr .row{display:flex;justify-content:space-between}
+.gr .bar{position:relative;height:6px;background:var(--track);border-radius:3px;margin-top:4px}
+.gr .bar div{height:6px;border-radius:3px}
+.bet{display:flex;justify-content:space-between;font-size:13.5px;padding:2px 0}
+.tag{font-size:12.5px;font-weight:600;padding:1px 8px;border-radius:999px}
+.tag.ok{background:var(--ok-soft);color:var(--ok)}.tag.bad{background:var(--bad-soft);color:var(--bad)}
+.sc{font-size:13px;background:var(--warn-soft);color:#6B4A10;border-radius:8px;padding:5px 9px;margin-top:6px}
+.sc.blk{background:var(--bad-soft);color:var(--bad)}
+.feed div{font-size:13.5px;color:var(--muted);padding:3px 0;line-height:1.4}
+.feed time{color:var(--faint);margin-right:8px;font-variant-numeric:tabular-nums}
+.controls{display:flex;gap:10px;align-items:center;margin-top:12px;color:var(--faint);font-size:13px}
+button{font:500 13px var(--text);padding:5px 14px;border-radius:8px;border:1.5px solid var(--rule);background:var(--panel);color:var(--ink);cursor:pointer}
+button:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+@keyframes br{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.5px)}}
+.ppl{animation:br 3.2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.ppl{animation:none}}
+@media (max-width:980px){.main,.top{grid-template-columns:1fr}.track{grid-template-columns:repeat(4,1fr);row-gap:10px}.track:before,.track .fill{display:none}}
+body.wide{height:100vh;overflow:hidden}
+body.wide .wrap{max-width:none;padding:22px 30px 0}
+body.wide .q{font-size:32px;max-width:40ch}
+body.wide .controls{display:none}
+body.wide .feed div:nth-child(n+4){display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div><p class="ws" id="ws"><b>Prodoffs</b><span id="wsname">waiting for events</span></p><h1 class="q" id="q">Waiting for a task</h1></div>
+    <div class="owner" id="owner">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="#17212B"/><circle cx="20" cy="16" r="6.5" fill="#F5F7F9"/><path d="M8 33c2-7 7-10 12-10s10 3 12 10" fill="#F5F7F9"/></svg>
+      <div><div class="who" id="who">Decision owner</div><div class="st" id="ownst">A person decides. The agents prepare and recommend.</div></div>
+    </div>
+  </div>
+  <div class="track" id="track"></div>
+  <div class="main">
+    <div class="room">
+      <svg id="room" viewBox="0 0 680 368" width="100%" role="img" aria-label="Boardroom"></svg>
+      <div class="stamp" id="stamp"><b id="stampT">Approved</b><span id="stampB"></span></div>
+      <div class="fac" id="fac"></div>
+      <div class="cap" id="cap2"></div>
+    </div>
+    <div class="side">
+      <section><h3 id="optT">On the table</h3><div id="opt"><div class="opt"><span style="color:var(--faint)">No option yet</span></div></div><div id="capTxt" style="font-size:13px;color:var(--muted);margin-top:8px"></div><div class="cap-bar"><div id="cap" style="width:0"></div></div></section>
+      <section id="caseSec" style="display:none"><h3 id="caseT">Business case</h3><table class="case" id="case"></table></section>
+      <section><h3>Strategy</h3><div id="guards"></div><div id="bets"></div><div id="shortcuts"></div></section>
+      <section><h3>Feed</h3><div class="feed" id="feed"></div></section>
+    </div>
+  </div>
+  <div class="controls"><button id="replay">Replay</button><span id="progress"></span></div>
+</div>
+<script>
+const PHASES=[["kickoff","Kickoff"],["briefing","Briefing"],["preparation","Preparation"],["assembly","Assembly"],["debate","Debate"],["narrowing","Narrowing"],["decision","Decision"],["outcome","Outcome"]];
+const PHASE_MAP={kickoff:"kickoff",intake:"briefing",briefing:"briefing",sealed:"preparation",preparation:"preparation",reveal:"assembly",assembly:"assembly",cross_exam:"debate",debate:"debate",converge:"debate",synthesis:"narrowing",scoring:"narrowing",narrowing:"narrowing",decision:"decision",outcome:"outcome"};
+const CAPTIONS={kickoff:"A person sets the question, the alternatives and who decides.",
+ briefing:"Every role gets the same context: strategy, business case, history, evidence.",
+ preparation:"Each role prepares alone: position, risks, questions, its own analysis.",
+ assembly:"The facilitator maps the options. Open questions go back to the decision owner.",
+ debate:"The roles challenge each other. Any change of view needs a reason.",
+ narrowing:"Options are scored. A script removes those that break red lines or guardrails.",
+ decision:"Consensus, compromise, or the owner decides.",
+ outcome:"Plan, risks and disagreements go to the decision owner."};
+const LOOKS={
+ executive:{skin:"#F1C9A5",hair:"#B4B2A9",hs:"side",suit:"#3F4448",tie:"#9C2F2B",glasses:true},
+ product:{skin:"#C68A5E",hair:"#2C2C2A",hs:"bob",suit:"#155E4C"},
+ engineering:{skin:"#E0AC80",hair:"#6B4226",hs:"short",suit:"#1F4E7A",beard:true},
+ marketing:{skin:"#F5D6BA",hair:"#993C1D",hs:"long",suit:"#4B3B8C"},
+ data:{skin:"#8D5A3B",hair:"#2C2C2A",hs:"curly",suit:"#5F6266",tie:"#B4862B",glasses:true},
+ legal:{skin:"#EAC2A0",hair:"#3A2A20",hs:"bob",suit:"#2B2F36",tie:"#5B6875",glasses:true},
+ people:{skin:"#B57A55",hair:"#1F1A17",hs:"short",suit:"#7A3E52"}};
+const FALLBACK=[{skin:"#E3B48E",hair:"#4A3426",hs:"short",suit:"#3D5A6C"},{skin:"#C9946C",hair:"#2C2C2A",hs:"long",suit:"#5C4B3A"}];
+const MOOD={pleased:"var(--ok)",neutral:"var(--faint)",concerned:"var(--warn)",angry:"var(--bad)",thinking:"var(--think)"};
+const INK="#2C2C2A",HY=172;
+const mouth={pleased:"M-8 13 Q0 21 8 13",neutral:"M-7 15 L7 15",concerned:"M-7 17 Q0 12 7 17",angry:"M-8 19 Q0 10 8 19",thinking:"M-4 15 Q0 17.5 4 15"};
+const brow={pleased:"M-13 -9 Q-8 -13 -3 -10 M3 -10 Q8 -13 13 -9",neutral:"M-13 -10 L-4 -10 M4 -10 L13 -10",concerned:"M-13 -8 L-4 -13 M4 -13 L13 -8",angry:"M-13 -14 L-3 -8 M3 -8 L13 -14",thinking:"M-13 -12 L-4 -13 M4 -14 L13 -11"};
+
+const CAP_FRONT={
+ side:"M-24 0 C-26 -29 -12 -36 2 -36 C16 -36 26 -28 24 -2 C20 -18 8 -22 -6 -20 C-14 -19 -20 -12 -24 0Z",
+ short:"M-24 -1 C-26 -28 -13 -35 0 -35 C13 -35 26 -28 24 -1 C21 -15 12 -22 0 -22 C-12 -22 -21 -15 -24 -1Z",
+ bob:"M-24 2 C-27 -28 -13 -36 0 -36 C13 -36 27 -28 24 2 C22 -10 16 -19 6 -21 C-4 -14 -16 -12 -24 2Z",
+ long:"M-24 2 C-27 -28 -13 -36 0 -36 C13 -36 27 -28 24 2 C21 -14 10 -22 -2 -21 C-12 -20 -20 -12 -24 2Z"};
+function backHair(p){
+ if(p.hs==="bob")return`<path d="M-29 20 C-34 -8 -27 -37 0 -37 C27 -37 34 -8 29 20 C25 25 19 25 17 18 L-17 18 C-19 25 -25 25 -29 20Z" fill="${p.hair}"/>`;
+ if(p.hs==="long")return`<path d="M-31 56 C-37 4 -29 -37 0 -37 C29 -37 37 4 31 56 L18 56 C20 30 22 10 20 0 L-20 0 C-22 10 -20 30 -18 56Z" fill="${p.hair}"/>`;
+ return"";}
+function frontHair(p){
+ if(p.hs==="curly")return`<g fill="${p.hair}">${[[-23,-12,8],[-18,-24,10],[-6,-31,10],[7,-31,10],[18,-25,10],[23,-13,8],[0,-36,8]].map(c=>`<circle cx="${c[0]}" cy="${c[1]}" r="${c[2]}"/>`).join("")}</g>`;
+ return CAP_FRONT[p.hs]?`<path d="${CAP_FRONT[p.hs]}" fill="${p.hair}"/>`:"";}
+function shoulder(x,y,suit){return"";}
+function sleeve(d,suit){return`<path d="${d}" stroke="${suit}" stroke-width="13" fill="none" stroke-linecap="round"/>`;}
+function handUp(x,y,k){const o=`stroke="${INK}" stroke-opacity=".35" stroke-width=".9"`;return`<ellipse cx="${x}" cy="${y}" rx="6.5" ry="6.5" fill="${k}" ${o}/><ellipse cx="${x+(-4.5)}" cy="${y-7}" rx="1.9" ry="3.4" fill="${k}" ${o} transform="rotate(-25 ${x+(-4.5)} ${y-7})"/><ellipse cx="${x+(-1.5)}" cy="${y-7}" rx="1.9" ry="3.4" fill="${k}" ${o} transform="rotate(-25 ${x+(-1.5)} ${y-7})"/><ellipse cx="${x+(1.5)}" cy="${y-7}" rx="1.9" ry="3.4" fill="${k}" ${o} transform="rotate(-25 ${x+(1.5)} ${y-7})"/><ellipse cx="${x+(4.5)}" cy="${y-7}" rx="1.9" ry="3.4" fill="${k}" ${o} transform="rotate(-25 ${x+(4.5)} ${y-7})"/><ellipse cx="${x+6}" cy="${y+1}" rx="2.6" ry="3.8" fill="${k}" ${o} transform="rotate(35 ${x+6} ${y+1})"/>`;}
+function handDown(x,y,k){const o=`stroke="${INK}" stroke-opacity=".35" stroke-width=".9"`;return`<ellipse cx="${x}" cy="${y}" rx="7" ry="5.6" fill="${k}" ${o}/><ellipse cx="${x+(-4.5)}" cy="${y+5}" rx="1.9" ry="3" fill="${k}" ${o}/><ellipse cx="${x+(-1.5)}" cy="${y+5}" rx="1.9" ry="3" fill="${k}" ${o}/><ellipse cx="${x+(1.5)}" cy="${y+5}" rx="1.9" ry="3" fill="${k}" ${o}/><ellipse cx="${x+(4.5)}" cy="${y+5}" rx="1.9" ry="3" fill="${k}" ${o}/><ellipse cx="${x+(x<0?-6:6)}" cy="${y-1}" rx="2.4" ry="3.4" fill="${k}" ${o}/>`;}
+function restL(p){return shoulder(-44,64,p.suit)+sleeve("M-44 62 Q-50 78 -32 82",p.suit)+handDown(-25,82,p.skin);}
+function restR(p){return shoulder(44,64,p.suit)+sleeve("M44 62 Q50 78 32 82",p.suit)+handDown(25,82,p.skin);}
+function arms(p,m){const k=p.skin;
+ if(m==="angry")return shoulder(-43,64,p.suit)+shoulder(43,64,p.suit)+sleeve("M-42 60 Q-20 70 28 74",p.suit)+sleeve("M42 60 Q20 70 -28 74",p.suit)+`<circle cx="31" cy="74" r="6.5" fill="${k}"/><circle cx="-31" cy="74" r="6.5" fill="${k}"/>`;
+ if(m==="concerned"||m==="thinking")return restL(p)+shoulder(43,64,p.suit)+sleeve("M42 62 L60 80",p.suit)+sleeve("M60 80 Q52 56 34 40",p.suit)+handUp(30,36,k);
+ if(m==="pleased")return restR(p)+shoulder(-43,62,p.suit)+sleeve("M-42 58 C-54 40 -57 22 -55 6",p.suit)+
+  `<rect x="-62" y="-14" width="14" height="18" rx="6" fill="${k}"/><ellipse cx="-47" cy="-1" rx="3.5" ry="5" fill="${k}" transform="rotate(-25 -47 -1)"/><path d="M-58 -13 V-6 M-55 -14 V-6 M-52 -13 V-6" stroke="${INK}" stroke-opacity=".25" stroke-width="1"/>`;
+ return restL(p)+restR(p);}
+function person(p,m,i){const tie=p.tie?`<path d="M-3.5 46 L3.5 46 L5.5 68 L0 76 L-5.5 68Z" fill="${p.tie}"/>`:"";
+ const eyeY=m==="thinking"?-4:-1,eyeX=m==="thinking"?1.5:0;
+ return`<g transform="translate(${p.x} ${HY})"><g class="ppl" style="animation-delay:${i*0.5}s">${backHair(p)}
+ <path d="M-52 100 C-52 62 -36 46 -18 42 L18 42 C36 46 52 62 52 100Z" fill="${p.suit}"/><path d="M-15 42 L0 72 L15 42Z" fill="#F7F7F5"/>${tie}
+ <path d="M-15 42 L-6 60 L-16 57 M15 42 L6 60 L16 57" stroke="${INK}" stroke-opacity=".35" fill="none"/>
+ <rect x="-7" y="22" width="14" height="22" rx="3" fill="${p.skin}"/>
+ <ellipse cx="-23" cy="2" rx="4.5" ry="6.5" fill="${p.skin}"/><ellipse cx="23" cy="2" rx="4.5" ry="6.5" fill="${p.skin}"/>
+ <ellipse cx="0" cy="0" rx="23" ry="27" fill="${p.skin}"/>
+ ${frontHair(p)}${p.beard?`<path d="M-21 4 C-21 30 -10 34 0 34 C10 34 21 30 21 4 C16 18 9 22 0 22 C-9 22 -16 18 -21 4Z" fill="${p.hair}"/><path d="M-7 13 Q0 10 7 13" stroke="${p.hair}" stroke-width="3" fill="none" stroke-linecap="round"/>`:""}
+ <circle cx="${-8+eyeX}" cy="${eyeY}" r="2.6" fill="${INK}"/><circle cx="${8+eyeX}" cy="${eyeY}" r="2.6" fill="${INK}"/>
+ ${p.glasses?`<g stroke="${INK}" fill="none" stroke-width="1.4"><circle cx="-8" cy="-1" r="6.5"/><circle cx="8" cy="-1" r="6.5"/><path d="M-1.5 -1 L1.5 -1 M-14.5 -2 L-22 -3 M14.5 -2 L22 -3"/></g>`:""}
+ <path d="M0 3 Q2.5 8 -1 9" stroke="${INK}" stroke-opacity=".35" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+ <path d="${brow[m]}" stroke="${p.hs==="side"?"#888780":INK}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+ ${m==="pleased"?`<circle cx="-14" cy="10" r="3.5" fill="#F0997B" opacity=".5"/><circle cx="14" cy="10" r="3.5" fill="#F0997B" opacity=".5"/>`:""}
+ <path d="${mouth[m]}" stroke="${INK}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+ ${m==="angry"?`<path d="M20 -28 l4 -6 M26 -24 l6 -3" stroke="#E24B4A" stroke-width="2" stroke-linecap="round"/>`:""}
+ ${arms(p,m)}</g></g>`;}
+
+const P=new URLSearchParams(location.search);
+if(P.get("layout")==="wide")document.body.classList.add("wide");
+let S,CAP="";
+function reset(){CAP="";S={ws:"",task:null,roster:[],phase:null,round:0,roles:{},items:[],option:null,cap:null,bets:[],guards:[],goals:[],shortcuts:[],feed:[],decision:null,status:null,approval:null,escalate:null,fac:"",accepted:null,case:null};}
+function ensure(r){if(!S.roles[r]){S.roles[r]={mood:"neutral",dev:null,tol:null,red:[],text:"",thinking:false,sealed:false};if(!S.roster.includes(r)&&r!=="facilitator")S.roster.push(r)}}
+function seats(){const n=Math.max(S.roster.length,1),sp=680/n,sc=Math.min(1,5.2/n);
+ return S.roster.map((r,i)=>({r,x:sp*(i+.5),sc,sp,look:LOOKS[r]||FALLBACK[i%FALLBACK.length]}))}
+function wrap(t,n){const w=String(t).split(" "),out=[];let cur="";w.forEach(x=>{if((cur+" "+x).trim().length>n){out.push(cur.trim());cur=x}else cur+=" "+x});if(cur.trim())out.push(cur.trim());if(out.length>4){out.length=4;out[3]=out[3].replace(/\s*\S*$/,"")+"…"}return out;}
+function esc(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function title(r){return r.charAt(0).toUpperCase()+r.slice(1)}
+function bubble(x,w,text,m){const chars=Math.max(12,Math.floor(w/6.1));const lines=text?wrap(text,chars):[];if(!lines.length)return"";const h=14+lines.length*15,y=86-h;
+ return`<g><rect x="${x-w/2}" y="${y}" width="${w}" height="${h}" rx="9" fill="#FFFFFF" stroke="${MOOD[m]}" stroke-width="1.4"/>
+ <path d="M${x-6} ${y+h-.5} L${x} ${y+h+9} L${x+6} ${y+h-.5}" fill="#FFFFFF" stroke="${MOOD[m]}" stroke-width="1.4"/><rect x="${x-7}" y="${y+h-2}" width="14" height="3" fill="#FFFFFF"/>
+ ${lines.map((l,i)=>`<text x="${x}" y="${y+18+i*15}" text-anchor="middle" font-size="11.5" font-family="Plex,sans-serif" fill="#17212B">${esc(l)}</text>`).join("")}</g>`;}
+function renderRoom(){let h=`<rect x="0" y="${HY+86}" width="680" height="200" fill="transparent"/>`;const st=seats();
+ st.forEach((s,i)=>{const R=S.roles[s.r];const m=R.thinking?"thinking":R.mood;const p={...s.look,x:0};
+  h+=`<g transform="translate(${s.x} 0) scale(${s.sc}) translate(0 ${HY*(1/s.sc-1)})">${person(p,m,i).replace(`translate(0 ${HY})`,`translate(0 ${HY})`)}</g>`});
+ h+=`<rect x="6" y="${HY+84}" width="668" height="12" rx="4" fill="var(--walnut-edge)"/><rect x="14" y="${HY+96}" width="652" height="42" fill="var(--walnut)"/>`;
+ st.forEach(s=>{const R=S.roles[s.r],m=R.thinking?"thinking":R.mood,bw=Math.min(132,s.sp-6),pw=Math.min(104,s.sp-12);
+  const txt=R.thinking?"…":(R.sealed&&!R.text?"Position ready":R.text);
+  h+=bubble(s.x,bw,txt,m);
+  h+=`<rect x="${s.x-pw/2}" y="${HY+102}" width="${pw}" height="30" rx="5" fill="#EFE6D2" stroke="var(--brass)" stroke-width="1"/><circle cx="${s.x-pw/2+12}" cy="${HY+117}" r="5" fill="${MOOD[m]}"/>
+  <text x="${s.x-pw/2+22}" y="${HY+114}" font-size="12.5" font-weight="700" font-family="Bricolage,sans-serif" fill="#17212B">${title(s.r)}</text><text x="${s.x-pw/2+22}" y="${HY+127}" font-size="11" font-family="Plex,sans-serif" fill="#56636F">${m}</text>`;
+  const bwid=Math.min(112,s.sp-14),bx=s.x-bwid/2,y=HY+152;h+=`<rect x="${bx}" y="${y}" width="${bwid}" height="6" rx="3" fill="var(--track)"/>`;
+  if(R.dev!==null){h+=`<rect x="${bx}" y="${y}" width="${Math.min(1,R.dev/0.25)*bwid}" height="6" rx="3" fill="${MOOD[m]}"/><rect x="${bx+Math.min(1,R.tol/0.25)*bwid-.75}" y="${y-4}" width="1.5" height="14" fill="#17212B"/>`}
+  const red=R.red&&R.red.length?" · red line":"";
+  h+=`<text x="${s.x}" y="${y+24}" text-anchor="middle" font-size="11.5" font-family="Plex,sans-serif" fill="${R.red&&R.red.length?"#B23A34":"#56636F"}">${R.dev===null?"not scored":Math.round(R.dev*100)+"% of "+Math.round(R.tol*100)+"%"+(R.red&&R.red.length?", red line":"")}</text>`;});
+ document.getElementById("room").innerHTML=h;}
+function money(v){return Math.round(v/1000).toLocaleString("en")+"k"}
+function render(){
+ document.getElementById("wsname").textContent=S.ws||"";
+ document.getElementById("q").textContent=S.task?S.task.question:"Waiting for a task";
+ const owner=S.task?S.task.owner:"Decision owner";document.getElementById("who").textContent=owner;
+ const ob=document.getElementById("owner"),os=document.getElementById("ownst");ob.className="owner";
+ if(S.approval){ob.classList.add("done");os.textContent=`Decided: ${S.approval.option}${S.approval.status==="override"?" (override)":""}. Recorded as ${S.approval.decision||"a decision"}.`}
+ else if(S.decision){ob.classList.add("wait");os.textContent=`The agents recommend ${S.decision} (${S.status}). Your call.`}
+ else if(S.escalate){ob.classList.add("wait");os.textContent=`No agreement. Closest option: ${S.escalate}. Your call.`}
+ else os.textContent="Decides. The agents prepare and recommend.";
+ const idx=PHASES.findIndex(p=>p[0]===(S.phase||"kickoff"));
+ document.getElementById("track").innerHTML=`<div class="fill" style="width:${Math.max(0,idx)/7*87.5}%"></div>`+PHASES.map((p,i)=>`<div class="stn ${i<idx?"done":""} ${i===idx?"on":""}"><i>${i+1}</i>${p[1]}${i===idx&&S.round&&(p[0]==="debate"||p[0]==="narrowing")?`<small>round ${S.round}</small>`:""}</div>`).join("");
+ renderRoom();
+ const stp=document.getElementById("stamp");if(S.approval){stp.style.display="block";document.getElementById("stampT").textContent=S.approval.status==="override"?"Owner override":"Approved";document.getElementById("stampB").textContent=`by ${S.approval.by}, option ${S.approval.option}`}else stp.style.display="none";
+ document.getElementById("cap2").textContent=CAP;
+ document.getElementById("fac").textContent=S.fac?"Facilitator: "+S.fac:"";
+ document.getElementById("optT").textContent=S.option?`On the table: option ${S.option}`:"On the table";
+ if(S.items.length)document.getElementById("opt").innerHTML=S.items.map(i=>`<div class="opt"><span>${esc(i.name)}</span><span>${esc(i.label)}</span></div>`).join("");
+ if(S.cap){document.getElementById("cap").style.width=Math.min(100,S.cap.used/S.cap.total*100)+"%";document.getElementById("capTxt").textContent=`Uses ${S.cap.used} of ${S.cap.total} team-weeks`}
+ if(S.case){document.getElementById("caseSec").style.display="block";document.getElementById("caseT").textContent=`Business case, ${S.case.years}-year net (${S.case.currency})`;
+  document.getElementById("case").innerHTML=Object.entries(S.case.options).map(([k,o])=>`<tr><td>${esc(o.label)}</td><td>${money(o.total_net)}</td><td class="${o.guardrails_ok===false?"x":""}">${o.guardrails_ok===false?"breaks guardrails":(o.payback_month?"payback m"+o.payback_month:"")}</td></tr>`).join("")}
+ document.getElementById("guards").innerHTML=(S.goals||[]).map(g=>`<div class="gr"><div class="row"><span>${esc(g.name)}</span><span>${Math.round(g.share_year1*100)}% of target</span></div></div>`).join("")+
+  (S.guards||[]).map(g=>{const pct=g.value==null?100:Math.min(100,g.value/g.limit*100);return`<div class="gr"><div class="row"><span>${esc(g.name)}</span><span style="color:${g.ok?"var(--ok)":"var(--bad)"}">${g.value==null?"none":Number(g.value).toLocaleString("en")} of ${Number(g.limit).toLocaleString("en")}</span></div><div class="bar"><div style="width:${pct}%;background:${g.ok?"var(--ok)":"var(--bad)"}"></div></div></div>`}).join("");
+ document.getElementById("bets").innerHTML=S.bets.map(x=>`<div class="bet"><span>${esc(x.name)}</span><span class="tag ${x.status==="on_track"?"ok":"bad"}">${x.status==="on_track"?"on track":"at risk"+(x.because.length?", "+x.because.join(", "):"")}</span></div>`).join("");
+ document.getElementById("shortcuts").innerHTML=S.shortcuts.map(s=>`<div class="sc ${s.blocks.length?"blk":""}"><b>${s.id}</b> ${esc(s.text)}${s.blocks.length?", blocks "+s.blocks.join(", "):""}</div>`).join("");
+ document.getElementById("feed").innerHTML=S.feed.slice(-6).reverse().map(f=>`<div><time>${f.t}</time>${esc(f.x)}</div>`).join("");}
+function log(ev,x){if(document.body.classList.contains("wide")&&x.length>130)x=x.slice(0,127)+"…";S.feed.push({t:(ev.ts||"").slice(11,16),x});}
+function apply(ev){switch(ev.type){
+ case"cast":S.ws=ev.workspace||"";(ev.roles||[]).forEach(ensure);break;
+ case"task":S.task=ev;S.roster=[];S.roles={};ev.roles.forEach(ensure);log(ev,`Task set by ${ev.owner}`);break;
+ case"phase":S.phase=PHASE_MAP[ev.phase]||ev.phase;S.round=ev.round||0;CAP=CAPTIONS[S.phase]||CAP;log(ev,"Phase: "+((PHASES.find(p=>p[0]===S.phase)||[0,ev.phase])[1]));
+  if(S.phase==="preparation")Object.values(S.roles).forEach(r=>{r.text="";r.sealed=false});break;
+ case"agent":if(ev.role==="facilitator"){if(ev.text&&ev.state==="done")S.fac=ev.text;break}ensure(ev.role);
+  S.roles[ev.role].thinking=ev.state==="thinking";if(ev.state==="done"){S.roles[ev.role].sealed=true}break;
+ case"say":if(ev.role==="facilitator"){S.fac=ev.text}else{ensure(ev.role);S.roles[ev.role].text=ev.text}
+  log(ev,(ev.role==="facilitator"?"Facilitator":title(ev.role))+": "+ev.text);break;
+ case"scores":S.option=ev.option;S.accepted=ev.accepted;S.cap=ev.capacity;
+  for(const r in ev.roles){ensure(r);const x=ev.roles[r];Object.assign(S.roles[r],{dev:x.deviation,tol:x.tolerance,mood:x.mood,red:x.red_lines})}
+  log(ev,`Scored ${ev.option}`);break;
+ case"roadmap":S.items=ev.items;S.option=ev.option;S.cap=ev.capacity;S.shortcuts=[];break;
+ case"strategy":S.bets=ev.bets;if(ev.guardrails)S.guards=ev.guardrails;if(ev.goals)S.goals=ev.goals;break;
+ case"shortcut":S.shortcuts.push(ev);break;
+ case"case":S.case=ev;log(ev,"Business case computed");break;
+ case"decision":S.decision=ev.option;S.status=ev.status;S.phase="decision";CAP=`Recommendation: ${ev.option}, by ${ev.status}. Now the decision owner decides.`;log(ev,`Recommendation: ${ev.option} (${ev.status})`);break;
+ case"escalate":S.escalate=ev.closest;S.phase="decision";CAP="No agreement. The decision owner decides.";log(ev,"Escalated to the decision owner");break;
+ case"approval":S.approval=ev;S.phase="outcome";CAP=`${ev.by} ${ev.status==="override"?"chose":"approved"} ${ev.option}. Decision recorded.`;
+  Object.values(S.roles).forEach(r=>{if(!r.red||!r.red.length)r.mood=r.mood==="angry"?"concerned":r.mood});log(ev,`Approved by ${ev.by}: ${ev.option}`);break;
+ case"note":if(ev.caption||/Unanimous|flaw|rejected|Veto|veto|Owner answered/.test(ev.text))CAP=ev.text.replace(/; red lines.*/,".");log(ev,ev.text);break;}}
+async function fetchEvents(){const src=P.get("events");if(!src)return[];const r=await fetch(src+(src.includes("?")?"&":"?")+"t="+Date.now());
+ const txt=await r.text();return txt.split("\n").filter(Boolean).map(l=>JSON.parse(l));}
+let timer=null,applied=0;
+async function start(){reset();clearInterval(timer);applied=0;const evs=await fetchEvents();window.EVS=evs;const prog=document.getElementById("progress");
+ if(P.get("live")){const tick=async()=>{const all=await fetchEvents();while(applied<all.length)apply(all[applied++]);render();prog.textContent=`live, ${applied} events`};await tick();timer=setInterval(tick,1000);return}
+ const upto=P.get("upto");if(upto){evs.slice(0,+upto).forEach(apply);render();prog.textContent=`${Math.min(+upto,evs.length)} of ${evs.length} events`;return}
+ const speed=+(P.get("speed")||900);render();timer=setInterval(()=>{if(applied>=evs.length){clearInterval(timer);return}apply(evs[applied++]);render();prog.textContent=`${applied} of ${evs.length} events`},speed);}
+document.getElementById("replay").onclick=start;
+reset();render();if(P.get("events"))start();else document.getElementById("wsname").textContent="Open with ?events=/path/to/events.jsonl";
+</script>
+</body>
+</html>

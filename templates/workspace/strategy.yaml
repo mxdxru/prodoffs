@@ -1,0 +1,16 @@
+company: "One line: what the business sells, to whom, where."
+horizon: "Next 12 months"
+goals:                                  # where the company is going, with numbers
+  - id: revenue-growth
+    name: "Revenue +20% this year"
+    metric: revenue                     # revenue goals are checked against the business case
+    baseline: 50000000
+    target_growth: 0.20
+guardrails:                             # hard limits for any single decision
+  max_one_off_investment: 150000
+  max_added_run_cost_monthly: 15000
+  max_payback_months: 12
+bets:                                   # concrete plans the next decisions must not block
+  - id: example-bet
+    name: "Launch in two new markets, H2"
+    detail: "Why it matters and what it depends on."
