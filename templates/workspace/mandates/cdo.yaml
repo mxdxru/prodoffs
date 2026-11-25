@@ -1,0 +1,22 @@
+# Template mandate: adjust owned metrics, red lines and requirement weights (must sum to 1.0).
+role: cdo
+title: Chief Data Officer
+owns:
+- core data models
+- measurability
+- data compliance
+red_lines:
+- id: shared_core_data
+  rule: Core data models must not be tied to one market, catalog or partner
+- id: measurable
+  rule: Every launch has instrumentation and a success metric
+requirements:
+- id: core_data
+  weight: 0.45
+  desc: Core data models reusable across markets, catalogs and partners
+- id: measurement
+  weight: 0.35
+  desc: Launches are instrumented from day one
+- id: data_debt
+  weight: 0.2
+  desc: No new manual data maintenance

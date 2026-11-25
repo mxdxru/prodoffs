@@ -1,0 +1,40 @@
+# Accepted: H3 (vehicle-id: hybrid_layer_measured), round 2. Strongest losing arguments per role.
+dissent:
+  - role: cto
+    argument: >-
+      VIN entry first (live around week 6) runs ahead of the search, cart and returns migration. Under
+      season pressure the quick path is to store the vendor's vehicle ID in search and cart "for now",
+      which recreates S-040 by the back door and leaves S-009 open past the season. The migration then
+      competes with marketplace work and never finishes.
+    revisit_if: >-
+      Any VIN-entry code path writes or reads a vendor vehicle ID outside the vehicle-ID layer (checked at
+      the week 6 launch review and every release after), or search, cart and returns still read supplier IDs
+      at end of week 12. Either one stops new VIN features until the layer path is restored and S-009 is closed.
+  - role: cpo
+    argument: >-
+      The 10 per cent holdout withholds VIN entry from one session in ten during the spring repair season,
+      when workshops need it most. Each held-out workshop that hits a dropdown dead end in March is a lost
+      first impression, and the case does not model that loss.
+    revisit_if: >-
+      The holdout runs past 8 weeks after launch (end of week 14), or by week 4 of the holdout the VIN cohort
+      already shows search-to-order conversion at least 0.5 points above holdout with a significant result,
+      in which case the holdout is cut to 5 per cent or ended early.
+  - role: ceo
+    argument: >-
+      Steelman of buy (shared by the CMO): direct vendor integration is live in month 2 for 4 team-weeks,
+      frees 10 more team-weeks for other revenue work and leads H3 by 186,110 over three years
+      (839,880 versus 653,770). Even after the 8 to 10 week S-040 remap (72k to 90k) it stays ahead on paper.
+      The layer is only worth it while the marketplace bet is real.
+    revisit_if: >-
+      The marketplace bet is dropped from strategy.yaml or moved beyond the next 12 months, or VIN entry is
+      not live for customers by end of week 8. Then re-run the case and re-score buy against the remaining layer work.
+  - role: cdo
+    argument: >-
+      Steelman of own decoding (shared by the CTO on cost): H3 owns the vehicle ID but not the decoding. Every
+      VIN stays on per-lookup fees and on a vendor precision claim (0.985) that has never been measured on our
+      catalog mapping. Build is the only version whose year-2 economics are actually paid for, and the decoding
+      rules would be auditable.
+    revisit_if: >-
+      Measured vendor precision on our catalog falls below 0.975 over the 8-week holdout, or monthly vendor
+      spend exceeds 12,000 EUR, or home-market VIN lookups exceed 150,000 a month (assumption: about 97,500).
+      Any one brings own home-market decoding forward as a separate candidate before the month-9 go/no-go.

@@ -1,0 +1,4 @@
+role: cto
+stance: "Pricing engine, or no new markets"
+proposal: {deferred-payment: quick_layer, vin-search: full, onboarding: full, loyalty: later, pricing-engine: part1}
+risks: ["S-014 grows by a week for every country or tier added", "Conceded in D-0012 and D-0015 on the same module"]

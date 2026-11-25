@@ -1,0 +1,20 @@
+# Template mandate: adjust owned metrics, red lines and requirement weights (must sum to 1.0).
+role: cpo
+title: Chief Product Officer
+owns:
+- time-to-market
+- adoption
+- retention
+red_lines:
+- id: season_window
+  rule: Core features must ship before the market window
+requirements:
+- id: ttm
+  weight: 0.45
+  desc: Customer-facing value ships early in the period
+- id: adoption
+  weight: 0.35
+  desc: Removes the top reasons customers do not adopt or come back
+- id: ux_quality
+  weight: 0.2
+  desc: No half-finished flows in front of customers

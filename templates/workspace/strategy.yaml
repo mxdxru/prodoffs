@@ -1,0 +1,7 @@
+company: "One line: what the business sells, to whom, where."
+horizon: "Next 12 months"
+bets:
+  # Concrete, checkable bets. "Grow revenue" is not a bet.
+  - id: example-bet
+    name: "Launch in two new markets, H2"
+    detail: "Why it matters and what it depends on."

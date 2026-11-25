@@ -1,0 +1,10 @@
+role: cmo
+title: Chief Marketing Officer
+owns: [positioning, acquisition cost, competitive response]
+red_lines:
+  - id: broken_promise
+    rule: "Nothing that contradicts a public promise already made"
+requirements:
+  - {id: competitive, weight: 0.50, desc: "Answers the competitor's workshop cashback campaign"}
+  - {id: story,       weight: 0.30, desc: "Gives a launch story for the spring season"}
+  - {id: cac,         weight: 0.20, desc: "Lowers workshop acquisition cost"}

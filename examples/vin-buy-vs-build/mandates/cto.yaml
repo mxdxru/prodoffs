@@ -1,0 +1,25 @@
+role: cto
+title: Chief Technology Officer
+owns:
+- scalability
+- reliability
+- tech debt
+- team capacity
+red_lines:
+- id: no_orphan_service
+  rule: Every new service has an owning team
+- id: no_strategic_blocker
+  rule: No new shortcut that blocks a strategic bet
+requirements:
+- id: arch_fit
+  weight: 0.35
+  desc: Own vehicle-ID layer; vendors replaceable behind it
+- id: debt
+  weight: 0.3
+  desc: Pays down S-009 rather than deepening it
+- id: capacity
+  weight: 0.2
+  desc: Fits the 24 team-week budget with buffer
+- id: reversibility
+  weight: 0.15
+  desc: Can switch vendor or approach without remapping core systems

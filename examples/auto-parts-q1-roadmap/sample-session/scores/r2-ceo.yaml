@@ -1,0 +1,4 @@
+opening: {revenue_q1: 90, strategy_fit: 80, margin: 90}
+options:
+  H1: {scores: {revenue_q1: 95, strategy_fit: 40, margin: 85}, red_lines: []}
+  H2: {scores: {revenue_q1: 78, strategy_fit: 75, margin: 75}, red_lines: [], line: "Works for Q1 revenue"}

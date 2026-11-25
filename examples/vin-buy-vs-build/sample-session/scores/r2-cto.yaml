@@ -1,0 +1,17 @@
+opening: {arch_fit: 90, debt: 88, capacity: 85, reversibility: 88}
+options:
+  H1:
+    scores: {arch_fit: 85, debt: 85, capacity: 60, reversibility: 85}
+    red_lines: [no_orphan_service]
+    receipt: "Cross-exam: case books an own decoder with no weeks, owner or licences funded"
+    line: "A decoder nobody builds or owns. Not signing that."
+  H2:
+    scores: {arch_fit: 90, debt: 88, capacity: 85, reversibility: 90}
+    red_lines: []
+    receipt: "Recomputed case: vendor_share flat 1.0, no sunk decoder, cleaner vendor switch"
+    line: "Layer, S-009 closed, honest numbers. This is the job."
+  H3:
+    scores: {arch_fit: 88, debt: 80, capacity: 78, reversibility: 90}
+    red_lines: []
+    receipt: "VIN-entry-first can push search, cart, returns migration past season; 14 weeks"
+    line: "VIN first only through our layer; migration stays in done_when."

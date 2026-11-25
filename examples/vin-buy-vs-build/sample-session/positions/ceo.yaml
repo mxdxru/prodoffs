@@ -1,0 +1,62 @@
+role: ceo
+stance: "Hybrid: revenue by month 3, marketplace safe"
+proposal:
+  vehicle-id: hybrid
+business_case_view: >
+  I trust the direction: VIN pays back fast and returns are the biggest lever (17% return rate, 45% fitment).
+  I doubt vin_entry_share 0.25 (every option's revenue hangs on it, so it needs a two-week A/B before we lock a
+  contract) and the hybrid Year 3 matching Year 2 although vendor_share drops from 0.55 to 0.35; buy's 839,880
+  also ignores that S-040 costs the marketplace bet and 8 to 10 weeks of remap later.
+alternatives:
+  buy:
+    pros:
+      - "Best 3-year net in the case (839,880) and payback in month 4"
+      - "Value in month 2, so conversion and returns move inside revenue_q1's two-quarter window"
+      - "4 team weeks leaves 20 of the 24-week budget for other revenue work"
+    cons:
+      - "S-040 keys search, cart and returns to vendor IDs and blocks the marketplace bet; block_on_strategy_risk makes it unacceptable as specified"
+      - "Deepens S-009 instead of fixing it: two supplier ID schemes, no own layer"
+      - "Margin leak: about 97,500 lookups a month at 0.08 plus 15% a year price growth and a 6,000 monthly minimum; no leverage at renewal"
+  build:
+    pros:
+      - "No per-lookup fees, so best on margin once running; fixes S-009"
+      - "Full ownership of vehicle IDs for marketplace matching"
+    cons:
+      - "Year 1 net -32,127 and payback in month 31: no visible revenue within two quarters"
+      - "22 of 24 team weeks for one initiative; nothing else ships"
+      - "S-041 covers home markets only and blocks the eu-markets H2 bet (6 to 8 weeks per country)"
+      - "Hit rate starts at 72%: a worse customer experience than the vendor at launch, which can hurt conversion rather than lift it"
+      - "Run cost 21,000 a month is a fixed cost that does not shrink if VIN adoption is lower than 25%"
+  hybrid:
+    pros:
+      - "Breaks no strategic bet: S-042 blocks nothing, fixes S-009, own vehicle-ID layer serves marketplace and new markets"
+      - "Value in month 3 with 95% hit rate, so revenue_q1 is still met"
+      - "580,744 over 3 years, payback month 9; gives up about 260k versus buy to keep the marketplace and avoid a later remap"
+      - "Vendor share falls to 35% by year 3: per-lookup fees shrink instead of growing, and we hold renegotiation leverage"
+      - "12 team weeks fits the 24-week budget with room left"
+    cons:
+      - "Per-lookup fees and the 6,000 minimum stay for the long tail and foreign VINs (S-042)"
+      - "Own decoding from year 2 is a promise, not a plan yet; if it slips, hybrid becomes buy with an extra layer and higher run cost (9,000 a month)"
+      - "One month later to value than buy"
+risks:
+  - "Buy: the marketplace at year end inherits vendor IDs; the remap (8 to 10 weeks) lands exactly when marketplace engineering is needed, and the vendor can raise prices knowing we cannot leave"
+  - "Buy: fee growth of 15% a year turns VIN success into structural cost growth; higher adoption means a bigger bill, not better margin"
+  - "Build: Q1 and Q2 show zero return on 198,000 one-off, and the returns-down bet (minus a third in 12 months) is missed because value arrives in month 8 at 72% coverage"
+  - "Build: launching two EU markets in H2 without VIN coverage means the new markets open with the old dropdown problem"
+  - "Hybrid: scope creep on the own layer pushes value past month 3 and erodes the revenue_q1 case"
+ideas:
+  - "Negotiate the vendor contract for hybrid with a 2-year price cap, a volume tier above 100k lookups a month and no exclusivity, using our own-decoding roadmap as leverage"
+  - "Ship the own vehicle-ID layer thin first: map vendor IDs and S-009 supplier IDs to our IDs, nothing else, so the vendor goes live in month 3"
+  - "Cache resolved VINs per customer and garage account so repeat lookups cost nothing; workshops reuse the same vehicles"
+  - "Make the year-2 own-decoding step a separate go/no-go gated on vendor spend and home-market VIN volume, not an automatic commitment"
+  - "Run a two-week VIN entry A/B on the existing search before signing, to replace the 0.25 assumption with our own number"
+plan:
+  - "Weeks 1-2: VIN entry A/B with a stub decoder on one home market; vendor contract negotiated with price cap and volume tiers"
+  - "Weeks 1-6: thin own vehicle-ID layer; map supplier IDs from S-009 and vendor IDs to it"
+  - "Weeks 6-10: vendor integration behind the layer; search, cart and returns keyed to our IDs only"
+  - "Weeks 10-12: launch in home markets, track search conversion and fitment returns weekly against the case"
+  - "Week 26: go/no-go on own decoding for home markets based on vendor spend and hit rate; marketplace onboarding uses our IDs from day one"
+conditions:
+  - "Buy acceptable only if integration is keyed to our own vehicle IDs from day one (which is hybrid in all but name) and the contract caps price growth at 5% a year for two years"
+  - "Build acceptable only if a vendor fallback covers launch until own hit rate reaches 90%, value arrives within two quarters, and eu-markets coverage is funded in the same plan"
+  - "Any option: positive 12-month contribution or an explicit strategic rationale, and no new shortcut that blocks marketplace, eu-markets or returns-down"

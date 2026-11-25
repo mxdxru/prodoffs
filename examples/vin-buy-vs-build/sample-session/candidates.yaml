@@ -1,0 +1,61 @@
+# One decision: one candidate, its versions are the alternatives.
+capacity_team_weeks: 24     # engineering budget available for this in the next two quarters
+candidates:
+  - id: vehicle-id
+    name: "Vehicle identification by VIN"
+    area: catalog
+    versions:
+      buy:
+        label: "Buy: vendor API, direct integration"
+        effort: 4
+        creates:
+          - id: S-040
+            area: catalog
+            shortcut: "Search, cart and returns keyed to the vendor's vehicle IDs"
+            saved_now: "8 weeks versus building our own vehicle-ID layer"
+            cost_later: "8 to 10 weeks to remap everything; no leverage on vendor price increases"
+            blocks: [marketplace]
+      build:
+        label: "Build: own decoder for home markets"
+        effort: 22
+        fixes: [S-009]
+        creates:
+          - id: S-041
+            area: catalog
+            shortcut: "Own decoder covers home markets only; new countries need new registry data"
+            saved_now: "10 weeks versus full European coverage"
+            cost_later: "6 to 8 weeks per new country for data sourcing and mapping"
+            blocks: [eu-markets]
+      hybrid:
+        label: "Hybrid: vendor behind own vehicle-ID layer, own decoding later"
+        effort: 12
+        fixes: [S-009]
+        creates:
+          - id: S-042
+            area: catalog
+            shortcut: "Long-tail and foreign VINs stay dependent on the vendor"
+            saved_now: "16 weeks versus own decoding everywhere"
+            cost_later: "Per-lookup fees stay for the long tail; renegotiation needed at volume"
+            blocks: []
+      hybrid_layer:
+        label: "Hybrid layer: vendor behind own vehicle-ID layer, no own decoding"
+        effort: 12
+        fixes: [S-009]
+        creates:
+          - id: S-042
+            area: catalog
+            shortcut: "All VIN decoding stays with the vendor; own decoding is a separate later decision"
+            saved_now: "10 weeks versus building a home-market decoder now"
+            cost_later: "Per-lookup fees for every VIN until own decoding is approved and built; renegotiation needed at volume"
+            blocks: []
+      hybrid_layer_measured:
+        label: "Hybrid layer, VIN entry first, holdout, price-capped vendor, VIN landing pages"
+        effort: 14
+        fixes: [S-009]
+        creates:
+          - id: S-042
+            area: catalog
+            shortcut: "All VIN decoding stays with the vendor; own decoding is a separate later decision"
+            saved_now: "10 weeks versus building a home-market decoder now"
+            cost_later: "Per-lookup fees for every VIN until own decoding is approved and built; growth capped by contract"
+            blocks: []

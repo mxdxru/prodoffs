@@ -1,0 +1,68 @@
+capacity_team_weeks: 30
+candidates:
+  - id: deferred-payment
+    name: "Deferred payment for workshops"
+    area: payments
+    versions:
+      full:
+        label: "Full, in-house"
+        effort: 8
+      quick:
+        label: "Quick, provider hardwired"
+        effort: 3
+        creates:
+          - id: S-022
+            area: payments
+            shortcut: "Payment provider hardwired into checkout"
+            saved_now: "5 weeks"
+            cost_later: "4 weeks to extract, +1 week per country added before that"
+            blocks: [eu-markets]
+      quick_layer:
+        label: "Quick, behind payment layer"
+        effort: 6
+        creates:
+          - id: S-021
+            area: payments
+            shortcut: "External provider fees above in-house cost"
+            saved_now: "2 weeks"
+            cost_later: "Margin loss; revisit when deferred volume passes the threshold"
+            blocks: []
+  - id: vin-search
+    name: "VIN-based part search"
+    area: catalog
+    versions:
+      full:
+        label: "Full, shared fitment service"
+        effort: 7
+      quick:
+        label: "Quick, own catalog only"
+        effort: 4
+        creates:
+          - id: S-023
+            area: catalog
+            shortcut: "Fitment rules tied to own catalog; third-party parts cannot be matched to vehicles"
+            saved_now: "3 weeks"
+            cost_later: "6 weeks to rebuild as a service"
+            blocks: [marketplace]
+  - id: onboarding
+    name: "Workshop self-service onboarding"
+    area: b2b
+    versions:
+      full:
+        label: "Full"
+        effort: 5
+  - id: loyalty
+    name: "Workshop loyalty and cashback"
+    area: b2b
+    versions:
+      full:
+        label: "Full"
+        effort: 7
+  - id: pricing-engine
+    name: "Pricing engine, part 1"
+    area: pricing
+    versions:
+      part1:
+        label: "Pulled in"
+        effort: 10
+        fixes: [S-014]

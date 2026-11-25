@@ -1,0 +1,4 @@
+dissent:
+  - role: cmo
+    argument: "Loyalty moved to Q2 leaves the competitor's cashback campaign unanswered this quarter."
+    revisit_if: "weekly-ordering workshops drop by more than 5% during Q1"

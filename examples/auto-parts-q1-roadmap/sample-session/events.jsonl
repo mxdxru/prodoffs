@@ -1,0 +1,54 @@
+{"ts": "2026-11-25T11:54:30", "type": "cast", "workspace": "auto-parts-q1-roadmap"}
+{"ts": "2026-11-25T11:54:30", "type": "phase", "phase": "intake", "round": 0}
+{"ts": "2026-11-25T11:54:30", "type": "note", "text": "Loaded strategy, 5 candidates, open shortcut S-014, concession balances"}
+{"ts": "2026-11-25T11:54:30", "type": "strategy", "bets": [{"id": "eu-markets", "name": "New EU markets, H2", "status": "at_risk", "because": ["S-014"], "new_risk": []}, {"id": "marketplace", "name": "Marketplace, year end", "status": "on_track", "because": [], "new_risk": []}, {"id": "b2b-growth", "name": "B2B workshop growth", "status": "at_risk", "because": ["S-014"], "new_risk": []}]}
+{"ts": "2026-11-25T11:54:31", "type": "phase", "phase": "sealed", "round": 1}
+{"ts": "2026-11-25T11:54:31", "type": "agent", "role": "ceo", "state": "thinking"}
+{"ts": "2026-11-25T11:54:31", "type": "agent", "role": "cpo", "state": "thinking"}
+{"ts": "2026-11-25T11:54:31", "type": "agent", "role": "cto", "state": "thinking"}
+{"ts": "2026-11-25T11:54:31", "type": "agent", "role": "cmo", "state": "thinking"}
+{"ts": "2026-11-25T11:54:31", "type": "agent", "role": "cdo", "state": "thinking"}
+{"ts": "2026-11-25T11:54:31", "type": "agent", "role": "ceo", "state": "done", "text": "Position sealed"}
+{"ts": "2026-11-25T11:54:31", "type": "agent", "role": "cpo", "state": "done", "text": "Position sealed"}
+{"ts": "2026-11-25T11:54:31", "type": "agent", "role": "cto", "state": "done", "text": "Position sealed"}
+{"ts": "2026-11-25T11:54:31", "type": "agent", "role": "cmo", "state": "done", "text": "Position sealed"}
+{"ts": "2026-11-25T11:54:31", "type": "agent", "role": "cdo", "state": "done", "text": "Position sealed"}
+{"ts": "2026-11-25T11:54:31", "type": "phase", "phase": "reveal", "round": 1}
+{"ts": "2026-11-25T11:54:31", "type": "say", "role": "ceo", "text": "B2B revenue in Q1, please"}
+{"ts": "2026-11-25T11:54:31", "type": "say", "role": "cpo", "text": "Payments and onboarding first"}
+{"ts": "2026-11-25T11:54:31", "type": "say", "role": "cto", "text": "Pricing engine, or no new markets"}
+{"ts": "2026-11-25T11:54:31", "type": "say", "role": "cmo", "text": "Competitor cashback is live"}
+{"ts": "2026-11-25T11:54:31", "type": "say", "role": "cdo", "text": "Fitment must be a shared service"}
+{"ts": "2026-11-25T11:54:32", "type": "phase", "phase": "cross_exam", "round": 1}
+{"ts": "2026-11-25T11:54:32", "type": "say", "role": "cto", "text": "Quick payments hardwire the provider"}
+{"ts": "2026-11-25T11:54:32", "type": "say", "role": "cdo", "text": "Loyalty needs tiered pricing first"}
+{"ts": "2026-11-25T11:54:32", "type": "phase", "phase": "synthesis", "round": 1}
+{"ts": "2026-11-25T11:54:32", "type": "say", "role": "facilitator", "text": "Two hybrids: H1 revenue-first, H2 balanced"}
+{"ts": "2026-11-25T11:54:32", "type": "phase", "phase": "scoring", "round": 2}
+{"ts": "2026-11-25T11:54:32", "type": "scores", "round": 2, "option": "H1", "accepted": false, "featured": false, "roles": {"ceo": {"deviation": 0.17, "tolerance": 0.2, "mood": "concerned", "red_lines": []}, "cpo": {"deviation": 0.04, "tolerance": 0.19, "mood": "pleased", "red_lines": []}, "cto": {"deviation": 0.51, "tolerance": 0.12, "mood": "angry", "red_lines": ["no_strategic_blocker"]}, "cmo": {"deviation": 0.0, "tolerance": 0.18, "mood": "pleased", "red_lines": []}, "cdo": {"deviation": 0.37, "tolerance": 0.2, "mood": "angry", "red_lines": ["shared_fitment"]}}, "capacity": {"used": 24, "total": 30}}
+{"ts": "2026-11-25T11:54:32", "type": "roadmap", "option": "H1", "items": [{"id": "deferred-payment", "name": "Deferred payment for workshops", "version": "full", "label": "Full, in-house"}, {"id": "vin-search", "name": "VIN-based part search", "version": "quick", "label": "Quick, own catalog only"}, {"id": "onboarding", "name": "Workshop self-service onboarding", "version": "full", "label": "Full"}, {"id": "loyalty", "name": "Workshop loyalty and cashback", "version": "full", "label": "Full"}, {"id": "pricing-engine", "name": "Pricing engine, part 1", "version": "later", "label": "Moved to next quarter"}], "capacity": {"used": 24, "total": 30}}
+{"ts": "2026-11-25T11:54:32", "type": "strategy", "bets": [{"id": "eu-markets", "name": "New EU markets, H2", "status": "at_risk", "because": ["S-014"], "new_risk": []}, {"id": "marketplace", "name": "Marketplace, year end", "status": "at_risk", "because": ["S-023"], "new_risk": ["S-023"]}, {"id": "b2b-growth", "name": "B2B workshop growth", "status": "at_risk", "because": ["S-014"], "new_risk": []}]}
+{"ts": "2026-11-25T11:54:32", "type": "shortcut", "id": "S-023", "text": "Fitment rules tied to own catalog; third-party parts cannot be matched to vehicles", "blocks": ["marketplace"]}
+{"ts": "2026-11-25T11:54:32", "type": "note", "text": "H1: rejected, red lines no_strategic_blocker, shared_fitment"}
+{"ts": "2026-11-25T11:54:32", "type": "scores", "round": 2, "option": "H2", "accepted": false, "featured": true, "roles": {"ceo": {"deviation": 0.11, "tolerance": 0.2, "mood": "neutral", "red_lines": []}, "cpo": {"deviation": 0.14, "tolerance": 0.19, "mood": "neutral", "red_lines": []}, "cto": {"deviation": 0.18, "tolerance": 0.12, "mood": "angry", "red_lines": ["no_strategic_blocker"]}, "cmo": {"deviation": 0.09, "tolerance": 0.18, "mood": "neutral", "red_lines": []}, "cdo": {"deviation": 0.05, "tolerance": 0.2, "mood": "pleased", "red_lines": []}}, "capacity": {"used": 25, "total": 30}}
+{"ts": "2026-11-25T11:54:32", "type": "roadmap", "option": "H2", "items": [{"id": "deferred-payment", "name": "Deferred payment for workshops", "version": "quick", "label": "Quick, provider hardwired"}, {"id": "vin-search", "name": "VIN-based part search", "version": "full", "label": "Full, shared fitment service"}, {"id": "onboarding", "name": "Workshop self-service onboarding", "version": "full", "label": "Full"}, {"id": "loyalty", "name": "Workshop loyalty and cashback", "version": "later", "label": "Moved to next quarter"}, {"id": "pricing-engine", "name": "Pricing engine, part 1", "version": "part1", "label": "Pulled in"}], "capacity": {"used": 25, "total": 30}}
+{"ts": "2026-11-25T11:54:32", "type": "strategy", "bets": [{"id": "eu-markets", "name": "New EU markets, H2", "status": "at_risk", "because": ["S-022"], "new_risk": ["S-022"]}, {"id": "marketplace", "name": "Marketplace, year end", "status": "on_track", "because": [], "new_risk": []}, {"id": "b2b-growth", "name": "B2B workshop growth", "status": "on_track", "because": [], "new_risk": []}]}
+{"ts": "2026-11-25T11:54:32", "type": "shortcut", "id": "S-022", "text": "Payment provider hardwired into checkout", "blocks": ["eu-markets"]}
+{"ts": "2026-11-25T11:54:32", "type": "say", "role": "ceo", "text": "Works for Q1 revenue", "receipt": null, "option": "H2"}
+{"ts": "2026-11-25T11:54:32", "type": "say", "role": "cpo", "text": "Payments land fast. Good.", "receipt": null, "option": "H2"}
+{"ts": "2026-11-25T11:54:32", "type": "say", "role": "cto", "text": "Third concession in a row. No.", "receipt": null, "option": "H2"}
+{"ts": "2026-11-25T11:54:32", "type": "say", "role": "cmo", "text": "Fine before the season", "receipt": null, "option": "H2"}
+{"ts": "2026-11-25T11:54:32", "type": "say", "role": "cdo", "text": "Fitment as a service. Good.", "receipt": null, "option": "H2"}
+{"ts": "2026-11-25T11:54:32", "type": "note", "text": "CTO tolerance tightened to 12% after D-0012 and D-0015"}
+{"ts": "2026-11-25T11:54:32", "type": "phase", "phase": "converge", "round": 3}
+{"ts": "2026-11-25T11:54:32", "type": "say", "role": "facilitator", "text": "H2b: put payments behind a layer. CPO pays 3 weeks."}
+{"ts": "2026-11-25T11:54:32", "type": "scores", "round": 3, "option": "H2b", "accepted": true, "featured": true, "roles": {"ceo": {"deviation": 0.13, "tolerance": 0.2, "mood": "neutral", "red_lines": []}, "cpo": {"deviation": 0.19, "tolerance": 0.19, "mood": "concerned", "red_lines": []}, "cto": {"deviation": 0.1, "tolerance": 0.12, "mood": "concerned", "red_lines": []}, "cmo": {"deviation": 0.16, "tolerance": 0.18, "mood": "concerned", "red_lines": []}, "cdo": {"deviation": 0.05, "tolerance": 0.2, "mood": "pleased", "red_lines": []}}, "capacity": {"used": 28, "total": 30}}
+{"ts": "2026-11-25T11:54:32", "type": "roadmap", "option": "H2b", "items": [{"id": "deferred-payment", "name": "Deferred payment for workshops", "version": "quick_layer", "label": "Quick, behind payment layer"}, {"id": "vin-search", "name": "VIN-based part search", "version": "full", "label": "Full, shared fitment service"}, {"id": "onboarding", "name": "Workshop self-service onboarding", "version": "full", "label": "Full"}, {"id": "loyalty", "name": "Workshop loyalty and cashback", "version": "later", "label": "Moved to next quarter"}, {"id": "pricing-engine", "name": "Pricing engine, part 1", "version": "part1", "label": "Pulled in"}], "capacity": {"used": 28, "total": 30}}
+{"ts": "2026-11-25T11:54:32", "type": "strategy", "bets": [{"id": "eu-markets", "name": "New EU markets, H2", "status": "on_track", "because": [], "new_risk": []}, {"id": "marketplace", "name": "Marketplace, year end", "status": "on_track", "because": [], "new_risk": []}, {"id": "b2b-growth", "name": "B2B workshop growth", "status": "on_track", "because": [], "new_risk": []}]}
+{"ts": "2026-11-25T11:54:32", "type": "shortcut", "id": "S-021", "text": "External provider fees above in-house cost", "blocks": []}
+{"ts": "2026-11-25T11:54:32", "type": "say", "role": "ceo", "text": "Acceptable.", "receipt": null, "option": "H2b"}
+{"ts": "2026-11-25T11:54:32", "type": "say", "role": "cpo", "text": "Layer costs me 3 weeks. I pay this time.", "receipt": "Layer adds 3 weeks to payments; onboarding untouched", "option": "H2b"}
+{"ts": "2026-11-25T11:54:32", "type": "say", "role": "cto", "text": "Layer is in. I can live with it.", "receipt": "Payment layer means S-022 is not created; EU markets back on track", "option": "H2b"}
+{"ts": "2026-11-25T11:54:32", "type": "say", "role": "cmo", "text": "Loyalty in Q2 hurts a bit", "receipt": "Payments land later, weaker spring story", "option": "H2b"}
+{"ts": "2026-11-25T11:54:32", "type": "say", "role": "cdo", "text": "Still covered", "receipt": null, "option": "H2b"}
+{"ts": "2026-11-25T11:54:32", "type": "decision", "option": "H2b", "status": "accepted"}

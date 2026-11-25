@@ -1,0 +1,76 @@
+question: "Vehicle identification by VIN"
+currency: EUR
+horizon_years: 3
+cost_per_team_week: 9000
+baseline:                                  # illustrative numbers; replace with your own analytics
+  monthly_search_sessions: 600000          # sessions that include a part search
+  vehicle_identified_share: 0.35           # vehicle already known (dropdown selection) today
+  vin_entry_share: 0.25                    # of the other sessions, share that enters a VIN if offered
+  conversion_identified: 0.048             # search-to-order with a known vehicle
+  conversion_unidentified: 0.038           # search-to-order without
+  completion_uplift: 0.02                  # extra checkout completion when fitment is confirmed by VIN
+  avg_order_value: 118
+  gross_margin: 0.28
+  return_rate: 0.17                        # industry reports for auto parts are around 18-20%
+  fitment_share_of_returns: 0.45           # industry reports: close to half of returns are fitment
+  fitment_return_reduction: 0.60           # share of fitment returns a VIN match removes
+  cost_per_return: 21                      # logistics, handling, write-off
+alternatives:
+  buy:
+    label: "Buy: vendor API"
+    one_off_team_weeks: 4
+    time_to_value_months: 2
+    hit_rate: 0.95                         # share of VINs resolved to a catalog vehicle
+    precision: 0.985
+    fee_per_lookup: 0.08
+    fee_growth_per_year: 0.15              # vendor price increases
+    monthly_minimum: 6000
+    run_cost_monthly: 1500                 # monitoring, vendor management
+  build:
+    label: "Build: own decoder"
+    one_off_team_weeks: 22
+    time_to_value_months: 8
+    hit_rate: [0.72, 0.86, 0.92]           # coverage grows as mapping improves
+    precision: [0.95, 0.975, 0.985]
+    pre_launch_cost_monthly: 6000          # registry data licences paid during the build
+    run_cost_monthly: 21000                # data licences plus about 1.5 FTE upkeep
+  hybrid:
+    label: "Hybrid: vendor behind own layer"
+    one_off_team_weeks: 12
+    time_to_value_months: 3
+    hit_rate: 0.95
+    precision: 0.985
+    fee_per_lookup: 0.08
+    fee_growth_per_year: 0.15
+    monthly_minimum: 6000
+    vendor_share: [1.0, 0.55, 0.35]        # own decoding takes over home-market VINs from year 2
+    run_cost_monthly: 9000                 # own layer upkeep, partial data licences from year 2
+  hybrid_layer:
+    label: "Hybrid layer: vendor behind own layer, no own decoding"
+    one_off_team_weeks: 12
+    time_to_value_months: 3
+    hit_rate: 0.95
+    precision: 0.985
+    fee_per_lookup: 0.08
+    fee_growth_per_year: 0.15
+    monthly_minimum: 6000
+    vendor_share: 1.0                      # no own decoder is funded, so the vendor answers every lookup
+    run_cost_monthly: 4500                 # layer upkeep about 0.3 FTE plus vendor management (buy's 1,500)
+  hybrid_layer_measured:
+    label: "Hybrid layer, VIN first, holdout, price cap, landing pages"
+    one_off_team_weeks: 14                 # 12 for the layer plus 2 for VIN landing pages (CMO critique)
+    time_to_value_months: 3                # VIN entry first gives beta at week 7-8; holdout keeps month 3 conservative
+    hit_rate: 0.95
+    precision: 0.985
+    fee_per_lookup: 0.08
+    fee_growth_per_year: 0.05              # contract price cap (CEO condition: 5% a year)
+    monthly_minimum: 6000
+    vendor_share: 1.0
+    run_cost_monthly: 4500
+notes:
+  - "Undiscounted; strategic effects (marketplace, new markets) are not priced in and are argued by the roles."
+  - "Return-rate and fitment-share figures follow public industry reports for auto parts e-commerce; all other numbers are illustrative."
+  - "hybrid_layer corrects hybrid: vendor_share flat at 1.0 because the 12 team-weeks fund the layer, vendor adapter and S-009 migration but no own decoder (all five critiques)."
+  - "hybrid_layer run_cost_monthly 4,500 instead of 9,000: no decoder data licences; about 0.3 FTE layer upkeep (1 FTE about 10,000 a month, from build's 21,000 minus 6,000 licences for 1.5 FTE) plus buy's 1,500 vendor management."
+  - "hybrid_layer_measured adds 2 team-weeks for VIN landing pages (CMO), fee_growth_per_year 0.05 for a contract price cap (CEO), VIN-entry-first sequencing (CPO) and a 10 per cent holdout for 8 weeks (CDO); the holdout's small value loss is not modelled."
+  - "Own home-market decoding is not priced in any hybrid_layer version; it should come back as a separate candidate with its own effort, licences and owner."

@@ -1,0 +1,27 @@
+{
+  "autoMemoryEnabled": false,
+  "hooks": {
+    "SubagentStart": [
+      {
+        "matcher": "^prodoffs-",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PROJECT_DIR}/scripts/prodoffs.py\" hook"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "matcher": "^prodoffs-",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PROJECT_DIR}/scripts/prodoffs.py\" hook"
+          }
+        ]
+      }
+    ]
+  }
+}

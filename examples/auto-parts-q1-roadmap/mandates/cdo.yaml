@@ -1,0 +1,12 @@
+role: cdo
+title: Chief Data Officer
+owns: [catalog and fitment data, measurability, data compliance]
+red_lines:
+  - id: shared_fitment
+    rule: "Vehicle fitment logic must be a shared service, not tied to one catalog"
+  - id: measurable
+    rule: "Every launch has instrumentation and a success metric"
+requirements:
+  - {id: fitment,     weight: 0.45, desc: "Fitment data reusable for third-party sellers"}
+  - {id: measurement, weight: 0.35, desc: "Launches are instrumented from day one"}
+  - {id: data_debt,   weight: 0.20, desc: "No new manual data maintenance"}

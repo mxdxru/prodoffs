@@ -1,0 +1,123 @@
+{
+  "round": 3,
+  "best": "H2b",
+  "options": {
+    "H2b": {
+      "effort": 28,
+      "created": [
+        {
+          "id": "S-021",
+          "area": "payments",
+          "shortcut": "External provider fees above in-house cost",
+          "saved_now": "2 weeks",
+          "cost_later": "Margin loss; revisit when deferred volume passes the threshold",
+          "blocks": []
+        }
+      ],
+      "fixed": [
+        "S-014"
+      ],
+      "items": [
+        {
+          "id": "deferred-payment",
+          "name": "Deferred payment for workshops",
+          "version": "quick_layer",
+          "label": "Quick, behind payment layer"
+        },
+        {
+          "id": "vin-search",
+          "name": "VIN-based part search",
+          "version": "full",
+          "label": "Full, shared fitment service"
+        },
+        {
+          "id": "onboarding",
+          "name": "Workshop self-service onboarding",
+          "version": "full",
+          "label": "Full"
+        },
+        {
+          "id": "loyalty",
+          "name": "Workshop loyalty and cashback",
+          "version": "later",
+          "label": "Moved to next quarter"
+        },
+        {
+          "id": "pricing-engine",
+          "name": "Pricing engine, part 1",
+          "version": "part1",
+          "label": "Pulled in"
+        }
+      ],
+      "bets": [
+        {
+          "id": "eu-markets",
+          "name": "New EU markets, H2",
+          "status": "on_track",
+          "because": [],
+          "new_risk": []
+        },
+        {
+          "id": "marketplace",
+          "name": "Marketplace, year end",
+          "status": "on_track",
+          "because": [],
+          "new_risk": []
+        },
+        {
+          "id": "b2b-growth",
+          "name": "B2B workshop growth",
+          "status": "on_track",
+          "because": [],
+          "new_risk": []
+        }
+      ],
+      "roles": {
+        "ceo": {
+          "deviation": 0.13,
+          "tolerance": 0.2,
+          "red_lines": [],
+          "mood": "neutral",
+          "receipt": null,
+          "line": "Acceptable."
+        },
+        "cpo": {
+          "deviation": 0.19,
+          "tolerance": 0.19,
+          "red_lines": [],
+          "mood": "concerned",
+          "receipt": "Layer adds 3 weeks to payments; onboarding untouched",
+          "line": "Layer costs me 3 weeks. I pay this time."
+        },
+        "cto": {
+          "deviation": 0.1,
+          "tolerance": 0.12,
+          "red_lines": [],
+          "mood": "concerned",
+          "receipt": "Payment layer means S-022 is not created; EU markets back on track",
+          "line": "Layer is in. I can live with it."
+        },
+        "cmo": {
+          "deviation": 0.16,
+          "tolerance": 0.18,
+          "red_lines": [],
+          "mood": "concerned",
+          "receipt": "Payments land later, weaker spring story",
+          "line": "Loyalty in Q2 hurts a bit"
+        },
+        "cdo": {
+          "deviation": 0.05,
+          "tolerance": 0.2,
+          "red_lines": [],
+          "mood": "pleased",
+          "receipt": null,
+          "line": "Still covered"
+        }
+      },
+      "fits": true,
+      "accepted": true,
+      "overshoot": 0.0,
+      "capacity": 30
+    }
+  }
+}

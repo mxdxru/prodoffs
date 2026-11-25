@@ -1,0 +1,4 @@
+opening: {competitive: 90, story: 85, cac: 80}
+options:
+  H1: {scores: {competitive: 92, story: 88, cac: 85}, red_lines: []}
+  H2: {scores: {competitive: 75, story: 85, cac: 80}, red_lines: [], line: "Fine before the season"}

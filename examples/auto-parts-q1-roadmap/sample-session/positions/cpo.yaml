@@ -1,0 +1,4 @@
+role: cpo
+stance: "Payments and onboarding first"
+proposal: {deferred-payment: quick, vin-search: full, onboarding: full, loyalty: later, pricing-engine: later}
+risks: ["Spring repair season starts in March; anything later misses peak demand"]

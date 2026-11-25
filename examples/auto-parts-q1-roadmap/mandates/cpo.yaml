@@ -1,0 +1,10 @@
+role: cpo
+title: Chief Product Officer
+owns: [time-to-market, workshop adoption, retention]
+red_lines:
+  - id: season_window
+    rule: "Core workshop features must ship before the spring repair season"
+requirements:
+  - {id: ttm,        weight: 0.45, desc: "Workshop-facing value ships early in the quarter"}
+  - {id: adoption,   weight: 0.35, desc: "Removes the top reasons workshops do not order weekly"}
+  - {id: ux_quality, weight: 0.20, desc: "No half-finished flows in front of customers"}

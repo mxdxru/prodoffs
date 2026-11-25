@@ -1,0 +1,4 @@
+role: ceo
+stance: "B2B revenue in Q1, please"
+proposal: {deferred-payment: full, vin-search: quick, onboarding: full, loyalty: full, pricing-engine: later}
+risks: ["Without deferred payment, workshop chains keep ordering from competitors with credit terms"]

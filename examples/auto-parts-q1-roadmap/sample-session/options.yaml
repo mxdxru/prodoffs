@@ -1,0 +1,13 @@
+options:
+  H1:
+    round: 2
+    summary: "Revenue-first: full deferred payment, quick VIN search, loyalty now, pricing engine later"
+    items: {deferred-payment: full, vin-search: quick, onboarding: full, loyalty: full, pricing-engine: later}
+  H2:
+    round: 2
+    summary: "Balanced: quick deferred payment, full VIN search, pricing engine part 1, loyalty next quarter"
+    items: {deferred-payment: quick, vin-search: full, onboarding: full, loyalty: later, pricing-engine: part1}
+  H2b:
+    round: 3
+    summary: "H2 with deferred payment behind a payment layer (concession by CPO)"
+    items: {deferred-payment: quick_layer, vin-search: full, onboarding: full, loyalty: later, pricing-engine: part1}

@@ -1,0 +1,17 @@
+opening: {revenue_q1: 85, strategy_fit: 90, margin: 80}
+options:
+  H1:
+    scores: {revenue_q1: 85, strategy_fit: 82, margin: 45}
+    red_lines: []
+    receipt: "All five critiques: vendor_share 0.55/0.35 assumes an own decoder nobody funded; fees stay at 15% growth."
+    line: "580,744 counts savings from a decoder we never bought."
+  H2:
+    scores: {revenue_q1: 85, strategy_fit: 90, margin: 55}
+    red_lines: []
+    receipt: "Recomputed case: vendor_share flat 1.0, run cost 4,500; every VIN pays fees growing 15% a year."
+    line: "Honest number, marketplace safe, but fees grow with every success."
+  H3:
+    scores: {revenue_q1: 92, strategy_fit: 92, margin: 72}
+    red_lines: []
+    receipt: "5% vendor price cap, VIN entry first for spring, landing pages: year 3 net 279,149 versus 258,557."
+    line: "Price cap and spring launch. This is the one I sign."

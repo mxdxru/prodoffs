@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prodoffs board</title>
+<style>
+:root{--bg:#F7F6F2;--card:#FFFFFF;--text:#1F1F1D;--muted:#6B6A65;--faint:#9A9892;--line:#E4E2DA;--accent:#185FA5;--accent-bg:#E6F1FB;
+--ok:#3B6D11;--ok-bg:#EAF3DE;--warn:#854F0B;--warn-bg:#FAEEDA;--bad:#A32D2D;--bad-bg:#FCEBEB;--neutral:#888780;--track:#ECEAE3}
+@media (prefers-color-scheme:dark){:root{--bg:#161615;--card:#1F1F1E;--text:#EDEDEA;--muted:#A8A7A0;--faint:#7A7973;--line:#33332F;--accent:#85B7EB;--accent-bg:#0C2A47;
+--ok:#97C459;--ok-bg:#1E2D10;--warn:#EF9F27;--warn-bg:#3A2706;--bad:#F09595;--bad-bg:#3D1414;--neutral:#888780;--track:#2C2C29}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 24px 28px}
+header{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.logo{font-weight:600;font-size:18px;letter-spacing:-0.01em}
+.ws{color:var(--muted)}
+.phases{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+.ph{font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--faint)}
+.ph.done{color:var(--muted)}
+.ph.on{background:var(--accent-bg);color:var(--accent);border-color:transparent;font-weight:500}
+.badge{font-size:12px;padding:3px 10px;border-radius:999px;font-weight:500}
+.room{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px 8px 0}
+.fac{text-align:center;color:var(--muted);font-size:13px;min-height:22px;padding:4px 0 10px}
+.grid{display:grid;grid-template-columns:1.25fr 1fr 1.15fr;gap:12px;margin-top:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.lbl{font-size:12px;color:var(--faint);margin:0 0 8px;text-transform:none}
+.row{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:6px 0;border-top:1px solid var(--line)}
+.row:first-of-type{border-top:0}
+.bar{height:6px;background:var(--track);border-radius:3px;margin-top:6px;overflow:hidden}
+.bar>div{height:6px;border-radius:3px;background:var(--accent);transition:width .4s}
+.feed div{font-size:13px;color:var(--muted);padding:3px 0}
+.feed time{font-family:ui-monospace,Menlo,monospace;color:var(--faint);margin-right:8px;font-size:12px}
+.sc{font-size:12px;background:var(--warn-bg);color:var(--warn);border-radius:8px;padding:6px 8px;margin-top:6px}
+.controls{display:flex;gap:10px;align-items:center;margin-top:12px;color:var(--faint);font-size:12px}
+button{font:inherit;font-size:12px;padding:4px 12px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer}
+@keyframes br{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.5px)}}
+.ppl{animation:br 3.2s ease-in-out infinite}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+body.wide .wrap{max-width:none;padding:18px 26px 0;display:grid;grid-template-columns:1.55fr 1fr;grid-template-rows:auto auto 1fr;gap:0 16px;height:100vh}
+body.wide header{grid-column:1/3}
+body.wide .room{grid-column:1;grid-row:2/4;display:flex;flex-direction:column;justify-content:center}
+body.wide .grid{grid-column:2;grid-row:2/4;grid-template-columns:1fr;margin-top:0;gap:10px;align-content:start}
+body.wide .card{padding:10px 14px}
+body.wide .row{padding:4px 0}
+body.wide .controls{display:none}
+body.wide #room{max-width:none!important}
+.cap{display:none;text-align:center;font-size:20px;line-height:1.35;font-weight:500;color:var(--text);padding:10px 24px 18px;min-height:64px}
+body.wide .cap{display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="logo">Prodoffs</span><span class="ws" id="ws">waiting for events</span>
+    <span id="badge"></span>
+    <div class="phases" id="phases"></div>
+  </header>
+  <div class="room">
+    <svg id="room" viewBox="0 0 680 362" width="100%" style="display:block;max-width:860px;margin:0 auto" role="img" aria-label="Boardroom"></svg>
+    <div class="fac" id="fac"></div>
+    <div class="cap" id="cap2"></div>
+  </div>
+  <div class="grid">
+    <div class="card"><p class="lbl" id="rmTitle">Roadmap draft</p><div id="roadmap"><div class="row"><span style="color:var(--faint)">No option yet</span></div></div>
+      <p class="lbl" style="margin:12px 0 0" id="capTxt">Capacity</p><div class="bar"><div id="cap" style="width:0"></div></div>
+      <div id="caseBox" style="display:none"><p class="lbl" style="margin:14px 0 4px" id="caseTitle">Business case</p><div id="case"></div></div></div>
+    <div class="card"><p class="lbl">Strategy health</p><div id="bets"></div><p class="lbl" style="margin:12px 0 0">Shortcuts in this plan</p><div id="shortcuts"><div style="font-size:13px;color:var(--faint)">None yet</div></div></div>
+    <div class="card"><p class="lbl">Live feed</p><div class="feed" id="feed"></div></div>
+  </div>
+  <div class="controls"><button id="replay">Replay</button><span id="progress"></span></div>
+</div>
+<script>
+const PHASES=[["intake","Intake"],["sealed","Sealed"],["reveal","Reveal"],["cross_exam","Cross-exam"],["synthesis","Synthesis"],["scoring","Scoring"],["converge","Converge"]];
+const CAST={
+ ceo:{x:76,skin:"#F1C9A5",hair:"#B4B2A9",hs:"side",suit:"#444441",tie:"#A32D2D",glasses:true},
+ cpo:{x:208,skin:"#C68A5E",hair:"#2C2C2A",hs:"bob",suit:"#085041"},
+ cto:{x:340,skin:"#E0AC80",hair:"#6B4226",hs:"short",suit:"#0C447C",beard:true},
+ cmo:{x:472,skin:"#F5D6BA",hair:"#993C1D",hs:"long",suit:"#3C3489"},
+ cdo:{x:604,skin:"#8D5A3B",hair:"#2C2C2A",hs:"curly",suit:"#5F5E5A",tie:"#BA7517",glasses:true}};
+const MOOD={pleased:"var(--ok)",neutral:"var(--neutral)",concerned:"var(--warn)",angry:"var(--bad)",thinking:"var(--accent)"};
+const INK="#2C2C2A",HY=172;
+const mouth={pleased:"M-8 9 Q0 17 8 9",neutral:"M-7 12 L7 12",concerned:"M-7 14 Q0 9 7 14",angry:"M-8 16 Q0 7 8 16",thinking:"M-4 12 Q0 14.5 4 12"};
+const brow={pleased:"M-13 -9 Q-8 -13 -3 -10 M3 -10 Q8 -13 13 -9",neutral:"M-13 -10 L-4 -10 M4 -10 L13 -10",concerned:"M-13 -8 L-4 -13 M4 -13 L13 -8",angry:"M-13 -14 L-3 -8 M3 -8 L13 -14",thinking:"M-13 -12 L-4 -13 M4 -14 L13 -11"};
+const P=new URLSearchParams(location.search);
+if(P.get("layout")==="wide")document.body.classList.add("wide");
+const CAPTIONS={intake:"Five AI executives get the strategy, the business case and the history of past trade-offs.",
+ sealed:"Each role writes its position alone. Nobody sees the others yet.",
+ reveal:"Positions revealed at once.",
+ cross_exam:"Cross-examination: each role attacks the plan from its own mandate.",
+ synthesis:"The facilitator builds options that every role could live with.",
+ scoring:"Each role scores every option. A script, not the model, does the math.",
+ converge:"Nothing passed. The smallest fair concession is proposed."};
+let S;let CAP="";
+function reset(){CAP="";S={case:null,ws:"",phase:null,round:0,roles:{},items:[],option:null,cap:null,bets:[],shortcuts:[],feed:[],decision:null,fac:"",accepted:null};
+ Object.keys(CAST).forEach(r=>S.roles[r]={mood:"neutral",dev:null,tol:null,red:[],text:"",thinking:false,sealed:false});}
+function hair(p){const c=p.hair;switch(p.hs){
+ case"side":return`<path d="M-24 -6 Q-26 -32 0 -32 Q24 -32 24 -8 Q14 -22 -6 -20 Q-18 -18 -24 -6Z" fill="${c}"/>`;
+ case"short":return`<path d="M-24 -8 Q-24 -32 0 -32 Q24 -32 24 -8 Q20 -20 0 -22 Q-20 -20 -24 -8Z" fill="${c}"/>`;
+ case"curly":return`<g fill="${c}">${[-20,-10,0,10,20].map((a,i)=>`<circle cx="${a}" cy="${-24+(i%2)*3}" r="10"/>`).join("")}<circle cx="-24" cy="-10" r="7"/><circle cx="24" cy="-10" r="7"/></g>`;}return"";}
+function backHair(p){if(p.hs==="bob")return`<path d="M-27 14 Q-32 -34 0 -33 Q32 -34 27 14 L20 14 Q22 -14 0 -20 Q-22 -14 -20 14Z" fill="${p.hair}"/>`;
+ if(p.hs==="long")return`<path d="M-26 40 Q-34 -34 0 -33 Q34 -34 26 40 L18 40 Q22 -12 2 -21 Q-10 -12 -22 -6 Q-20 20 -18 40Z" fill="${p.hair}"/>`;return"";}
+function fringe(p){return(p.hs==="bob"||p.hs==="long")?`<path d="M-22 -4 Q-14 -22 4 -20 Q16 -18 22 -6 Q20 -28 0 -29 Q-22 -28 -22 -4Z" fill="${p.hair}"/>`:"";}
+function arms(p,m){const s=p.suit,k=p.skin;
+ if(m==="angry")return`<rect x="-34" y="70" width="68" height="16" rx="8" fill="${s}" stroke="${INK}" stroke-opacity=".25"/><circle cx="-30" cy="78" r="6" fill="${k}"/><circle cx="30" cy="78" r="6" fill="${k}"/>`;
+ if(m==="concerned"||m==="thinking")return`<path d="M30 90 Q38 60 16 40" stroke="${s}" stroke-width="13" fill="none" stroke-linecap="round"/><circle cx="12" cy="32" r="6.5" fill="${k}"/>`;
+ if(m==="pleased")return`<path d="M-34 90 Q-50 70 -46 52" stroke="${s}" stroke-width="13" fill="none" stroke-linecap="round"/><ellipse cx="-46" cy="44" rx="6" ry="8" fill="${k}"/>`;return"";}
+function person(p,m,i){const tie=p.tie?`<path d="M-3.5 46 L3.5 46 L5.5 68 L0 76 L-5.5 68Z" fill="${p.tie}"/>`:"";
+ const eyeY=m==="thinking"?-3:-1,eyeX=m==="thinking"?1.5:0;
+ return`<g transform="translate(${p.x} ${HY})"><g class="ppl" style="animation-delay:${i*0.5}s">${backHair(p)}
+ <path d="M-50 100 Q-48 52 -20 42 L20 42 Q48 52 50 100Z" fill="${p.suit}"/><path d="M-15 42 L0 72 L15 42Z" fill="#F7F7F5"/>${tie}
+ <path d="M-15 42 L-6 60 L-16 56 M15 42 L6 60 L16 56" stroke="${INK}" stroke-opacity=".35" fill="none"/>
+ <rect x="-7" y="24" width="14" height="20" fill="${p.skin}"/><ellipse cx="0" cy="0" rx="23" ry="27" fill="${p.skin}"/>
+ ${hair(p)}${fringe(p)}${p.beard?`<path d="M-21 6 Q-20 30 0 30 Q20 30 21 6 Q14 22 0 22 Q-14 22 -21 6Z" fill="${p.hair}"/>`:""}
+ <circle cx="${-8+eyeX}" cy="${eyeY}" r="2.6" fill="${INK}"/><circle cx="${8+eyeX}" cy="${eyeY}" r="2.6" fill="${INK}"/>
+ ${p.glasses?`<g stroke="${INK}" fill="none" stroke-width="1.4"><circle cx="-8" cy="-1" r="6.5"/><circle cx="8" cy="-1" r="6.5"/><path d="M-1.5 -1 L1.5 -1"/></g>`:""}
+ <path d="${brow[m]}" stroke="${p.hs==="side"?"#888780":INK}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+ ${m==="pleased"?`<circle cx="-14" cy="9" r="3.5" fill="#F0997B" opacity=".5"/><circle cx="14" cy="9" r="3.5" fill="#F0997B" opacity=".5"/>`:""}
+ <path d="${mouth[m]}" stroke="${INK}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+ ${m==="angry"?`<path d="M18 -26 l4 -6 M24 -22 l6 -3" stroke="#E24B4A" stroke-width="2" stroke-linecap="round"/>`:""}
+ ${arms(p,m)}</g></g>`;}
+function wrap(t,n){const w=t.split(" "),out=[];let cur="";w.forEach(x=>{if((cur+" "+x).trim().length>n){out.push(cur.trim());cur=x}else cur+=" "+x});if(cur.trim())out.push(cur.trim());if(out.length>4){out.length=4;out[3]=out[3].replace(/\s*\S*$/,"")+"…"}return out;}
+function esc(t){return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function bubble(x,text,m){const lines=text?wrap(text,21):[];if(!lines.length)return"";const w=130,h=14+lines.length*15,y=86-h;
+ return`<g><rect x="${x-w/2}" y="${y}" width="${w}" height="${h}" rx="9" fill="var(--card)" stroke="${MOOD[m]}" stroke-width="1.2"/>
+ <path d="M${x-6} ${y+h-0.5} L${x} ${y+h+9} L${x+6} ${y+h-0.5}" fill="var(--card)" stroke="${MOOD[m]}" stroke-width="1.2"/><rect x="${x-7}" y="${y+h-2}" width="14" height="3" fill="var(--card)"/>
+ ${lines.map((l,i)=>`<text x="${x}" y="${y+18+i*15}" text-anchor="middle" font-size="11.5" fill="var(--text)">${esc(l)}</text>`).join("")}</g>`;}
+function renderRoom(){let h="";const keys=Object.keys(CAST);
+ keys.forEach((r,i)=>{const st=S.roles[r];h+=person(CAST[r],st.thinking?"thinking":st.mood,i)});
+ h+=`<rect x="10" y="${HY+86}" width="660" height="10" rx="3" fill="#888780"/><rect x="18" y="${HY+96}" width="644" height="40" fill="#5F5E5A"/>`;
+ keys.forEach(r=>{const p=CAST[r],st=S.roles[r],m=st.thinking?"thinking":st.mood;
+  const txt=st.thinking?"…":(st.sealed&&!st.text?"Position sealed":st.text);
+  h+=bubble(p.x,txt,m);
+  h+=`<rect x="${p.x-50}" y="${HY+102}" width="100" height="28" rx="4" fill="#F1EFE8"/><circle cx="${p.x-37}" cy="${HY+116}" r="5" fill="${MOOD[m]}"/>
+  <text x="${p.x-27}" y="${HY+113}" font-size="12" font-weight="600" fill="#2C2C2A">${r.toUpperCase()}</text><text x="${p.x-27}" y="${HY+126}" font-size="11" fill="#5F5E5A">${m}</text>`;
+  const bw=112,bx=p.x-56,y=HY+150;h+=`<rect x="${bx}" y="${y}" width="${bw}" height="6" rx="3" fill="var(--track)"/>`;
+  if(st.dev!==null){h+=`<rect x="${bx}" y="${y}" width="${Math.min(1,st.dev/0.2)*bw}" height="6" rx="3" fill="${MOOD[m]}"/>`;
+   h+=`<rect x="${bx+st.tol/0.2*bw-0.75}" y="${y-4}" width="1.5" height="14" fill="var(--text)"/>`;}
+  const red=st.red&&st.red.length?" · red line":"";
+  h+=`<text x="${p.x}" y="${y+24}" text-anchor="middle" font-size="11.5" fill="var(--muted)">${st.dev===null?"no score yet":Math.round(st.dev*100)+"% of "+Math.round(st.tol*100)+"%"+red}</text>`;});
+ document.getElementById("room").innerHTML=h;}
+function render(){
+ document.getElementById("ws").textContent=S.ws||"";
+ const idx=PHASES.findIndex(p=>p[0]===S.phase);
+ document.getElementById("phases").innerHTML=PHASES.map((p,i)=>`<span class="ph ${i<idx?"done":""} ${i===idx?"on":""}">${p[1]}${i===idx&&S.round?` · round ${S.round}`:""}</span>`).join("");
+ const b=document.getElementById("badge");
+ if(S.decision){b.className="badge";b.style.cssText="background:var(--ok-bg);color:var(--ok)";b.textContent="Accepted: "+S.decision}
+ else if(S.option&&S.accepted===false){b.className="badge";b.style.cssText="background:var(--bad-bg);color:var(--bad)";b.textContent=S.option+" not accepted"}
+ else{b.textContent="";b.style.cssText=""}
+ renderRoom();
+ document.getElementById("cap2").textContent=CAP;
+ document.getElementById("fac").textContent=S.fac?"Facilitator: "+S.fac:"";
+ document.getElementById("rmTitle").textContent=S.option?`Roadmap draft · option ${S.option}`:"Roadmap draft";
+ if(S.items.length){document.getElementById("roadmap").innerHTML=S.items.map(i=>{const c=i.version==="later"?"var(--faint)":(i.label.startsWith("Quick")?"var(--warn)":(i.version==="part1"?"var(--accent)":"var(--ok)"));
+  return`<div class="row"><span>${esc(i.name)}</span><span style="color:${c};text-align:right">${esc(i.label)}</span></div>`}).join("")}
+ if(S.cap){document.getElementById("cap").style.width=Math.min(100,S.cap.used/S.cap.total*100)+"%";document.getElementById("capTxt").textContent=`Capacity ${S.cap.used} of ${S.cap.total} team-weeks`}
+ document.getElementById("bets").innerHTML=S.bets.map(x=>`<div class="row"><span>${esc(x.name)}</span><span style="color:${x.status==="on_track"?"var(--ok)":"var(--bad)"}">${x.status==="on_track"?"On track":"At risk"+(x.because.length?" · "+x.because.join(", "):"")}</span></div>`).join("")||`<div style="font-size:13px;color:var(--faint)">No strategy loaded</div>`;
+ document.getElementById("shortcuts").innerHTML=S.shortcuts.length?S.shortcuts.map(s=>`<div class="sc" style="${s.blocks.length?"background:var(--bad-bg);color:var(--bad)":""}"><b>${s.id}</b> ${esc(s.text)}${s.blocks.length?" · blocks "+s.blocks.join(", "):""}</div>`).join(""):`<div style="font-size:13px;color:var(--faint)">None yet</div>`;
+ if(S.case){document.getElementById("caseBox").style.display="block";document.getElementById("caseTitle").textContent=`Business case, ${S.case.years}-year net (${S.case.currency})`;
+  document.getElementById("case").innerHTML=Object.entries(S.case.options).map(([k,o])=>`<div class="row"><span>${esc(o.label)}</span><span style="color:${o.total_net>=0?"var(--ok)":"var(--bad)"};text-align:right">${Math.round(o.total_net/1000).toLocaleString()}k · payback ${o.payback_month?"m"+o.payback_month:"none"}</span></div>`).join("")}
+ document.getElementById("feed").innerHTML=S.feed.slice(document.body.classList.contains("wide")?-4:-8).reverse().map(f=>`<div><time>${f.t}</time>${esc(f.x)}</div>`).join("");}
+function log(ev,x){if(document.body.classList.contains("wide")&&x.length>120)x=x.slice(0,117)+"…";S.feed.push({t:(ev.ts||"").slice(11,16),x});}
+function apply(ev){switch(ev.type){
+ case"cast":S.ws=ev.workspace||"";break;
+ case"phase":CAP=CAPTIONS[ev.phase]||CAP;S.phase=ev.phase;S.round=ev.round||0;log(ev,"Phase: "+(PHASES.find(p=>p[0]===ev.phase)||[0,ev.phase])[1]);
+  if(ev.phase==="sealed")Object.values(S.roles).forEach(r=>{r.text="";r.sealed=false});break;
+ case"agent":if(!S.roles[ev.role]){if(ev.role==="facilitator"&&ev.text)S.fac=ev.text;break}
+  S.roles[ev.role].thinking=ev.state==="thinking";if(ev.state==="done"){S.roles[ev.role].sealed=true;log(ev,ev.role.toUpperCase()+" done"+(ev.text?": "+ev.text:""))}break;
+ case"say":if(ev.role==="facilitator"){S.fac=ev.text}else if(S.roles[ev.role]){S.roles[ev.role].text=ev.text}
+  log(ev,(ev.role==="facilitator"?"Facilitator":ev.role.toUpperCase())+": "+ev.text+(ev.receipt?" (receipt: "+ev.receipt+")":""));break;
+ case"scores":S.option=ev.option;S.accepted=ev.accepted;S.cap=ev.capacity;
+  for(const r in ev.roles){if(S.roles[r]){const x=ev.roles[r];Object.assign(S.roles[r],{dev:x.deviation,tol:x.tolerance,mood:x.mood,red:x.red_lines})}}
+  log(ev,`Scored ${ev.option}: ${ev.accepted?"accepted":"not accepted"}`);break;
+ case"roadmap":S.items=ev.items;S.option=ev.option;S.cap=ev.capacity;S.shortcuts=[];break;
+ case"strategy":S.bets=ev.bets;break;
+ case"shortcut":S.shortcuts.push(ev);log(ev,`Shortcut ${ev.id}: ${ev.text}`);break;
+ case"decision":CAP=`Accepted: ${ev.option}. Every role within tolerance, no strategic bet put at risk.`;S.decision=ev.option;log(ev,`Decision: ${ev.option} accepted`);break;
+ case"case":S.case=ev;log(ev,"Business case computed");break;
+ case"note":if(ev.caption||/Unanimous|found the same flaw|rejected/.test(ev.text))CAP=ev.text.replace(/, red lines.*/," on red lines.");log(ev,ev.text);break;}}
+async function fetchEvents(){const src=P.get("events");if(!src)return[];const r=await fetch(src+(src.includes("?")?"&":"?")+"t="+Date.now());
+ const txt=await r.text();return txt.split("\n").filter(Boolean).map(l=>JSON.parse(l));}
+let timer=null,applied=0;
+async function start(){reset();clearInterval(timer);applied=0;const evs=await fetchEvents();window.EVS=evs;const prog=document.getElementById("progress");
+ if(P.get("live")){const tick=async()=>{const all=await fetchEvents();while(applied<all.length)apply(all[applied++]);render();prog.textContent=`live · ${applied} events`};await tick();timer=setInterval(tick,1000);return}
+ const upto=P.get("upto");if(upto){evs.slice(0,+upto).forEach(apply);render();prog.textContent=`${Math.min(+upto,evs.length)} of ${evs.length} events`;return}
+ const speed=+(P.get("speed")||900);render();timer=setInterval(()=>{if(applied>=evs.length){clearInterval(timer);return}apply(evs[applied++]);render();prog.textContent=`${applied} of ${evs.length} events`},speed);}
+document.getElementById("replay").onclick=start;
+if(!P.get("events")){document.getElementById("ws").textContent="Open with ?events=/path/to/events.jsonl";reset();render()}else start();
+</script>
+</body>
+</html>

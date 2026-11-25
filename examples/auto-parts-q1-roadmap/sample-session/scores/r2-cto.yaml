@@ -1,0 +1,4 @@
+opening: {arch_fit: 95, debt: 95, capacity: 85, reversibility: 90}
+options:
+  H1: {scores: {arch_fit: 50, debt: 20, capacity: 80, reversibility: 40}, red_lines: [no_strategic_blocker]}
+  H2: {scores: {arch_fit: 78, debt: 80, capacity: 80, reversibility: 55}, red_lines: [no_strategic_blocker], line: "Third concession in a row. No."}

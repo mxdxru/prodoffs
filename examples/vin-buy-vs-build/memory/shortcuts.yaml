@@ -1,0 +1,9 @@
+shortcuts:
+  - id: S-009
+    area: catalog
+    shortcut: "Vehicle selection keyed to one data supplier's internal vehicle IDs; no own vehicle-ID layer"
+    saved_now: "5 weeks"
+    cost_later: "8 weeks to introduce an own vehicle-ID layer, growing with every system that uses the supplier IDs"
+    blocks: [marketplace]
+    decided_in: D-0018
+    status: open

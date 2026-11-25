@@ -1,0 +1,19 @@
+role: ceo
+title: Chief Executive Officer
+owns:
+- EBITDA
+- ARR
+- strategic fit
+red_lines:
+- id: negative_contribution
+  rule: No quarter plan with negative 12-month contribution and no strategic rationale
+requirements:
+- id: revenue_q1
+  weight: 0.4
+  desc: Visible impact on conversion and returns within two quarters
+- id: strategy_fit
+  weight: 0.4
+  desc: Keeps the year's strategic bets on track
+- id: margin
+  weight: 0.2
+  desc: No structural cost growth from per-lookup fees

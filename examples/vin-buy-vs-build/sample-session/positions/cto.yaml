@@ -1,0 +1,59 @@
+role: cto
+stance: "Own vehicle-ID layer, vendor behind it"
+proposal:
+  vehicle-id: hybrid
+business_case_view: >-
+  I trust the conversion and returns inputs, which are the same for all three. I doubt buy's 839k lead:
+  it ignores the 8 to 10 week remap S-040 forces before marketplace (72k to 90k), and hybrid's year-2
+  vendor_share of 0.55 assumes own home-market decoding that the 12 team-weeks do not pay for.
+alternatives:
+  buy:
+    pros:
+      - "4 team-weeks, live in month 2; leaves 20 of 24 weeks for other work"
+      - "95% hit rate and 98.5% precision from day one, including foreign VINs for eu-markets"
+      - "No new service to own beyond an integration"
+    cons:
+      - "Creates S-040: search, cart and returns keyed to vendor IDs, which blocks marketplace (breaks no_strategic_blocker)"
+      - "Deepens S-009 instead of paying it down: a second supplier's IDs spread through core systems"
+      - "Not reversible: 8 to 10 weeks to remap, no leverage on the 15% yearly fee growth"
+  build:
+    pros:
+      - "Fixes S-009: we own the vehicle-ID layer and the decoder"
+      - "No per-lookup fees; full control of mapping quality long term"
+    cons:
+      - "Creates S-041: home markets only, which blocks eu-markets in H2 (breaks no_strategic_blocker)"
+      - "22 of 24 team-weeks with no buffer; any slip pushes past the budget"
+      - "Time to value 8 months and 72% hit rate in year 1 work against returns-down"
+      - "Needs about 1.5 FTE permanent upkeep; owning team must be named before start (no_orphan_service)"
+  hybrid:
+    pros:
+      - "Fixes S-009: own vehicle-ID layer, vendor replaceable behind it"
+      - "12 of 24 team-weeks, so 12 weeks buffer; live in month 3"
+      - "Vendor covers foreign VINs, so eu-markets is not blocked; marketplace sellers map to our IDs"
+      - "Reversible: switch vendor or add own decoding per market without touching search, cart or returns"
+    cons:
+      - "S-042: long-tail and foreign VINs stay on per-lookup fees"
+      - "About 259k less 3-year net than buy on paper, before the remap cost buy defers"
+      - "Own decoding in year 2 is extra effort not in the 12 weeks; the case's vendor_share curve depends on it"
+risks:
+  - "Buy: every sprint after launch adds systems on vendor IDs, so the S-040 remap grows past 10 weeks by marketplace launch at year end"
+  - "Buy: vendor raises price after lock-in; at 97,500 lookups a month we have no exit to negotiate with"
+  - "Build: data sourcing for the two new countries (6 to 8 weeks each, S-041) collides with the H2 launch"
+  - "Build: 22-week estimate with zero buffer on registry data we have never integrated"
+  - "Any option: vehicle-ID layer without a named owning team becomes an orphan service"
+ideas:
+  - "Contract the vendor with our own vehicle IDs as the integration key and a 12-month exit clause, so switching is a config change"
+  - "Make the vehicle-ID layer the single mapping marketplace sellers use from day one"
+  - "Migrate the dropdown selector (S-009) onto the same layer in the same project so supplier IDs leave search and cart"
+  - "Decide own home-market decoding in month 9 from real lookup volume and fee data, as a separate candidate with its own effort"
+plan:
+  - "Weeks 1-2: define vehicle-ID schema and mapping from supplier and vendor IDs; catalog team named as owner"
+  - "Weeks 3-6: build the vehicle-ID layer service and vendor adapter behind it, with caching and fallback to dropdowns"
+  - "Weeks 7-9: move search, cart and returns from supplier IDs to own IDs; close S-009"
+  - "Weeks 10-12: VIN entry in search, monitoring of hit rate and precision, vendor contract with exit clause"
+  - "Month 9: review volume and fees; propose own home-market decoding as a new candidate if fees justify it"
+conditions:
+  - "Buy acceptable only if the integration is keyed to our own vehicle IDs from day one, which is hybrid under another name"
+  - "Buy acceptable if marketplace is dropped from the 12-month strategy, so S-040 blocks nothing strategic"
+  - "Build acceptable only if eu-markets moves out of H2 and the effort fits with at least 4 weeks buffer"
+  - "Any option needs a named owning team for the vehicle-ID service before work starts"

@@ -1,0 +1,293 @@
+{
+  "round": 2,
+  "best": "H3",
+  "options": {
+    "H1": {
+      "effort": 12,
+      "created": [
+        {
+          "id": "S-042",
+          "area": "catalog",
+          "shortcut": "Long-tail and foreign VINs stay dependent on the vendor",
+          "saved_now": "16 weeks versus own decoding everywhere",
+          "cost_later": "Per-lookup fees stay for the long tail; renegotiation needed at volume",
+          "blocks": []
+        }
+      ],
+      "fixed": [
+        "S-009"
+      ],
+      "items": [
+        {
+          "id": "vehicle-id",
+          "name": "Vehicle identification by VIN",
+          "version": "hybrid",
+          "label": "Hybrid: vendor behind own vehicle-ID layer, own decoding later"
+        }
+      ],
+      "bets": [
+        {
+          "id": "eu-markets",
+          "name": "Two new EU markets, H2",
+          "status": "on_track",
+          "because": [],
+          "new_risk": []
+        },
+        {
+          "id": "marketplace",
+          "name": "Marketplace, year end",
+          "status": "on_track",
+          "because": [],
+          "new_risk": []
+        },
+        {
+          "id": "returns-down",
+          "name": "Wrong-fitment returns down by a third",
+          "status": "on_track",
+          "because": [],
+          "new_risk": []
+        }
+      ],
+      "roles": {
+        "ceo": {
+          "deviation": 0.12,
+          "tolerance": 0.2,
+          "red_lines": [],
+          "mood": "neutral",
+          "receipt": "All five critiques: vendor_share 0.55/0.35 assumes an own decoder nobody funded; fees stay at 15% growth.",
+          "line": "580,744 counts savings from a decoder we never bought."
+        },
+        "cpo": {
+          "deviation": 0.0,
+          "tolerance": 0.19,
+          "red_lines": [],
+          "mood": "pleased",
+          "receipt": null,
+          "line": "Same customer path, money that was never there."
+        },
+        "cto": {
+          "deviation": 0.09,
+          "tolerance": 0.18,
+          "red_lines": [
+            "no_orphan_service"
+          ],
+          "mood": "angry",
+          "receipt": "Cross-exam: case books an own decoder with no weeks, owner or licences funded",
+          "line": "A decoder nobody builds or owns. Not signing that."
+        },
+        "cmo": {
+          "deviation": 0.1,
+          "tolerance": 0.2,
+          "red_lines": [
+            "broken_promise"
+          ],
+          "mood": "angry",
+          "receipt": "Cross-exam: vendor_share 0.55/0.35 means an unfunded own decoder at 0.95 precision takes home-market lookups after 'fit guaranteed' is public.",
+          "line": "Guarantee on vendor precision, then quietly swap decoders? Broken promise."
+        },
+        "cdo": {
+          "deviation": 0.22,
+          "tolerance": 0.14,
+          "red_lines": [
+            "measurable"
+          ],
+          "mood": "angry",
+          "receipt": "All five critiques: own decoder unfunded and 12 weeks double-booked, so no instrumentation slot or holdout is committed",
+          "line": "Counts a decoder nobody pays for and measures nothing."
+        }
+      },
+      "fits": true,
+      "accepted": false,
+      "overshoot": 0.08,
+      "capacity": 24
+    },
+    "H2": {
+      "effort": 12,
+      "created": [
+        {
+          "id": "S-042",
+          "area": "catalog",
+          "shortcut": "All VIN decoding stays with the vendor; own decoding is a separate later decision",
+          "saved_now": "10 weeks versus building a home-market decoder now",
+          "cost_later": "Per-lookup fees for every VIN until own decoding is approved and built; renegotiation needed at volume",
+          "blocks": []
+        }
+      ],
+      "fixed": [
+        "S-009"
+      ],
+      "items": [
+        {
+          "id": "vehicle-id",
+          "name": "Vehicle identification by VIN",
+          "version": "hybrid_layer",
+          "label": "Hybrid layer: vendor behind own vehicle-ID layer, no own decoding"
+        }
+      ],
+      "bets": [
+        {
+          "id": "eu-markets",
+          "name": "Two new EU markets, H2",
+          "status": "on_track",
+          "because": [],
+          "new_risk": []
+        },
+        {
+          "id": "marketplace",
+          "name": "Marketplace, year end",
+          "status": "on_track",
+          "because": [],
+          "new_risk": []
+        },
+        {
+          "id": "returns-down",
+          "name": "Wrong-fitment returns down by a third",
+          "status": "on_track",
+          "because": [],
+          "new_risk": []
+        }
+      ],
+      "roles": {
+        "ceo": {
+          "deviation": 0.06,
+          "tolerance": 0.2,
+          "red_lines": [],
+          "mood": "pleased",
+          "receipt": "Recomputed case: vendor_share flat 1.0, run cost 4,500; every VIN pays fees growing 15% a year.",
+          "line": "Honest number, marketplace safe, but fees grow with every success."
+        },
+        "cpo": {
+          "deviation": 0.06,
+          "tolerance": 0.19,
+          "red_lines": [],
+          "mood": "pleased",
+          "receipt": "CTO critique: search, cart, returns on own IDs before launch pushes VIN entry to weeks 10-12, early March at best",
+          "line": "Honest numbers, but VIN lands days before spring. Too tight."
+        },
+        "cto": {
+          "deviation": 0.0,
+          "tolerance": 0.18,
+          "red_lines": [],
+          "mood": "pleased",
+          "receipt": "Recomputed case: vendor_share flat 1.0, no sunk decoder, cleaner vendor switch",
+          "line": "Layer, S-009 closed, honest numbers. This is the job."
+        },
+        "cmo": {
+          "deviation": 0.02,
+          "tolerance": 0.2,
+          "red_lines": [],
+          "mood": "pleased",
+          "receipt": "Recomputed case: vendor answers every VIN at 0.985, so the guarantee holds; no landing-page weeks funded.",
+          "line": "Promise holds, but paid search gets nothing new. Half a launch."
+        },
+        "cdo": {
+          "deviation": 0.18,
+          "tolerance": 0.14,
+          "red_lines": [
+            "measurable"
+          ],
+          "mood": "angry",
+          "receipt": "Recomputed case: vendor answers every VIN at 0.985, own decoding deferred; options.yaml puts holdout and instrumentation only in H3",
+          "line": "Honest layer, our IDs, but launch still flies blind."
+        }
+      },
+      "fits": true,
+      "accepted": false,
+      "overshoot": 0.04,
+      "capacity": 24
+    },
+    "H3": {
+      "effort": 14,
+      "created": [
+        {
+          "id": "S-042",
+          "area": "catalog",
+          "shortcut": "All VIN decoding stays with the vendor; own decoding is a separate later decision",
+          "saved_now": "10 weeks versus building a home-market decoder now",
+          "cost_later": "Per-lookup fees for every VIN until own decoding is approved and built; growth capped by contract",
+          "blocks": []
+        }
+      ],
+      "fixed": [
+        "S-009"
+      ],
+      "items": [
+        {
+          "id": "vehicle-id",
+          "name": "Vehicle identification by VIN",
+          "version": "hybrid_layer_measured",
+          "label": "Hybrid layer, VIN entry first, holdout, price-capped vendor, VIN landing pages"
+        }
+      ],
+      "bets": [
+        {
+          "id": "eu-markets",
+          "name": "Two new EU markets, H2",
+          "status": "on_track",
+          "because": [],
+          "new_risk": []
+        },
+        {
+          "id": "marketplace",
+          "name": "Marketplace, year end",
+          "status": "on_track",
+          "because": [],
+          "new_risk": []
+        },
+        {
+          "id": "returns-down",
+          "name": "Wrong-fitment returns down by a third",
+          "status": "on_track",
+          "because": [],
+          "new_risk": []
+        }
+      ],
+      "roles": {
+        "ceo": {
+          "deviation": 0.0,
+          "tolerance": 0.2,
+          "red_lines": [],
+          "mood": "pleased",
+          "receipt": "5% vendor price cap, VIN entry first for spring, landing pages: year 3 net 279,149 versus 258,557.",
+          "line": "Price cap and spring launch. This is the one I sign."
+        },
+        "cpo": {
+          "deviation": 0.0,
+          "tolerance": 0.19,
+          "red_lines": [],
+          "mood": "pleased",
+          "receipt": "VIN-first sequencing now in the option (live around week 6); landing pages lift discovery; instrumentation catches dead ends; 10% holdout trims reach in season",
+          "line": "VIN live by February. Holdout off after 8 weeks, not later."
+        },
+        "cto": {
+          "deviation": 0.05,
+          "tolerance": 0.18,
+          "red_lines": [],
+          "mood": "pleased",
+          "receipt": "VIN-entry-first can push search, cart, returns migration past season; 14 weeks",
+          "line": "VIN first only through our layer; migration stays in done_when."
+        },
+        "cmo": {
+          "deviation": 0.0,
+          "tolerance": 0.2,
+          "red_lines": [],
+          "mood": "pleased",
+          "receipt": "H3 adds VIN entry before spring, a holdout that measures precision before any public claim, and 2 weeks of VIN landing pages.",
+          "line": "VIN before spring, landing pages funded, guarantee measured first. Ship it."
+        },
+        "cdo": {
+          "deviation": 0.02,
+          "tolerance": 0.14,
+          "red_lines": [],
+          "mood": "pleased",
+          "receipt": "hybrid_layer_measured funds the 10 per cent holdout and instrumentation for 8 weeks; decoding stays vendor-only until a separate candidate",
+          "line": "Our IDs, vendor precision, holdout on day one. I sign."
+        }
+      },
+      "fits": true,
+      "accepted": true,
+      "overshoot": -0.12,
+      "capacity": 24
+    }
+  }
+}

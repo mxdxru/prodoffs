@@ -1,0 +1,17 @@
+# Running balance of how much each role has given up recently.
+# A high balance tightens that role's tolerance in the next negotiation.
+ceo:
+  balance: 0.0
+  history: []
+cpo:
+  balance: 0.05
+  history: [{D-0015: 0.05}]
+cto:
+  balance: 0.40
+  history: [{D-0012: 0.22}, {D-0015: 0.25}]
+cmo:
+  balance: 0.10
+  history: [{D-0012: 0.10}]
+cdo:
+  balance: 0.0
+  history: []

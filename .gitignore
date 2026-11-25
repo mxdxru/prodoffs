@@ -1,0 +1,12 @@
+# local notes, not published
+notes/
+# your own company workspaces (created by prodoffs-setup)
+workspaces/
+# runtime state
+.prodoffs/
+__pycache__/
+# live sessions created by running the skill (the sample session is committed)
+examples/*/sessions/
+.DS_Store
+# rendered video frames
+build/

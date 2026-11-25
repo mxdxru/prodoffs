@@ -1,0 +1,4 @@
+opening: {fitment: 95, measurement: 90, data_debt: 85}
+options:
+  H1: {scores: {fitment: 30, measurement: 85, data_debt: 70}, red_lines: [shared_fitment]}
+  H2: {scores: {fitment: 95, measurement: 80, data_debt: 80}, red_lines: [], line: "Fitment as a service. Good."}

@@ -1,0 +1,13 @@
+options:
+  H1:
+    round: 2
+    summary: "Original hybrid as cased: vendor share falls to 0.35 by year 3 via an unfunded own decoder. Kept for comparison."
+    items: {vehicle-id: hybrid}
+  H2:
+    round: 2
+    summary: "Corrected hybrid: own vehicle-ID layer, S-009 closed, vendor answers every VIN, own decoding a separate later decision."
+    items: {vehicle-id: hybrid_layer}
+  H3:
+    round: 2
+    summary: "H2 plus VIN entry first for spring, 10% holdout and instrumentation, vendor price cap 5% a year, 2 weeks of VIN landing pages."
+    items: {vehicle-id: hybrid_layer_measured}

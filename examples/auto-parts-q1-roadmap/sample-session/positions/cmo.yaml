@@ -1,0 +1,4 @@
+role: cmo
+stance: "Competitor cashback is live"
+proposal: {deferred-payment: quick, vin-search: quick, onboarding: full, loyalty: full, pricing-engine: later}
+risks: ["Competitor's workshop cashback campaign is pulling our top workshops"]

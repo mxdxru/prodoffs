@@ -1,0 +1,19 @@
+role: cpo
+title: Chief Product Officer
+owns:
+- time-to-market
+- workshop adoption
+- retention
+red_lines:
+- id: season_window
+  rule: Core workshop features must ship before the spring repair season
+requirements:
+- id: ttm
+  weight: 0.45
+  desc: Customers can enter a VIN before the spring season
+- id: adoption
+  weight: 0.35
+  desc: 'VIN entry actually used: high hit rate, no dead ends'
+- id: ux_quality
+  weight: 0.2
+  desc: Wrong vehicle matches never shown as certain

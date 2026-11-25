@@ -1,0 +1,4 @@
+opening: {ttm: 95, adoption: 90, ux_quality: 85}
+options:
+  H1: {scores: {ttm: 90, adoption: 90, ux_quality: 80}, red_lines: []}
+  H2: {scores: {ttm: 80, adoption: 78, ux_quality: 75}, red_lines: [], line: "Payments land fast. Good."}

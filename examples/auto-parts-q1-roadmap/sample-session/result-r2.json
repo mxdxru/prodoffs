@@ -1,0 +1,260 @@
+{
+  "round": 2,
+  "best": "H2",
+  "options": {
+    "H1": {
+      "effort": 24,
+      "created": [
+        {
+          "id": "S-023",
+          "area": "catalog",
+          "shortcut": "Fitment rules tied to own catalog; third-party parts cannot be matched to vehicles",
+          "saved_now": "3 weeks",
+          "cost_later": "6 weeks to rebuild as a service",
+          "blocks": [
+            "marketplace"
+          ]
+        }
+      ],
+      "fixed": [],
+      "items": [
+        {
+          "id": "deferred-payment",
+          "name": "Deferred payment for workshops",
+          "version": "full",
+          "label": "Full, in-house"
+        },
+        {
+          "id": "vin-search",
+          "name": "VIN-based part search",
+          "version": "quick",
+          "label": "Quick, own catalog only"
+        },
+        {
+          "id": "onboarding",
+          "name": "Workshop self-service onboarding",
+          "version": "full",
+          "label": "Full"
+        },
+        {
+          "id": "loyalty",
+          "name": "Workshop loyalty and cashback",
+          "version": "full",
+          "label": "Full"
+        },
+        {
+          "id": "pricing-engine",
+          "name": "Pricing engine, part 1",
+          "version": "later",
+          "label": "Moved to next quarter"
+        }
+      ],
+      "bets": [
+        {
+          "id": "eu-markets",
+          "name": "New EU markets, H2",
+          "status": "at_risk",
+          "because": [
+            "S-014"
+          ],
+          "new_risk": []
+        },
+        {
+          "id": "marketplace",
+          "name": "Marketplace, year end",
+          "status": "at_risk",
+          "because": [
+            "S-023"
+          ],
+          "new_risk": [
+            "S-023"
+          ]
+        },
+        {
+          "id": "b2b-growth",
+          "name": "B2B workshop growth",
+          "status": "at_risk",
+          "because": [
+            "S-014"
+          ],
+          "new_risk": []
+        }
+      ],
+      "roles": {
+        "ceo": {
+          "deviation": 0.17,
+          "tolerance": 0.2,
+          "red_lines": [],
+          "mood": "concerned",
+          "receipt": null,
+          "line": ""
+        },
+        "cpo": {
+          "deviation": 0.04,
+          "tolerance": 0.19,
+          "red_lines": [],
+          "mood": "pleased",
+          "receipt": null,
+          "line": ""
+        },
+        "cto": {
+          "deviation": 0.51,
+          "tolerance": 0.12,
+          "red_lines": [
+            "no_strategic_blocker"
+          ],
+          "mood": "angry",
+          "receipt": null,
+          "line": ""
+        },
+        "cmo": {
+          "deviation": 0.0,
+          "tolerance": 0.18,
+          "red_lines": [],
+          "mood": "pleased",
+          "receipt": null,
+          "line": ""
+        },
+        "cdo": {
+          "deviation": 0.37,
+          "tolerance": 0.2,
+          "red_lines": [
+            "shared_fitment"
+          ],
+          "mood": "angry",
+          "receipt": null,
+          "line": ""
+        }
+      },
+      "fits": true,
+      "accepted": false,
+      "overshoot": 0.39,
+      "capacity": 30
+    },
+    "H2": {
+      "effort": 25,
+      "created": [
+        {
+          "id": "S-022",
+          "area": "payments",
+          "shortcut": "Payment provider hardwired into checkout",
+          "saved_now": "5 weeks",
+          "cost_later": "4 weeks to extract, +1 week per country added before that",
+          "blocks": [
+            "eu-markets"
+          ]
+        }
+      ],
+      "fixed": [
+        "S-014"
+      ],
+      "items": [
+        {
+          "id": "deferred-payment",
+          "name": "Deferred payment for workshops",
+          "version": "quick",
+          "label": "Quick, provider hardwired"
+        },
+        {
+          "id": "vin-search",
+          "name": "VIN-based part search",
+          "version": "full",
+          "label": "Full, shared fitment service"
+        },
+        {
+          "id": "onboarding",
+          "name": "Workshop self-service onboarding",
+          "version": "full",
+          "label": "Full"
+        },
+        {
+          "id": "loyalty",
+          "name": "Workshop loyalty and cashback",
+          "version": "later",
+          "label": "Moved to next quarter"
+        },
+        {
+          "id": "pricing-engine",
+          "name": "Pricing engine, part 1",
+          "version": "part1",
+          "label": "Pulled in"
+        }
+      ],
+      "bets": [
+        {
+          "id": "eu-markets",
+          "name": "New EU markets, H2",
+          "status": "at_risk",
+          "because": [
+            "S-022"
+          ],
+          "new_risk": [
+            "S-022"
+          ]
+        },
+        {
+          "id": "marketplace",
+          "name": "Marketplace, year end",
+          "status": "on_track",
+          "because": [],
+          "new_risk": []
+        },
+        {
+          "id": "b2b-growth",
+          "name": "B2B workshop growth",
+          "status": "on_track",
+          "because": [],
+          "new_risk": []
+        }
+      ],
+      "roles": {
+        "ceo": {
+          "deviation": 0.11,
+          "tolerance": 0.2,
+          "red_lines": [],
+          "mood": "neutral",
+          "receipt": null,
+          "line": "Works for Q1 revenue"
+        },
+        "cpo": {
+          "deviation": 0.14,
+          "tolerance": 0.19,
+          "red_lines": [],
+          "mood": "neutral",
+          "receipt": null,
+          "line": "Payments land fast. Good."
+        },
+        "cto": {
+          "deviation": 0.18,
+          "tolerance": 0.12,
+          "red_lines": [
+            "no_strategic_blocker"
+          ],
+          "mood": "angry",
+          "receipt": null,
+          "line": "Third concession in a row. No."
+        },
+        "cmo": {
+          "deviation": 0.09,
+          "tolerance": 0.18,
+          "red_lines": [],
+          "mood": "neutral",
+          "receipt": null,
+          "line": "Fine before the season"
+        },
+        "cdo": {
+          "deviation": 0.05,
+          "tolerance": 0.2,
+          "red_lines": [],
+          "mood": "pleased",
+          "receipt": null,
+          "line": "Fitment as a service. Good."
+        }
+      },
+      "fits": true,
+      "accepted": false,
+      "overshoot": 0.06,
+      "capacity": 30
+    }
+  }
+}

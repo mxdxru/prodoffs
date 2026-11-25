@@ -1,0 +1,19 @@
+role: cmo
+title: Chief Marketing Officer
+owns:
+- positioning
+- acquisition cost
+- competitive response
+red_lines:
+- id: broken_promise
+  rule: Nothing that contradicts a public promise already made
+requirements:
+- id: competitive
+  weight: 0.5
+  desc: Matches competitors that already offer VIN search
+- id: story
+  weight: 0.3
+  desc: A clear 'parts that fit, guaranteed' message
+- id: cac
+  weight: 0.2
+  desc: Better paid-search conversion from VIN landing pages

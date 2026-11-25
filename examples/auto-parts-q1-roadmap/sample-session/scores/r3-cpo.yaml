@@ -1,0 +1,3 @@
+opening: {ttm: 95, adoption: 90, ux_quality: 85}
+options:
+  H2b: {scores: {ttm: 70, adoption: 78, ux_quality: 75}, red_lines: [], receipt: "Layer adds 3 weeks to payments; onboarding untouched", line: "Layer costs me 3 weeks. I pay this time."}

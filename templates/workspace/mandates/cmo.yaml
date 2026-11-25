@@ -1,0 +1,20 @@
+# Template mandate: adjust owned metrics, red lines and requirement weights (must sum to 1.0).
+role: cmo
+title: Chief Marketing Officer
+owns:
+- positioning
+- acquisition cost
+- competitive response
+red_lines:
+- id: broken_promise
+  rule: Nothing that contradicts a public promise already made
+requirements:
+- id: competitive
+  weight: 0.5
+  desc: Answers the main competitor move of this period
+- id: story
+  weight: 0.3
+  desc: Gives a launch story for the period
+- id: cac
+  weight: 0.2
+  desc: Lowers acquisition cost of the target segment

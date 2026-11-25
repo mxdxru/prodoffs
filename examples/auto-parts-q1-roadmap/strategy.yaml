@@ -1,0 +1,12 @@
+company: "Fictional online auto parts retailer. Sells spare parts to consumers and to independent repair workshops (B2B) in several European countries."
+horizon: "Next 12 months"
+bets:
+  - id: eu-markets
+    name: "New EU markets, H2"
+    detail: "Launch in two new EU countries in the second half of the year."
+  - id: marketplace
+    name: "Marketplace, year end"
+    detail: "Open the catalog to third-party sellers whose parts must match vehicles like our own."
+  - id: b2b-growth
+    name: "B2B workshop growth"
+    detail: "More workshops ordering weekly; tiered pricing for workshop chains."

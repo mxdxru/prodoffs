@@ -1,0 +1,13 @@
+role: cto
+title: Chief Technology Officer
+owns: [scalability, reliability, tech debt, team capacity]
+red_lines:
+  - id: no_orphan_service
+    rule: "Every new service has an owning team"
+  - id: no_strategic_blocker
+    rule: "No new shortcut that blocks a strategic bet"
+requirements:
+  - {id: arch_fit,      weight: 0.35, desc: "Fits target architecture, no parallel stack"}
+  - {id: debt,          weight: 0.30, desc: "Pays down debt in areas the strategy depends on"}
+  - {id: capacity,      weight: 0.20, desc: "Plan fits capacity with buffer"}
+  - {id: reversibility, weight: 0.15, desc: "Vendors and features can be swapped or turned off"}

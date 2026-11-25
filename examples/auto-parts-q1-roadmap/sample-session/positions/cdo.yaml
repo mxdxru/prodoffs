@@ -1,0 +1,4 @@
+role: cdo
+stance: "Fitment must be a shared service"
+proposal: {deferred-payment: quick_layer, vin-search: full, onboarding: full, loyalty: later, pricing-engine: part1}
+risks: ["A fitment model tied to our catalog makes the marketplace a rebuild, not a feature"]

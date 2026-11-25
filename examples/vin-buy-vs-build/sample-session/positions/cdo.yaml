@@ -1,0 +1,62 @@
+role: cdo
+stance: "Our vehicle ID, vendor as one source"
+proposal:
+  vehicle-id: hybrid
+business_case_view: >-
+  I trust the return-rate and fitment-share inputs, they come from industry reports. I doubt three illustrative
+  numbers that carry most of the value: vin_entry_share 0.25, fitment_return_reduction 0.60 and the vendor's
+  0.985 precision, which is a vendor claim never measured against our catalog mapping. Buy's 839,880 also prices
+  out the marketplace remap that S-040 blocks, so it is not comparable to hybrid as stated.
+alternatives:
+  buy:
+    pros:
+      - "Fastest path to a measured baseline: VIN-identified sessions visible within 2 months"
+      - "Hit rate 0.95 from day one across all markets, including the two H2 countries"
+      - "Claimed precision 0.985 is the best available on day one"
+    cons:
+      - "Breaks red line own_vehicle_id: S-040 keys search, cart and returns to the vendor's vehicle IDs"
+      - "Repeats D-0018: a second system on external IDs on top of open S-009, making the marketplace remap 8 to 10 weeks"
+      - "Marketplace sellers cannot be matched to an identity we do not own; every match runs through vendor IDs"
+      - "Vendor match quality is a black box; no way to audit wrong matches against our own fitment data"
+  build:
+    pros:
+      - "Full data ownership: vehicle identity becomes our asset, reusable for marketplace sellers"
+      - "Fixes S-009"
+      - "Every decoding rule is auditable, so wrong matches can be traced and corrected"
+    cons:
+      - "Year-1 hit rate 0.72 and precision 0.95: one wrong match in twenty, and wrong matches cost more than no match"
+      - "S-041 blocks eu-markets: 6 to 8 weeks of data sourcing per new country"
+      - "Value lands only at month 8, so returns-down cannot be measured until late in the 12 months"
+      - "22 of 24 team weeks leaves almost nothing for instrumentation and data quality tooling"
+  hybrid:
+    pros:
+      - "Own vehicle-ID layer fixes S-009 and keeps core systems on our IDs, so own_vehicle_id holds"
+      - "Vendor precision 0.985 and hit rate 0.95 from month 3, swapped for own decoding per market when ours is proven"
+      - "Same layer serves marketplace seller listings and new markets without remapping"
+      - "Running vendor and own decoder side by side gives a measured precision comparison, not a claimed one"
+    cons:
+      - "S-042: long-tail and foreign VINs stay vendor dependent, so data_ownership is partial for those"
+      - "12 team weeks, 3 times buy; risk that the layer gets cut thin and the mapping stays manual"
+      - "Mapping vendor vehicle IDs to our IDs is a new manual data task unless it is automated and monitored"
+risks:
+  - "Buy: S-040 plus S-009 means two systems on external IDs; marketplace launch at year end needs a remap nobody has planned"
+  - "Buy: vendor price growth of 15 per cent a year with no fallback, because all our data is keyed to their IDs"
+  - "Build: a 0.95 precision decoder in year 1 can raise wrong-fitment returns for the VINs it gets wrong, the opposite of returns-down"
+  - "Any option: launching without a holdout repeats D-0016 partial tracking, and the 0.60 return reduction stays an assumption forever"
+  - "Hybrid: if the ID mapping table is maintained by hand it becomes a new manual data burden that grows with marketplace sellers"
+ideas:
+  - "Shadow-decode: log both vendor result and our own decoder result for every home-market VIN; switch a market only when ours matches vendor precision on 30 days of data"
+  - "Treat a low-confidence VIN match as no match and fall back to the dropdown, because a wrong match costs more than none"
+  - "Run a 10 per cent holdout without VIN entry for the first 8 weeks to measure conversion, completion and returns against the business case"
+  - "Negotiate with the vendor for match confidence scores and raw attributes, not only their vehicle ID, so our layer can audit and remap"
+  - "Use the same layer as the marketplace seller listing API from day one, so sellers never touch vendor IDs"
+plan:
+  - "Weeks 1-3: define our vehicle-ID schema and migrate the dropdown selector off supplier IDs (closes S-009)"
+  - "Weeks 3-7: vendor integration behind the layer, automated vendor-to-own ID mapping with mismatch alerts"
+  - "Weeks 6-9: instrumentation: VIN entry, match confidence, conversion, completion and fitment returns by VIN source, plus 10 per cent holdout"
+  - "Weeks 9-12: launch in home markets, report weekly against the business case inputs vin_entry_share and fitment_return_reduction"
+  - "Year 2: shadow-decode home-market VINs with own decoder, switch per market when precision reaches 0.985 on our data"
+conditions:
+  - "Buy is acceptable only if search, cart and returns store our own vehicle ID and the vendor ID is a mapped attribute, which is in effect hybrid"
+  - "Build is acceptable only if launch is gated on precision of at least 0.975 with dropdown fallback, and the H2 markets get a vendor fallback"
+  - "Any option needs a holdout and a dashboard live on launch day; no repeat of D-0016"

@@ -1,0 +1,17 @@
+opening: {data_ownership: 85, measurement: 85, data_quality: 85}
+options:
+  H1:
+    scores: {data_ownership: 72, measurement: 55, data_quality: 72}
+    red_lines: [measurable]
+    receipt: "All five critiques: own decoder unfunded and 12 weeks double-booked, so no instrumentation slot or holdout is committed"
+    line: "Counts a decoder nobody pays for and measures nothing."
+  H2:
+    scores: {data_ownership: 75, measurement: 55, data_quality: 85}
+    red_lines: [measurable]
+    receipt: "Recomputed case: vendor answers every VIN at 0.985, own decoding deferred; options.yaml puts holdout and instrumentation only in H3"
+    line: "Honest layer, our IDs, but launch still flies blind."
+  H3:
+    scores: {data_ownership: 75, measurement: 92, data_quality: 85}
+    red_lines: []
+    receipt: "hybrid_layer_measured funds the 10 per cent holdout and instrumentation for 8 weeks; decoding stays vendor-only until a separate candidate"
+    line: "Our IDs, vendor precision, holdout on day one. I sign."

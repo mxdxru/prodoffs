@@ -1,0 +1,3 @@
+opening: {revenue_q1: 90, strategy_fit: 80, margin: 90}
+options:
+  H2b: {scores: {revenue_q1: 72, strategy_fit: 80, margin: 70}, red_lines: [], line: "Acceptable."}

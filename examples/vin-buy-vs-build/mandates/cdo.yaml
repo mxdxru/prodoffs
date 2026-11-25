@@ -1,0 +1,12 @@
+role: cdo
+title: Chief Data Officer
+owns: [catalog and vehicle data, measurability, data compliance]
+red_lines:
+  - id: own_vehicle_id
+    rule: "Core systems must not be keyed to an external party's vehicle IDs"
+  - id: measurable
+    rule: "Every launch has instrumentation and a success metric"
+requirements:
+  - {id: data_ownership, weight: 0.45, desc: "Vehicle identity is our own data asset, reusable for marketplace sellers and new markets"}
+  - {id: measurement,    weight: 0.35, desc: "Impact on conversion, completion and returns measurable from day one"}
+  - {id: data_quality,   weight: 0.20, desc: "Precision of VIN-to-vehicle matching; wrong matches cost more than no match"}

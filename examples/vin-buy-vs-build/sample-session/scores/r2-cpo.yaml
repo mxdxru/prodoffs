@@ -1,0 +1,19 @@
+role: cpo
+round: 2
+opening: {ttm: 78, adoption: 85, ux_quality: 82}   # sealed hybrid, VIN entry weeks 3-6, zero slack before mid-March
+options:
+  H1:
+    scores: {ttm: 78, adoption: 85, ux_quality: 82}
+    red_lines: []
+    receipt: null   # same customer path as my opening; unfunded decoder hurts the case, not ttm, adoption or ux_quality
+    line: "Same customer path, money that was never there."
+  H2:
+    scores: {ttm: 68, adoption: 85, ux_quality: 82}
+    red_lines: []
+    receipt: "CTO critique: search, cart, returns on own IDs before launch pushes VIN entry to weeks 10-12, early March at best"
+    line: "Honest numbers, but VIN lands days before spring. Too tight."
+  H3:
+    scores: {ttm: 88, adoption: 88, ux_quality: 85}
+    red_lines: []
+    receipt: "VIN-first sequencing now in the option (live around week 6); landing pages lift discovery; instrumentation catches dead ends; 10% holdout trims reach in season"
+    line: "VIN live by February. Holdout off after 8 weeks, not later."

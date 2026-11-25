@@ -1,0 +1,17 @@
+opening: {competitive: 85, story: 90, cac: 65}
+options:
+  H1:
+    scores: {competitive: 85, story: 65, cac: 60}
+    red_lines: [broken_promise]
+    receipt: "Cross-exam: vendor_share 0.55/0.35 means an unfunded own decoder at 0.95 precision takes home-market lookups after 'fit guaranteed' is public."
+    line: "Guarantee on vendor precision, then quietly swap decoders? Broken promise."
+  H2:
+    scores: {competitive: 85, story: 88, cac: 60}
+    red_lines: []
+    receipt: "Recomputed case: vendor answers every VIN at 0.985, so the guarantee holds; no landing-page weeks funded."
+    line: "Promise holds, but paid search gets nothing new. Half a launch."
+  H3:
+    scores: {competitive: 90, story: 93, cac: 85}
+    red_lines: []
+    receipt: "H3 adds VIN entry before spring, a holdout that measures precision before any public claim, and 2 weeks of VIN landing pages."
+    line: "VIN before spring, landing pages funded, guarantee measured first. Ship it."

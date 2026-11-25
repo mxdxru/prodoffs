@@ -1,0 +1,50 @@
+role: cmo
+stance: "VIN live by month 3, full coverage"
+proposal:
+  vehicle-id: hybrid
+business_case_view: "I trust the time-to-value gap: 2-3 months vs 8 is what decides the competitive race. I doubt the flat 25% VIN entry share; without a 'fit guaranteed' promise and VIN landing pages it will start lower, and build's 72% year-1 hit rate would push it lower still."
+alternatives:
+  buy:
+    pros:
+      - "Fastest answer to competitors who already offer VIN search: live in about 2 months"
+      - "95% hit rate and 98.5% precision from day one, enough to say 'parts that fit'"
+      - "VIN landing pages for paid search can go live with the launch"
+    cons:
+      - "S-040 blocks the marketplace: third-party listings cannot carry the same fitment promise, so the story splits in two at year end"
+      - "Fitment claim depends on a vendor we cannot control; a vendor outage or price hike hits a public promise"
+  build:
+    pros:
+      - "Own fitment data could become a differentiator we can market as ours"
+      - "No per-lookup fee eating into paid-search margin at scale"
+    cons:
+      - "Month 8 time to value: competitors keep the VIN advantage for most of the year"
+      - "72% hit rate in year 1 means one in four VINs fails; cannot say 'guaranteed' with that"
+      - "S-041 blocks the two new EU markets in H2: no VIN story at launch there, worst moment to lack it"
+  hybrid:
+    pros:
+      - "Live by month 3, same 95% hit rate and 98.5% precision as buy, so the 'fit guaranteed' message holds from launch"
+      - "One vehicle-ID layer for own catalog and marketplace: the same fitment promise covers third-party sellers at year end"
+      - "No blocked bet: EU markets launch with VIN via the vendor (S-042)"
+    cons:
+      - "About one month later than buy; one more month competitors own the VIN message"
+      - "12 team-weeks leaves less room for landing pages and VIN-based campaign tooling"
+risks:
+  - "Build: launching a 'fit guaranteed' message on 72% coverage creates a promise we break in public, which would cross my broken_promise red line once announced"
+  - "Build: entering two EU markets in H2 without VIN search, while local competitors have it, raises CAC exactly where we pay most to acquire"
+  - "Buy: marketing the guarantee on own catalog, then the marketplace at year end cannot honour it, gives two contradictory promises on one site"
+  - "Any option: announcing VIN before precision is measured on our own catalog; wrong-fit returns after a 'guaranteed' claim cost more trust than no claim"
+ideas:
+  - "Soft launch on the vendor behind the thin first cut of the layer at week 6-8 for paid-search VIN landing pages only, measure entry share and conversion before the public claim"
+  - "Make 'fit guaranteed' a scoped promise: free return on wrong fitment for VIN-identified orders only; it costs little at 98.5% precision and sells the VIN field"
+  - "Show the VIN field on the product page, not only search, with 'check if this fits your car'; lifts entry share above the assumed 25%"
+  - "Add a contract clause with the vendor capping fee growth at volume, so the campaign can scale without margin creep"
+plan:
+  - "Weeks 1-2: vendor contract, competitor VIN UX benchmark in home markets and the two H2 countries, define the scoped 'fit guaranteed' wording with legal"
+  - "Weeks 3-8: own vehicle-ID layer with vendor behind it; VIN landing page templates for top 50 paid-search vehicle queries"
+  - "Weeks 9-12: soft launch on paid-search traffic, measure VIN entry share, hit rate and conversion vs dropdown sessions"
+  - "Weeks 13-14: public launch with 'parts that fit, guaranteed' and the free wrong-fit return for VIN orders"
+  - "H2: EU market launches with VIN on day one; marketplace sellers onboarded onto the same layer by year end"
+conditions:
+  - "Buy acceptable if S-040 is time-boxed: remap onto an own layer committed before marketplace launch, so the fitment promise covers third-party sellers"
+  - "Build acceptable only if a vendor fallback covers unresolved VINs from launch (hit rate 95%+) and VIN launches in the two EU markets in H2"
+  - "Any option: no public 'guaranteed' claim until measured precision on our catalog is at least 98%"

@@ -1,0 +1,61 @@
+role: cpo
+stance: "Hybrid, but VIN live before spring"
+proposal:
+  vehicle-id: hybrid
+business_case_view: >
+  I trust the ranking: only buy and hybrid deliver value before spring, build pays back in month 31.
+  I doubt vin_entry_share 0.25 (untested, likely higher for workshops, lower for consumers) and the flat 0.95
+  hit rate, which is vendor decoding, not proof the decoded vehicle maps to our catalog without dead ends.
+alternatives:
+  buy:
+    pros:
+      - "Fastest path: 4 team-weeks, value in month 2, VIN entry live well before the spring season"
+      - "Hit rate 0.95 and precision 0.985 from day one, so workshops get few dead ends"
+      - "Leaves 20 of 24 team-weeks for the season's other workshop features"
+    cons:
+      - "S-040 keys search, cart and returns to vendor IDs and blocks the marketplace; strategy-risk rule can veto it outright"
+      - "Doubles down on S-009: a second supplier-ID dependency in the same flows customers touch"
+      - "Vendor price increases (15% a year) arrive with no leverage and could force rationing VIN lookups later"
+  build:
+    pros:
+      - "Fixes S-009 and owns the vehicle model for marketplace listings"
+      - "No per-lookup fee pressure on how freely we offer VIN entry"
+    cons:
+      - "Breaks red line season_window: value in month 8, i.e. mid-summer, after the spring repair season"
+      - "Year-1 hit rate 0.72: more than one VIN in four is a dead end, which kills workshop adoption on first try"
+      - "Precision 0.95 in year 1 risks wrong vehicles shown as certain, the opposite of what ux_quality requires"
+      - "22 of 24 team-weeks: nothing else ships for workshops this half"
+      - "S-041 blocks eu-markets: new countries launch without VIN entry"
+  hybrid:
+    pros:
+      - "Same customer-facing quality as buy (0.95 hit rate, 0.985 precision) because the vendor answers every lookup at launch"
+      - "Fixes S-009 and avoids S-040, so it does not block marketplace or eu-markets"
+      - "Value in month 3; can still make the spring window if the customer path is built first"
+    cons:
+      - "12 team-weeks and 3 months to value: starting early December lands around early March, zero slack before the season"
+      - "Risk that the internal layer work crowds out the UX work (VIN input, scan, confidence display) and we ship a half-finished flow"
+      - "Half of the remaining capacity goes to plumbing customers never see"
+risks:
+  - "Build ships after the spring season and with 28% dead ends; workshops try VIN once, fail, and go back to dropdowns for good"
+  - "Buy gets vetoed late by the strategy-risk rule, and we lose weeks re-planning instead of shipping"
+  - "Hybrid slips by 3 to 4 weeks because the layer is scoped as a full platform instead of a thin mapping table, missing March"
+  - "Any option shows a decoded vehicle as certain when the catalog mapping is ambiguous; one wrong part to a workshop costs more trust than ten misses"
+  - "VIN entry hidden behind the dropdowns so the 25% usage assumption never materialises"
+ideas:
+  - "Sequence hybrid customer-first: week 1 to 6 thin vehicle-ID mapping table plus VIN entry wired to the vendor; richer layer and own decoding after the season"
+  - "Show a confidence state: when VIN maps to more than one catalog variant, ask one question (engine code or year) instead of guessing"
+  - "Never dead-end: on a VIN miss, prefill the dropdowns with what the vendor did decode"
+  - "Put VIN first for logged-in workshop accounts and add camera scan of the VIN plate in the mobile web flow"
+  - "Measure vin_entry_share and catalog hit rate in a 2-week beta with 50 workshops in January before full rollout"
+  - "Negotiate the vendor contract with a 12-month price cap, since hybrid makes switching credible"
+plan:
+  - "Weeks 1-2: sign vendor, define thin vehicle-ID table mapping vendor IDs and supplier IDs to our own IDs"
+  - "Weeks 3-6: VIN entry in search and cart via the own layer, ambiguity question, dropdown fallback on miss"
+  - "Weeks 7-8: beta with 50 workshops, track entry share, catalog hit rate and wrong-fitment returns"
+  - "Weeks 9-10: full rollout to all workshops and consumers, before mid-March spring season"
+  - "Weeks 11-12 and after the season: migrate returns and remaining S-009 consumers to own IDs, plan own home-market decoding for year 2"
+conditions:
+  - "Buy: acceptable only if the integration goes through our own ID table from day one (no S-040), which in practice makes it hybrid"
+  - "Hybrid with layer-first sequencing: acceptable only if VIN entry is live for workshops by 1 March with dropdown fallback on every miss"
+  - "Build: acceptable only if a vendor fallback covers VINs the own decoder misses so launch hit rate is at least 0.90, and it ships before the spring season; otherwise never"
+  - "Any option: wrong or ambiguous matches must be shown as uncertain, not as a confirmed fit"

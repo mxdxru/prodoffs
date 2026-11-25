@@ -1,0 +1,6 @@
+# Running balance of how much each role has given up recently.
+ceo: {balance: 0.0, history: []}
+cpo: {balance: 0.05, history: [{D-0018: 0.05}]}
+cto: {balance: 0.10, history: [{D-0016: 0.10}]}
+cmo: {balance: 0.0, history: []}
+cdo: {balance: 0.30, history: [{D-0016: 0.12}, {D-0018: 0.21}]}
